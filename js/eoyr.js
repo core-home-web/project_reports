@@ -4,7 +4,7 @@
  */
 
 // Configuration
-const API_BASE_URL = window.API_BASE_URL || ''; // Set via environment or default to same origin
+const API_BASE_URL = window.API_BASE_URL || 'https://eoyr-dashboard.corehomeweb2.workers.dev'; // Cloudflare Worker URL
 const API_ENDPOINTS = {
   repos: '/api/repos',
   weeks: '/api/weeks',
@@ -18,7 +18,9 @@ const API_ENDPOINTS = {
  * @returns {Promise<Object>} API response
  */
 async function fetchAPI(endpoint, params = {}) {
-  const url = new URL(endpoint, API_BASE_URL || window.location.origin);
+  // Construct full URL
+  const baseUrl = API_BASE_URL || window.location.origin;
+  const url = new URL(endpoint, baseUrl);
   
   Object.entries(params).forEach(([key, value]) => {
     if (value !== null && value !== undefined && value !== '') {
@@ -27,13 +29,24 @@ async function fetchAPI(endpoint, params = {}) {
   });
   
   try {
-    const response = await fetch(url.toString());
+    console.log('Fetching:', url.toString()); // Debug log
+    const response = await fetch(url.toString(), {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      },
+      mode: 'cors' // Explicitly enable CORS
+    });
     
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error('API error response:', response.status, errorText);
       throw new Error(`API error: ${response.status} ${response.statusText}`);
     }
     
-    return await response.json();
+    const data = await response.json();
+    console.log('API response:', data); // Debug log
+    return data;
   } catch (error) {
     console.error('API fetch error:', error);
     throw error;
@@ -256,26 +269,45 @@ async function loadWeeks(filters = {}) {
  */
 async function initDashboard() {
   try {
+    console.log('Initializing dashboard...');
+    console.log('API_BASE_URL:', API_BASE_URL);
+    
+    // Wait a bit for filter manager to initialize
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
     // Load repos for filter dropdown
+    console.log('Fetching repos...');
     const repos = await fetchRepos();
+    console.log('Repos loaded:', repos);
     await populateRepoFilter(repos);
     
     // Get initial filters from filter manager
     const filters = window.eoyrFilters?.getFilters();
-    if (filters) {
+    console.log('Initial filters:', filters);
+    
+    if (filters && filters.from && filters.to) {
       // Load weeks with initial filters
       await loadWeeks(filters);
     } else {
-      // Load weeks with default filters
-      await loadWeeks({
-        datePreset: 'last3Months',
+      // Calculate default date range for last 3 months
+      const today = new Date();
+      const threeMonthsAgo = new Date(today);
+      threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+      
+      const defaultFilters = {
+        from: threeMonthsAgo.toISOString().split('T')[0],
+        to: today.toISOString().split('T')[0],
         sortBy: 'date',
         sortOrder: 'desc'
-      });
+      };
+      
+      console.log('Using default filters:', defaultFilters);
+      await loadWeeks(defaultFilters);
     }
   } catch (error) {
     console.error('Error initializing dashboard:', error);
-    showError('Failed to initialize dashboard. Please refresh the page.');
+    console.error('Error stack:', error.stack);
+    showError('Failed to initialize dashboard. Please refresh the page. Error: ' + error.message);
   }
 }
 
