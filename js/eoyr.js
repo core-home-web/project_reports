@@ -249,31 +249,60 @@ async function populateRepoFilter(repos) {
   });
 }
 
+// Debounce to prevent multiple simultaneous loads
+let loadWeeksTimeout = null;
+let currentLoadAbortController = null;
+
 /**
  * Main function to load and render weeks
  * @param {Object} filters - Filter object
  */
 async function loadWeeks(filters = {}) {
-  console.log('loadWeeks called with filters:', filters);
-  showLoading();
-  
-  try {
-    const data = await fetchWeeks(filters);
-    console.log('Weeks data received:', data);
-    console.log('Number of weeks:', data.weeks ? data.weeks.length : 0);
-    
-    const sortOptions = {
-      sortBy: filters.sortBy || 'date',
-      sortOrder: filters.sortOrder || 'desc'
-    };
-    
-    console.log('Rendering weeks with sort options:', sortOptions);
-    renderWeekRows(data.weeks || [], sortOptions);
-    console.log('renderWeekRows completed');
-  } catch (error) {
-    console.error('Error loading weeks:', error);
-    showError(error.message || 'Failed to load weeks data. Please try again.');
+  // Cancel any pending load
+  if (currentLoadAbortController) {
+    currentLoadAbortController.abort();
   }
+  
+  // Clear any pending timeout
+  if (loadWeeksTimeout) {
+    clearTimeout(loadWeeksTimeout);
+  }
+  
+  // Debounce the load
+  return new Promise((resolve) => {
+    loadWeeksTimeout = setTimeout(async () => {
+      console.log('loadWeeks called with filters:', filters);
+      showLoading();
+      
+      currentLoadAbortController = new AbortController();
+      
+      try {
+        const data = await fetchWeeks(filters);
+        console.log('Weeks data received:', data);
+        console.log('Number of weeks:', data.weeks ? data.weeks.length : 0);
+        
+        const sortOptions = {
+          sortBy: filters.sortBy || 'date',
+          sortOrder: filters.sortOrder || 'desc'
+        };
+        
+        console.log('Rendering weeks with sort options:', sortOptions);
+        renderWeekRows(data.weeks || [], sortOptions);
+        console.log('renderWeekRows completed');
+        resolve();
+      } catch (error) {
+        if (error.name === 'AbortError') {
+          console.log('Load was aborted');
+          return;
+        }
+        console.error('Error loading weeks:', error);
+        showError(error.message || 'Failed to load weeks data. Please try again.');
+        resolve();
+      } finally {
+        currentLoadAbortController = null;
+      }
+    }, 300); // 300ms debounce
+  });
 }
 
 /**
