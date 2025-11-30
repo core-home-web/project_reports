@@ -142,12 +142,22 @@ class FilterManager {
       this.currentFilters.datePreset = params.get('preset');
     }
     
-    // If preset is set, use it to determine date range
-    if (this.currentFilters.datePreset && this.currentFilters.datePreset !== 'custom') {
-      const range = getDateRangeForPreset(this.currentFilters.datePreset);
-      if (range) {
-        this.currentFilters.from = range.from;
-        this.currentFilters.to = range.to;
+    // If no dates are set, use the preset to determine date range
+    if (!this.currentFilters.from || !this.currentFilters.to) {
+      if (this.currentFilters.datePreset && this.currentFilters.datePreset !== 'custom') {
+        const range = getDateRangeForPreset(this.currentFilters.datePreset);
+        if (range) {
+          this.currentFilters.from = range.from;
+          this.currentFilters.to = range.to;
+        }
+      } else {
+        // Default to last 3 months if nothing is set
+        const range = getDateRangeForPreset('last3Months');
+        if (range) {
+          this.currentFilters.from = range.from;
+          this.currentFilters.to = range.to;
+          this.currentFilters.datePreset = 'last3Months';
+        }
       }
     }
   }
