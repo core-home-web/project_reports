@@ -1,0 +1,84 @@
+# End of Year Review GitHub Dashboard - Cursor Rules
+
+## Tech Stack
+- **Frontend**: HTML, CSS, JavaScript (vanilla)
+- **Backend**: Cloudflare Workers
+- **Storage**: Cloudflare KV
+- **Hosting**: Cloudflare Pages
+- **Version Control**: GitHub
+
+## Development Principles
+
+### Critical Rules
+1. **NEVER GUESS**: If uncertain about implementation details, requirements, or design decisions - ASK the user before proceeding
+2. **Break up long tasks**: Any task taking more than 30 minutes should be split into smaller sub-tasks
+3. **Iterate and verify**: Complete each task fully before moving to the next; verify it works
+4. **UI/UX first**: Clean, accessible, intuitive interfaces that follow established design patterns
+5. **Clean code**: Modular, well-commented, consistent naming conventions
+6. **Scalable**: Design for growth (more repos, more data, more users)
+7. **Reusable**: Components and functions should be generic enough for other use cases
+
+### UI/UX Design Guidelines
+- **User-centered design**: Keep end users at the center of every decision
+- **Ease of use**: Organization, consistency, and intuitive navigation
+- **Visual hierarchy**: Guide users through content with clear structure
+- **Accessibility**: Ensure clickable actions are highly noticeable and accessible for color-blind users
+- **Mobile-first**: Design for mobile screens first, then scale up
+- **Empathy**: Understand user motivations and provide what they need in the simplest way
+
+## Reference Documentation
+
+### UI/UX Design Resources (Consult Before Designing)
+- Webflow UX Design Process: https://webflow.com/blog/ux-design-process
+- Figma UI Design Principles: https://www.figma.com/resource-library/ui-design-principles/
+- Figma Mobile Website Design: https://www.figma.com/resource-library/mobile-website-design/
+- Figma Mobile-First Design: https://www.figma.com/resource-library/mobile-first-design/
+
+### Technical Documentation (Consult Before Implementing)
+- GitHub REST API: https://docs.github.com/en
+- Cloudflare Developers: https://developers.cloudflare.com
+
+### When to Use References
+- **If unsure about GitHub API**: Consult GitHub docs before implementing
+- **If unsure about Cloudflare Workers/KV**: Consult Cloudflare docs before implementing
+- **If unsure about UI/UX decisions**: Review Figma and Webflow resources before designing
+
+## Code Style
+
+### Naming Conventions
+- **Files**: kebab-case (e.g., `eoyr-filters.js`)
+- **Functions**: camelCase (e.g., `fetchWeekData()`)
+- **Constants**: UPPER_SNAKE_CASE (e.g., `API_BASE_URL`)
+- **CSS Classes**: kebab-case (e.g., `.week-row-item`)
+
+### Code Organization
+- Keep functions small and focused (single responsibility)
+- Use meaningful variable names
+- Add comments for complex logic
+- Group related functions together
+
+### File Structure
+- Keep HTML semantic and accessible
+- Separate concerns: HTML (structure), CSS (presentation), JS (behavior)
+- Use existing CSS classes from `wanderlostgalaxy.webflow.css` where possible
+- Create new styles in `eoyr.css` for dashboard-specific needs
+
+## Project-Specific Notes
+
+### GitHub Integration
+- Track repos from `core-home-web` organization
+- Use GitHub REST API v3
+- Support date range filtering
+- Group commits by ISO week (Monday-Sunday)
+
+### Cloudflare Worker
+- Cache responses in KV with 1 hour TTL
+- Handle webhook events for cache invalidation
+- Support filtering by date range and repo
+
+### Frontend
+- Reuse layout pattern from `stories.html`
+- Implement filtering, sorting, and date range selection
+- Make all interactive elements highly visible and accessible
+- Support URL parameters for sharing/bookmarking filtered views
+

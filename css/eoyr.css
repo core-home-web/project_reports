@@ -1,0 +1,311 @@
+/**
+ * End of Year Review Dashboard Styles
+ * Dashboard-specific styles for filter controls and week listing
+ */
+
+/* Filter Controls Section */
+.eoyr-filters {
+  padding: 2rem 1rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.eoyr-filters-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.eoyr-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 150px;
+  flex: 1 1 auto;
+}
+
+.eoyr-filter-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.eoyr-filter-input,
+.eoyr-filter-select {
+  padding: 0.75rem;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  background: white;
+  color: #333;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.eoyr-filter-input:focus,
+.eoyr-filter-select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.eoyr-filter-button {
+  padding: 0.75rem 1.5rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.eoyr-filter-button:hover {
+  background: #0056b3;
+  transform: translateY(-1px);
+}
+
+.eoyr-filter-button:active {
+  transform: translateY(0);
+}
+
+.eoyr-filter-button.secondary {
+  background: #6c757d;
+}
+
+.eoyr-filter-button.secondary:hover {
+  background: #545b62;
+}
+
+/* Date Range Presets */
+.eoyr-date-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.eoyr-date-preset {
+  padding: 0.5rem 1rem;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.eoyr-date-preset:hover {
+  background: #f8f9fa;
+  border-color: #007bff;
+}
+
+.eoyr-date-preset.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+/* Week Listing Section */
+.eoyr-week-list {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.eoyr-week-header {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.eoyr-week-row {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.eoyr-week-row:hover {
+  background: rgba(0, 123, 255, 0.05);
+}
+
+.eoyr-week-row:last-child {
+  border-bottom: none;
+}
+
+.eoyr-week-date {
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.eoyr-week-projects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.eoyr-week-project-tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: rgba(0, 123, 255, 0.1);
+  color: #007bff;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.eoyr-week-commit-count {
+  font-size: 1rem;
+  color: #666;
+  text-align: center;
+}
+
+.eoyr-week-view {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  color: #007bff;
+  font-weight: 600;
+}
+
+.eoyr-week-view-icon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* Empty State */
+.eoyr-empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #666;
+}
+
+.eoyr-empty-state h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.eoyr-empty-state p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Loading State */
+.eoyr-loading {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #666;
+}
+
+.eoyr-loading-spinner {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 123, 255, 0.1);
+  border-top-color: #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Mobile Responsive */
+@media (max-width: 767px) {
+  .eoyr-filters-container {
+    flex-direction: column;
+  }
+  
+  .eoyr-filter-group {
+    width: 100%;
+  }
+  
+  .eoyr-week-header,
+  .eoyr-week-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .eoyr-week-header {
+    display: none; /* Hide header on mobile, use labels instead */
+  }
+  
+  .eoyr-week-row {
+    padding: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+  
+  .eoyr-week-date::before {
+    content: "Week: ";
+    font-weight: normal;
+    color: #666;
+  }
+  
+  .eoyr-week-projects::before {
+    content: "Projects: ";
+    font-weight: 600;
+    color: #666;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .eoyr-week-commit-count::before {
+    content: "Commits: ";
+    font-weight: 600;
+    color: #666;
+  }
+  
+  .eoyr-week-view {
+    justify-content: flex-start;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Accessibility: High contrast for clickable elements */
+.eoyr-week-row:focus,
+.eoyr-filter-button:focus,
+.eoyr-date-preset:focus {
+  outline: 3px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Ensure clickable elements are highly visible */
+.eoyr-week-row {
+  cursor: pointer;
+}
+
+.eoyr-filter-button {
+  min-height: 44px; /* Touch target size */
+}
+
+.eoyr-date-preset {
+  min-height: 36px;
+}
+

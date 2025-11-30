@@ -1,0 +1,32 @@
+{
+  "organization": "core-home-web",
+  "repos": [
+    {
+      "name": "hydragearbottle_website",
+      "displayName": "Hydragear Bottle"
+    },
+    {
+      "name": "core_render_portal",
+      "displayName": "Core Render Portal"
+    },
+    {
+      "name": "outlaw_spice",
+      "displayName": "Outlaw Spice"
+    },
+    {
+      "name": "people_of_spice",
+      "displayName": "People of Spice"
+    },
+    {
+      "name": "thyme-and-table",
+      "displayName": "Thyme & Table"
+    },
+    {
+      "name": "spice-st-market",
+      "displayName": "Spice St Market"
+    }
+  ],
+  "defaultDateRange": "3months",
+  "weekStartDay": "monday"
+}
+
