@@ -1,6 +1,13 @@
 /**
  * End of Year Review Dashboard - Main JavaScript
  * Handles API calls, data fetching, and UI rendering
+ * 
+ * WEBFLOW DEPENDENCY: Uses class names from wanderlostgalaxy.webflow.css
+ * If Webflow re-export changes these, update accordingly:
+ * - static-cube, block-wrapper, static-block, cube-top
+ * - block-content, block-title-wrapper, block-title
+ * - block-year, block-client, block-studio, block-type
+ * - block-actions-wrapper, icon-3
  */
 
 // Configuration
@@ -171,6 +178,16 @@ function renderWeekRows(weeks, sortOptions = {}, searchMode = 'range') {
     
     const staticBlock = document.createElement('div');
     staticBlock.className = 'static-block';
+    
+    // Add cube-top SVG (matching stories.html structure)
+    const cubeTop = document.createElement('div');
+    cubeTop.className = 'cube-top';
+    cubeTop.innerHTML = `<div class="cube-top-svg w-embed">
+      <svg viewbox="0 0 1400 218">
+        <path d="M140 0h1120l140 218H0z" fill="none" stroke="currentColor"></path>
+      </svg>
+    </div>`;
+    staticBlock.appendChild(cubeTop);
     
     const blockContent = document.createElement('a');
     blockContent.className = 'block-content w-inline-block';

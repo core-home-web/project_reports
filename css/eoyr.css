@@ -1,13 +1,27 @@
 /**
  * End of Year Review Dashboard Styles
  * Styled to match stories.html layout and design
+ * 
+ * WEBFLOW DEPENDENCY: Uses class names from wanderlostgalaxy.webflow.css
+ * If Webflow re-export changes these, update accordingly:
+ * - static-cube, block-wrapper, static-block, cube-top
+ * - block-content, block-title-wrapper, block-title
+ * - block-year, block-client, block-studio, block-type
+ * - block-actions-wrapper, icon-3
+ * - main-wrapper-2, cube-wrapper, floating-block
  */
+
+/* CSS Variable Fallbacks - Protect against Webflow CSS variable changes */
+:root {
+  --eoyr-neon-blue: var(--neon-blue, #b6fff5);
+  --eoyr-black: var(--black, #000);
+}
 
 /* Filter Controls Section - Styled to match stories page */
 .eoyr-filters {
   padding: 2rem 4rem;
-  background-color: var(--black);
-  border-bottom: 2px solid var(--neon-blue);
+  background-color: var(--eoyr-black);
+  border-bottom: 2px solid var(--eoyr-neon-blue);
   margin-bottom: 0;
 }
 
@@ -43,7 +57,7 @@
 .eoyr-filter-group label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--neon-blue);
+  color: var(--eoyr-neon-blue);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-family: "Audiowide", sans-serif;
@@ -52,11 +66,11 @@
 .eoyr-filter-input,
 .eoyr-filter-select {
   padding: 0.75rem;
-  border: 2px solid var(--neon-blue);
+  border: 2px solid var(--eoyr-neon-blue);
   border-radius: 0;
   font-size: 1rem;
-  background: var(--black);
-  color: var(--neon-blue);
+  background: var(--eoyr-black);
+  color: var(--eoyr-neon-blue);
   transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
   font-family: "Exo 2", sans-serif;
 }
@@ -64,16 +78,16 @@
 .eoyr-filter-input:focus,
 .eoyr-filter-select:focus {
   outline: none;
-  border-color: var(--neon-blue);
+  border-color: var(--eoyr-neon-blue);
   background-color: rgba(182, 255, 245, 0.1);
-  box-shadow: 0 0 10rem 0.1px var(--neon-blue);
+  box-shadow: 0 0 10rem 0.1px var(--eoyr-neon-blue);
 }
 
 .eoyr-filter-button {
   padding: 0.75rem 1.5rem;
-  background: var(--black);
-  color: var(--neon-blue);
-  border: 2px solid var(--neon-blue);
+  background: var(--eoyr-black);
+  color: var(--eoyr-neon-blue);
+  border: 2px solid var(--eoyr-neon-blue);
   border-radius: 0;
   font-size: 1rem;
   font-weight: 600;
@@ -85,9 +99,9 @@
 }
 
 .eoyr-filter-button:hover {
-  color: var(--black);
-  background-color: var(--neon-blue);
-  box-shadow: 0 0 10rem 0.1px var(--neon-blue);
+  color: var(--eoyr-black);
+  background-color: var(--eoyr-neon-blue);
+  box-shadow: 0 0 10rem 0.1px var(--eoyr-neon-blue);
 }
 
 .eoyr-filter-button:active {
@@ -95,14 +109,14 @@
 }
 
 .eoyr-filter-button.secondary {
-  background: var(--black);
-  border-color: var(--neon-blue);
-  color: var(--neon-blue);
+  background: var(--eoyr-black);
+  border-color: var(--eoyr-neon-blue);
+  color: var(--eoyr-neon-blue);
 }
 
 .eoyr-filter-button.secondary:hover {
-  color: var(--black);
-  background-color: var(--neon-blue);
+  color: var(--eoyr-black);
+  background-color: var(--eoyr-neon-blue);
 }
 
 /* Date Range Presets */
@@ -115,13 +129,13 @@
 
 .eoyr-date-preset {
   padding: 0.5rem 1rem;
-  background: var(--black);
-  border: 2px solid var(--neon-blue);
+  background: var(--eoyr-black);
+  border: 2px solid var(--eoyr-neon-blue);
   border-radius: 0;
   font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.2s;
-  color: var(--neon-blue);
+  color: var(--eoyr-neon-blue);
   font-family: "Exo 2", sans-serif;
 }
 
@@ -132,8 +146,8 @@
 
 .eoyr-date-preset.active {
   background: var(--neon-blue);
-  color: var(--black);
-  border-color: var(--neon-blue);
+  color: var(--eoyr-black);
+  border-color: var(--eoyr-neon-blue);
 }
 
 /* Week Listing Section - Match stories.html structure */
@@ -166,8 +180,8 @@
 /* Week block matching static-block */
 .eoyr-week-block {
   z-index: 0;
-  background-color: var(--black);
-  border: 2px solid var(--neon-blue);
+  background-color: var(--eoyr-black);
+  border: 2px solid var(--eoyr-neon-blue);
   margin-top: -2px;
   position: relative;
 }
@@ -175,7 +189,7 @@
 /* Week content matching block-content */
 .eoyr-week-content {
   z-index: 0;
-  color: var(--neon-blue);
+  color: var(--eoyr-neon-blue);
   justify-content: space-between;
   align-items: center;
   padding-top: 1rem;
@@ -188,9 +202,9 @@
 
 .eoyr-week-content:hover {
   z-index: 1;
-  color: var(--black);
-  background-color: var(--neon-blue);
-  box-shadow: 0 0 10rem 0.1px var(--neon-blue);
+  color: var(--eoyr-black);
+  background-color: var(--eoyr-neon-blue);
+  box-shadow: 0 0 10rem 0.1px var(--eoyr-neon-blue);
 }
 
 /* Title wrapper matching block-title-wrapper */
@@ -285,23 +299,23 @@
 .eoyr-empty-state {
   text-align: center;
   padding: 4rem 2rem;
-  color: var(--neon-blue);
-  background-color: var(--black);
-  border: 2px solid var(--neon-blue);
+  color: var(--eoyr-neon-blue);
+  background-color: var(--eoyr-black);
+  border: 2px solid var(--eoyr-neon-blue);
   margin: 2rem;
 }
 
 .eoyr-empty-state h3 {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
-  color: var(--neon-blue);
+  color: var(--eoyr-neon-blue);
   font-family: "Audiowide", sans-serif;
 }
 
 .eoyr-empty-state p {
   font-size: 1rem;
   margin-bottom: 1rem;
-  color: var(--neon-blue);
+  color: var(--eoyr-neon-blue);
   font-family: "Exo 2", sans-serif;
 }
 
@@ -309,12 +323,12 @@
 .eoyr-loading {
   text-align: center;
   padding: 4rem 2rem;
-  color: var(--neon-blue);
-  background-color: var(--black);
+  color: var(--eoyr-neon-blue);
+  background-color: var(--eoyr-black);
 }
 
 .eoyr-loading p {
-  color: var(--neon-blue);
+  color: var(--eoyr-neon-blue);
   font-family: "Exo 2", sans-serif;
 }
 
@@ -323,7 +337,7 @@
   width: 40px;
   height: 40px;
   border: 4px solid rgba(182, 255, 245, 0.1);
-  border-top-color: var(--neon-blue);
+  border-top-color: var(--eoyr-neon-blue);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -388,7 +402,7 @@
 .eoyr-week-content:focus,
 .eoyr-filter-button:focus,
 .eoyr-date-preset:focus {
-  outline: 3px solid var(--neon-blue);
+  outline: 3px solid var(--eoyr-neon-blue);
   outline-offset: 2px;
 }
 
@@ -413,5 +427,23 @@
   font-family: "Audiowide", sans-serif;
   font-size: 1.125rem;
   font-weight: 400;
+}
+
+/* Stories page navbar color overrides - dark theme */
+/* Change brown/beige backgrounds to dark theme (light black and dark grey) */
+.navbar-left {
+  background-color: #1a1a1a !important; /* was #fff5ef - light beige */
+}
+
+.navbar-right {
+  background-color: #2a2a2a !important; /* was #e7d4ca - light brown */
+}
+
+.navbar-right-item {
+  background-color: #1a1a1a !important; /* was #ffede3 - very light beige */
+}
+
+.navbar-right-item:hover {
+  background-color: #333333 !important; /* was #fff5ef - light beige */
 }
 
