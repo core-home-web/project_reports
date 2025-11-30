@@ -1,0 +1,28 @@
+# Cloudflare setup files with secrets
+CLOUDFLARE_SETUP.md
+*_SETUP.md
+*_SECRETS.md
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dependencies
+node_modules/
+
