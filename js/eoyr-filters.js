@@ -108,6 +108,8 @@ class FilterManager {
       datePreset: 'last3Months',
       from: null,
       to: null,
+      day: null,
+      searchMode: 'range', // 'range' or 'day'
       repos: [],
       sortBy: 'date',
       sortOrder: 'desc'
@@ -129,6 +131,13 @@ class FilterManager {
     if (params.has('to')) {
       this.currentFilters.to = params.get('to');
     }
+    if (params.has('day')) {
+      this.currentFilters.day = params.get('day');
+      this.currentFilters.searchMode = 'day';
+    }
+    if (params.has('searchMode')) {
+      this.currentFilters.searchMode = params.get('searchMode');
+    }
     if (params.has('repo')) {
       this.currentFilters.repos = params.get('repo').split(',').map(r => r.trim());
     }
@@ -142,8 +151,11 @@ class FilterManager {
       this.currentFilters.datePreset = params.get('preset');
     }
     
-    // If no dates are set, use the preset to determine date range
-    if (!this.currentFilters.from || !this.currentFilters.to) {
+    // If in day mode and day is set, use it
+    if (this.currentFilters.searchMode === 'day' && this.currentFilters.day) {
+      // Day mode is active, don't set range
+    } else if (!this.currentFilters.from || !this.currentFilters.to) {
+      // If no dates are set, use the preset to determine date range
       if (this.currentFilters.datePreset && this.currentFilters.datePreset !== 'custom') {
         const range = getDateRangeForPreset(this.currentFilters.datePreset);
         if (range) {
@@ -168,12 +180,19 @@ class FilterManager {
   updateURL() {
     const params = new URLSearchParams();
     
-    if (this.currentFilters.from) {
-      params.set('from', this.currentFilters.from);
+    if (this.currentFilters.searchMode === 'day' && this.currentFilters.day) {
+      params.set('day', this.currentFilters.day);
+      params.set('searchMode', 'day');
+    } else {
+      if (this.currentFilters.from) {
+        params.set('from', this.currentFilters.from);
+      }
+      if (this.currentFilters.to) {
+        params.set('to', this.currentFilters.to);
+      }
+      params.set('searchMode', 'range');
     }
-    if (this.currentFilters.to) {
-      params.set('to', this.currentFilters.to);
-    }
+    
     if (this.currentFilters.repos.length > 0) {
       params.set('repo', this.currentFilters.repos.join(','));
     }
@@ -195,24 +214,42 @@ class FilterManager {
    * Initializes date inputs with default values
    */
   initializeDateInputs() {
-    // If no dates are set, use default preset
-    if (!this.currentFilters.from || !this.currentFilters.to) {
-      const defaultPreset = this.currentFilters.datePreset || 'last3Months';
-      const range = getDateRangeForPreset(defaultPreset);
-      if (range) {
-        this.currentFilters.from = range.from;
-        this.currentFilters.to = range.to;
-      }
+    // Set search mode
+    const searchModeSelect = document.getElementById('eoyr-search-mode');
+    if (searchModeSelect) {
+      searchModeSelect.value = this.currentFilters.searchMode || 'range';
+      this.toggleSearchMode(this.currentFilters.searchMode || 'range');
     }
     
-    // Set date input values
-    const fromInput = document.getElementById('eoyr-date-from');
-    const toInput = document.getElementById('eoyr-date-to');
-    if (fromInput && this.currentFilters.from) {
-      fromInput.value = this.currentFilters.from;
-    }
-    if (toInput && this.currentFilters.to) {
-      toInput.value = this.currentFilters.to;
+    // If no dates are set, use default preset
+    if (this.currentFilters.searchMode === 'day') {
+      const dayInput = document.getElementById('eoyr-date-day');
+      if (dayInput && this.currentFilters.day) {
+        dayInput.value = this.currentFilters.day;
+      } else if (dayInput && !this.currentFilters.day) {
+        // Default to today
+        dayInput.value = formatDate(new Date());
+        this.currentFilters.day = dayInput.value;
+      }
+    } else {
+      if (!this.currentFilters.from || !this.currentFilters.to) {
+        const defaultPreset = this.currentFilters.datePreset || 'last3Months';
+        const range = getDateRangeForPreset(defaultPreset);
+        if (range) {
+          this.currentFilters.from = range.from;
+          this.currentFilters.to = range.to;
+        }
+      }
+      
+      // Set date input values
+      const fromInput = document.getElementById('eoyr-date-from');
+      const toInput = document.getElementById('eoyr-date-to');
+      if (fromInput && this.currentFilters.from) {
+        fromInput.value = this.currentFilters.from;
+      }
+      if (toInput && this.currentFilters.to) {
+        toInput.value = this.currentFilters.to;
+      }
     }
     
     // Set active preset button
@@ -227,11 +264,61 @@ class FilterManager {
   }
   
   /**
+   * Toggles between range and day search modes
+   * @param {string} mode - 'range' or 'day'
+   */
+  toggleSearchMode(mode) {
+    const rangeFilters = document.getElementById('eoyr-range-filters');
+    const rangeToFilter = document.getElementById('eoyr-range-to-filter');
+    const dayFilter = document.getElementById('eoyr-day-filter');
+    
+    if (mode === 'day') {
+      if (rangeFilters) rangeFilters.style.display = 'none';
+      if (rangeToFilter) rangeToFilter.style.display = 'none';
+      if (dayFilter) dayFilter.style.display = 'flex';
+      this.currentFilters.searchMode = 'day';
+      this.currentFilters.from = null;
+      this.currentFilters.to = null;
+    } else {
+      if (rangeFilters) rangeFilters.style.display = 'flex';
+      if (rangeToFilter) rangeToFilter.style.display = 'flex';
+      if (dayFilter) dayFilter.style.display = 'none';
+      this.currentFilters.searchMode = 'range';
+      this.currentFilters.day = null;
+      
+      // Restore date range if not set
+      if (!this.currentFilters.from || !this.currentFilters.to) {
+        const defaultPreset = this.currentFilters.datePreset || 'last3Months';
+        const range = getDateRangeForPreset(defaultPreset);
+        if (range) {
+          this.currentFilters.from = range.from;
+          this.currentFilters.to = range.to;
+          const fromInput = document.getElementById('eoyr-date-from');
+          const toInput = document.getElementById('eoyr-date-to');
+          if (fromInput) fromInput.value = range.from;
+          if (toInput) toInput.value = range.to;
+        }
+      }
+    }
+  }
+  
+  /**
    * Sets up event listeners for filter controls
    */
   setupEventListeners() {
     // Initialize date inputs first
     this.initializeDateInputs();
+    
+    // Search mode selector
+    const searchModeSelect = document.getElementById('eoyr-search-mode');
+    if (searchModeSelect) {
+      searchModeSelect.addEventListener('change', () => {
+        const mode = searchModeSelect.value;
+        this.toggleSearchMode(mode);
+        this.updateURL();
+        this.applyFilters();
+      });
+    }
     
     // Date preset buttons
     document.querySelectorAll('.eoyr-date-preset').forEach(button => {
@@ -241,7 +328,7 @@ class FilterManager {
       });
     });
     
-    // Custom date inputs
+    // Custom date inputs (range mode)
     const fromInput = document.getElementById('eoyr-date-from');
     const toInput = document.getElementById('eoyr-date-to');
     
@@ -258,6 +345,16 @@ class FilterManager {
       toInput.addEventListener('change', () => {
         this.currentFilters.to = toInput.value;
         this.currentFilters.datePreset = 'custom';
+        this.updateURL();
+        this.applyFilters();
+      });
+    }
+    
+    // Day input (single day mode)
+    const dayInput = document.getElementById('eoyr-date-day');
+    if (dayInput) {
+      dayInput.addEventListener('change', () => {
+        this.currentFilters.day = dayInput.value;
         this.updateURL();
         this.applyFilters();
       });
@@ -345,17 +442,28 @@ class FilterManager {
       datePreset: 'last3Months',
       from: null,
       to: null,
+      day: null,
+      searchMode: 'range',
       repos: [],
       sortBy: 'date',
       sortOrder: 'desc'
     };
     
     // Reset UI
+    const searchModeSelect = document.getElementById('eoyr-search-mode');
+    if (searchModeSelect) {
+      searchModeSelect.value = 'range';
+      this.toggleSearchMode('range');
+    }
+    
     const range = getDateRangeForPreset('last3Months');
     const fromInput = document.getElementById('eoyr-date-from');
     const toInput = document.getElementById('eoyr-date-to');
     if (fromInput && range) fromInput.value = range.from;
     if (toInput && range) toInput.value = range.to;
+    
+    const dayInput = document.getElementById('eoyr-date-day');
+    if (dayInput) dayInput.value = '';
     
     const repoSelect = document.getElementById('eoyr-filter-repos');
     if (repoSelect) {

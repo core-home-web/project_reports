@@ -64,14 +64,21 @@ async function fetchRepos() {
 
 /**
  * Fetches weeks data with filters
- * @param {Object} filters - Filter object (from, to, repo)
+ * @param {Object} filters - Filter object (from, to, day, repo)
  * @returns {Promise<Object>} Weeks data
  */
 async function fetchWeeks(filters = {}) {
   const params = {};
   
-  if (filters.from) params.from = filters.from;
-  if (filters.to) params.to = filters.to;
+  // If day mode, use day as both from and to
+  if (filters.searchMode === 'day' && filters.day) {
+    params.from = filters.day;
+    params.to = filters.day;
+  } else {
+    if (filters.from) params.from = filters.from;
+    if (filters.to) params.to = filters.to;
+  }
+  
   if (filters.repos && filters.repos.length > 0) {
     params.repo = filters.repos.join(',');
   }
@@ -110,8 +117,8 @@ function formatDateRange(startDate, endDate) {
  * @param {Array} weeks - Array of week objects
  * @param {Object} sortOptions - Sort options (sortBy, sortOrder)
  */
-function renderWeekRows(weeks, sortOptions = {}) {
-  console.log('renderWeekRows called with', weeks.length, 'weeks');
+function renderWeekRows(weeks, sortOptions = {}, searchMode = 'range') {
+  console.log('renderWeekRows called with', weeks.length, 'weeks, mode:', searchMode);
   const container = document.getElementById('eoyr-week-list');
   if (!container) {
     console.error('Week list container not found - looking for #eoyr-week-list');
@@ -124,10 +131,13 @@ function renderWeekRows(weeks, sortOptions = {}) {
   
   if (weeks.length === 0) {
     console.log('No weeks to display');
+    const emptyMessage = searchMode === 'day' 
+      ? '<p>No commits found for this day. Try selecting a different date.</p>'
+      : '<p>Try adjusting your date range or project filters.</p>';
     container.innerHTML = `
       <div class="eoyr-empty-state">
-        <h3>No weeks found</h3>
-        <p>Try adjusting your date range or project filters.</p>
+        <h3>No ${searchMode === 'day' ? 'commits' : 'weeks'} found</h3>
+        ${emptyMessage}
       </div>
     `;
     return;
@@ -150,43 +160,69 @@ function renderWeekRows(weeks, sortOptions = {}) {
     return sortOrder === 'desc' ? -comparison : comparison;
   });
   
-  // Create header row
-  const header = document.createElement('div');
-  header.className = 'eoyr-week-header';
-  header.innerHTML = `
-    <div>Week Of</div>
-    <div>Projects</div>
-    <div>Commits</div>
-    <div>View</div>
-  `;
-  container.appendChild(header);
+  // Create static-cube wrapper matching stories.html
+  const staticCube = document.createElement('div');
+  staticCube.className = 'static-cube';
   
-  // Create week rows
+  // Create week rows matching stories.html structure
   sortedWeeks.forEach(week => {
-    const row = document.createElement('a');
-    row.className = 'eoyr-week-row';
-    row.href = `weeks/week-${week.weekId}.html`;
+    const blockWrapper = document.createElement('div');
+    blockWrapper.className = 'block-wrapper';
+    
+    const staticBlock = document.createElement('div');
+    staticBlock.className = 'static-block';
+    
+    const blockContent = document.createElement('a');
+    blockContent.className = 'block-content w-inline-block';
+    blockContent.href = `weeks/week-${week.weekId}.html`;
     
     const dateRange = formatDateRange(week.startDate, week.endDate);
     
-    const projectsHTML = week.repos.length > 0
-      ? week.repos.map(repo => `<span class="eoyr-week-project-tag">${repo}</span>`).join('')
-      : '<span class="eoyr-week-project-tag">No projects</span>';
+    // Format date for display (extract just the date part if it's a single day)
+    let displayDate = dateRange;
+    if (searchMode === 'day' && week.startDate === week.endDate) {
+      const date = new Date(week.startDate);
+      displayDate = date.toLocaleDateString('en-US', { 
+        month: 'short', 
+        day: 'numeric', 
+        year: 'numeric' 
+      });
+    }
     
-    row.innerHTML = `
-      <div class="eoyr-week-date">${dateRange}</div>
-      <div class="eoyr-week-projects">${projectsHTML}</div>
-      <div class="eoyr-week-commit-count">${week.commitCount}</div>
-      <div class="eoyr-week-view">
-        View Details
-        <svg class="eoyr-week-view-icon" viewBox="0 0 25 25">
-          <path d="M0 13.486h21.178l-9.602 9.591 1.413 1.412L23.591 13.9l.001.001L25 12.496l-.002-.002H25l-1.413-1.412h-.002L12.989.5l-1.407 1.406 9.596 9.584H0v1.996z" fill="currentColor" fill-rule="evenodd"></path>
-        </svg>
+    const projectsHTML = week.repos.length > 0
+      ? week.repos.map(repo => repo).join(', ')
+      : 'No projects';
+    
+    blockContent.innerHTML = `
+      <div class="block-title-wrapper">
+        <div class="block-year">
+          <h4 class="block-title">${displayDate}</h4>
+        </div>
+        <div class="block-client">
+          <h4 class="block-title">${projectsHTML}</h4>
+        </div>
+        <div class="block-studio">
+          <h4 class="block-title">${week.commitCount} ${week.commitCount === 1 ? 'commit' : 'commits'}</h4>
+        </div>
+        <div class="block-type">
+          <h4 class="block-title">${week.repoCount} ${week.repoCount === 1 ? 'project' : 'projects'}</h4>
+        </div>
+      </div>
+      <div class="block-actions-wrapper">
+        <div class="icon-3 w-embed">
+          <svg viewbox="0 0 25 25">
+            <path d="M0 13.486h21.178l-9.602 9.591 1.413 1.412L23.591 13.9l.001.001L25 12.496l-.002-.002H25l-1.413-1.412h-.002L12.989.5l-1.407 1.406 9.596 9.584H0v1.996z" fill="currentColor" fill-rule="evenodd"></path>
+          </svg>
+        </div>
       </div>
     `;
     
-    container.appendChild(row);
+    staticBlock.appendChild(blockContent);
+    blockWrapper.appendChild(staticBlock);
+    staticCube.appendChild(blockWrapper);
   });
+  
+  container.appendChild(staticCube);
 }
 
 /**
@@ -286,9 +322,10 @@ async function loadWeeks(filters = {}) {
           sortOrder: filters.sortOrder || 'desc'
         };
         
-        console.log('Rendering weeks with sort options:', sortOptions);
-        renderWeekRows(data.weeks || [], sortOptions);
-        console.log('renderWeekRows completed');
+    console.log('Rendering weeks with sort options:', sortOptions);
+    const searchMode = filters.searchMode || 'range';
+    renderWeekRows(data.weeks || [], sortOptions, searchMode);
+    console.log('renderWeekRows completed');
         resolve();
       } catch (error) {
         if (error.name === 'AbortError') {

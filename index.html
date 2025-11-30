@@ -241,13 +241,26 @@
           </div>
           
           <div class="eoyr-filter-group">
+            <label for="eoyr-search-mode">Search Mode</label>
+            <select id="eoyr-search-mode" class="eoyr-filter-select" aria-label="Search mode">
+              <option value="range">Date Range</option>
+              <option value="day">Single Day</option>
+            </select>
+          </div>
+          
+          <div class="eoyr-filter-group" id="eoyr-range-filters">
             <label for="eoyr-date-from">From Date</label>
             <input type="date" id="eoyr-date-from" class="eoyr-filter-input" aria-label="Start date">
           </div>
           
-          <div class="eoyr-filter-group">
+          <div class="eoyr-filter-group" id="eoyr-range-to-filter">
             <label for="eoyr-date-to">To Date</label>
             <input type="date" id="eoyr-date-to" class="eoyr-filter-input" aria-label="End date">
+          </div>
+          
+          <div class="eoyr-filter-group" id="eoyr-day-filter" style="display: none;">
+            <label for="eoyr-date-day">Select Day</label>
+            <input type="date" id="eoyr-date-day" class="eoyr-filter-input" aria-label="Select day">
           </div>
           
           <div class="eoyr-filter-group">
