@@ -1,0 +1,15 @@
+name = "eoyr-dashboard"
+main = "workers/github-commits.js"
+compatibility_date = "2025-11-30"
+
+# KV Namespace binding
+[[kv_namespaces]]
+binding = "EOYR_CACHE"
+id = "da03e8cf85c9420b9db2831526f8aa8f"
+
+# Environment variables (these should be set in Cloudflare Dashboard, but listed here for reference)
+# GITHUB_TOKEN - Set as secret in dashboard
+# GITHUB_ORG - Set in dashboard
+# WEBHOOK_SECRET - Set as secret in dashboard
+# REPOS_CONFIG - Set in dashboard
+
