@@ -111,16 +111,19 @@ function formatDateRange(startDate, endDate) {
  * @param {Object} sortOptions - Sort options (sortBy, sortOrder)
  */
 function renderWeekRows(weeks, sortOptions = {}) {
+  console.log('renderWeekRows called with', weeks.length, 'weeks');
   const container = document.getElementById('eoyr-week-list');
   if (!container) {
-    console.error('Week list container not found');
+    console.error('Week list container not found - looking for #eoyr-week-list');
     return;
   }
   
+  console.log('Container found, clearing and rendering...');
   // Clear existing content
   container.innerHTML = '';
   
   if (weeks.length === 0) {
+    console.log('No weeks to display');
     container.innerHTML = `
       <div class="eoyr-empty-state">
         <h3>No weeks found</h3>
@@ -129,6 +132,8 @@ function renderWeekRows(weeks, sortOptions = {}) {
     `;
     return;
   }
+  
+  console.log('Rendering', weeks.length, 'week rows');
   
   // Sort weeks
   const sortedWeeks = [...weeks].sort((a, b) => {
@@ -249,15 +254,22 @@ async function populateRepoFilter(repos) {
  * @param {Object} filters - Filter object
  */
 async function loadWeeks(filters = {}) {
+  console.log('loadWeeks called with filters:', filters);
   showLoading();
   
   try {
     const data = await fetchWeeks(filters);
+    console.log('Weeks data received:', data);
+    console.log('Number of weeks:', data.weeks ? data.weeks.length : 0);
+    
     const sortOptions = {
       sortBy: filters.sortBy || 'date',
       sortOrder: filters.sortOrder || 'desc'
     };
+    
+    console.log('Rendering weeks with sort options:', sortOptions);
     renderWeekRows(data.weeks || [], sortOptions);
+    console.log('renderWeekRows completed');
   } catch (error) {
     console.error('Error loading weeks:', error);
     showError(error.message || 'Failed to load weeks data. Please try again.');
