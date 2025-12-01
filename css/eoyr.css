@@ -600,11 +600,12 @@
 /* Stories page navbar color overrides - dark theme */
 /* Left panel: subtle dark tint of theme color, Right panel: pure dark */
 .navbar-left {
-  background-color: var(--eoyr-dark-green, #0a1f0d) !important; /* subtle dark theme color tint */
+  background-color: var(--eoyr-dark-green, #001a00) !important;
+  background: linear-gradient(135deg, var(--eoyr-dark-green, #001a00) 0%, rgba(0, 0, 0, 0.95) 100%) !important;
 }
 
 .navbar-right {
-  background-color: #0a0a0a !important; /* pure dark for contrast */
+  background-color: var(--eoyr-black, #0a0a0a) !important;
 }
 
 .navbar-right-item {
@@ -1120,14 +1121,7 @@
   font-family: "Exo 2", sans-serif !important;
 }
 
-/* Ensure navigation uses theme colors */
-.navbar-left {
-  background-color: var(--eoyr-dark-green, #0a1f0d) !important; /* subtle theme color tint */
-}
-
-.navbar-right {
-  background-color: var(--eoyr-black, #0a0a0a) !important; /* pure dark */
-}
+/* Ensure navigation uses theme colors - defined above in "Left panel" section */
 
 .nav-link-item,
 .nav-link-item:hover {
