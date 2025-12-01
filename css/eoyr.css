@@ -121,6 +121,11 @@
   width: 2.8rem;
   height: 2.8rem;
   display: block;
+  pointer-events: none; /* Disable interaction since it's just a logo */
+}
+
+#spline-logo-canvas {
+  background: transparent;
 }
 
 /* Websites panel highlight when opened via WEBSITES link */

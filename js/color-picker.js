@@ -110,6 +110,11 @@ function applyColorTheme(themeName, save = true) {
   
   // Update active state in picker if open
   updatePickerActiveState(themeName);
+  
+  // Update Spline 3D logo color (if loaded)
+  if (typeof applySplineColor === 'function') {
+    applySplineColor();
+  }
 }
 
 /**
