@@ -60,7 +60,12 @@ async function fetchRepoCommits(org, repo, token, since = null, until = null) {
   let pageCount = 0;
   const maxPages = 20; // Safety limit to prevent infinite loops
   
+  console.log(`Starting fetch for ${org}/${repo}, since=${since}, until=${until}`);
+  console.log(`Initial URL: ${url.toString()}`);
+  
   while (url && pageCount < maxPages) {
+    console.log(`Fetching page ${pageCount + 1} from: ${url.toString()}`);
+    
     const response = await fetch(url.toString(), {
       headers: {
         'Authorization': `token ${token}`,
@@ -69,20 +74,25 @@ async function fetchRepoCommits(org, repo, token, since = null, until = null) {
       }
     });
     
+    console.log(`Response status for ${repo}: ${response.status}`);
+    
     // Handle rate limiting
     if (response.status === 403 || response.status === 429) {
       const retryAfter = response.headers.get('Retry-After') || '60';
-      console.warn(`Rate limited for ${repo}, waiting ${retryAfter}s`);
+      const rateLimit = response.headers.get('X-RateLimit-Remaining');
+      console.warn(`Rate limited for ${repo}, waiting ${retryAfter}s, remaining: ${rateLimit}`);
       // For now, just return what we have
       break;
     }
     
     if (!response.ok) {
       const errorText = await response.text();
+      console.error(`GitHub API error for ${repo}: ${response.status} - ${errorText}`);
       throw new Error(`GitHub API error: ${response.status} - ${errorText}`);
     }
     
     const commits = await response.json();
+    console.log(`Got ${commits.length} commits from ${repo} on page ${pageCount + 1}`);
     
     // Add repo name to each commit for easier tracking
     const commitsWithRepo = commits.map(commit => ({
@@ -98,6 +108,12 @@ async function fetchRepoCommits(org, repo, token, since = null, until = null) {
     const nextUrl = getNextPageUrl(linkHeader);
     url = nextUrl ? new URL(nextUrl) : null;
     pageCount++;
+    
+    // If we got less than 100 commits, there are no more pages
+    if (commits.length < 100) {
+      console.log(`Last page for ${repo}, got ${commits.length} commits`);
+      break;
+    }
   }
   
   console.log(`Fetched ${allCommits.length} commits from ${repo} (${pageCount} pages)`);
