@@ -404,16 +404,8 @@ class FilterManager {
       });
     }
     
-    // Repo filter (multi-select)
-    const repoSelect = document.getElementById('eoyr-filter-repos');
-    if (repoSelect) {
-      repoSelect.addEventListener('change', () => {
-        const selected = Array.from(repoSelect.selectedOptions).map(opt => opt.value);
-        this.currentFilters.repos = selected;
-        this.updateURL();
-        this.applyFilters();
-      });
-    }
+    // Repo filter is now handled by eoyr.js with checkbox system
+    // No need to add event listener here as triggerRepoFilterChange() dispatches the event
     
     // Sort controls
     const sortBySelect = document.getElementById('eoyr-sort-by');
@@ -526,10 +518,17 @@ class FilterManager {
     const dayInput = document.getElementById('eoyr-date-day');
     if (dayInput) dayInput.value = '';
     
-    const repoSelect = document.getElementById('eoyr-filter-repos');
-    if (repoSelect) {
-      Array.from(repoSelect.options).forEach(opt => opt.selected = false);
-    }
+    // Clear project checkboxes
+    const checkboxes = document.querySelectorAll('.eoyr-project-checkbox');
+    checkboxes.forEach(cb => {
+      cb.classList.remove('active');
+      const input = cb.querySelector('input[type="checkbox"]');
+      if (input) input.checked = false;
+    });
+    
+    // Clear selected projects display
+    const selectedProjects = document.getElementById('eoyr-selected-projects');
+    if (selectedProjects) selectedProjects.innerHTML = '';
     
     const sortBySelect = document.getElementById('eoyr-sort-by');
     const sortOrderSelect = document.getElementById('eoyr-sort-order');

@@ -506,31 +506,116 @@ function showError(message) {
 }
 
 /**
- * Populates repo filter dropdown
+ * Populates repo filter with checkboxes
  * @param {Array} repos - Array of repo objects
  */
 async function populateRepoFilter(repos) {
-  const select = document.getElementById('eoyr-filter-repos');
-  if (!select) return;
+  const container = document.getElementById('eoyr-filter-repos');
+  if (!container) return;
   
-  // Clear existing options (except "All")
-  while (select.options.length > 0) {
-    select.remove(0);
-  }
+  // Clear loading message
+  container.innerHTML = '';
   
-  // Add "All" option
-  const allOption = document.createElement('option');
-  allOption.value = '';
-  allOption.textContent = 'All Projects';
-  select.appendChild(allOption);
+  // Get currently selected repos from filter manager
+  const currentFilters = window.eoyrFilters?.getFilters();
+  const selectedRepos = currentFilters?.repos || [];
   
-  // Add repo options
+  // Create checkbox for each repo
   repos.forEach(repo => {
-    const option = document.createElement('option');
-    option.value = repo.name;
-    option.textContent = repo.displayName || repo.name;
-    select.appendChild(option);
+    const isSelected = selectedRepos.includes(repo.name);
+    
+    const label = document.createElement('label');
+    label.className = `eoyr-project-checkbox${isSelected ? ' active' : ''}`;
+    label.setAttribute('data-repo', repo.name);
+    
+    label.innerHTML = `
+      <input type="checkbox" value="${repo.name}" ${isSelected ? 'checked' : ''}>
+      <span class="checkbox-indicator">
+        <svg viewBox="0 0 12 12" fill="none">
+          <path d="M2 6l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="project-name">${repo.displayName || repo.name}</span>
+    `;
+    
+    // Add click handler
+    label.addEventListener('click', (e) => {
+      e.preventDefault();
+      const checkbox = label.querySelector('input[type="checkbox"]');
+      checkbox.checked = !checkbox.checked;
+      label.classList.toggle('active', checkbox.checked);
+      
+      updateSelectedProjects();
+      triggerRepoFilterChange();
+    });
+    
+    container.appendChild(label);
   });
+  
+  // Update selected projects display
+  updateSelectedProjects();
+}
+
+/**
+ * Updates the selected projects tag display
+ */
+function updateSelectedProjects() {
+  const container = document.getElementById('eoyr-selected-projects');
+  const checkboxes = document.querySelectorAll('.eoyr-project-checkbox input[type="checkbox"]:checked');
+  
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  checkboxes.forEach(checkbox => {
+    const label = checkbox.closest('.eoyr-project-checkbox');
+    const repoName = checkbox.value;
+    const displayName = label.querySelector('.project-name').textContent;
+    
+    const tag = document.createElement('span');
+    tag.className = 'eoyr-project-tag';
+    tag.innerHTML = `
+      ${displayName}
+      <span class="tag-remove" data-repo="${repoName}">&times;</span>
+    `;
+    
+    // Add remove handler
+    tag.querySelector('.tag-remove').addEventListener('click', (e) => {
+      e.stopPropagation();
+      const repoToRemove = e.target.dataset.repo;
+      const checkboxToUncheck = document.querySelector(`.eoyr-project-checkbox[data-repo="${repoToRemove}"]`);
+      
+      if (checkboxToUncheck) {
+        checkboxToUncheck.classList.remove('active');
+        checkboxToUncheck.querySelector('input[type="checkbox"]').checked = false;
+      }
+      
+      updateSelectedProjects();
+      triggerRepoFilterChange();
+    });
+    
+    container.appendChild(tag);
+  });
+}
+
+/**
+ * Triggers the repo filter change event
+ */
+function triggerRepoFilterChange() {
+  const checkboxes = document.querySelectorAll('.eoyr-project-checkbox input[type="checkbox"]:checked');
+  const selectedRepos = Array.from(checkboxes).map(cb => cb.value);
+  
+  // Update the filter manager
+  if (window.eoyrFilters) {
+    const filters = window.eoyrFilters.getFilters();
+    filters.repos = selectedRepos;
+    
+    // Dispatch filter change event
+    const event = new CustomEvent('eoyr-filters-changed', {
+      detail: filters
+    });
+    window.dispatchEvent(event);
+  }
 }
 
 // Debounce to prevent multiple simultaneous loads

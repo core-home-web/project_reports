@@ -645,3 +645,153 @@
   }
 }
 
+/* ===================================
+   Improved Project Filter UI
+   =================================== */
+
+.eoyr-project-filter {
+  max-width: 100%;
+}
+
+.eoyr-project-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: var(--eoyr-black);
+  border: 1px solid var(--eoyr-neon-blue);
+  border-radius: 4px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.eoyr-project-loading {
+  color: var(--eoyr-neon-blue);
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+/* Custom checkbox styling */
+.eoyr-project-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.35rem 0.6rem;
+  background-color: rgba(182, 255, 245, 0.05);
+  border: 1px solid rgba(182, 255, 245, 0.3);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.eoyr-project-checkbox:hover {
+  background-color: rgba(182, 255, 245, 0.15);
+  border-color: var(--eoyr-neon-blue);
+}
+
+.eoyr-project-checkbox.active {
+  background-color: var(--eoyr-neon-blue);
+  border-color: var(--eoyr-neon-blue);
+  color: var(--eoyr-black);
+}
+
+.eoyr-project-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.eoyr-project-checkbox .checkbox-indicator {
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-radius: 2px;
+  margin-right: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.eoyr-project-checkbox.active .checkbox-indicator {
+  background-color: var(--eoyr-black);
+}
+
+.eoyr-project-checkbox .checkbox-indicator svg {
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.eoyr-project-checkbox.active .checkbox-indicator svg {
+  opacity: 1;
+}
+
+.eoyr-project-checkbox .project-name {
+  font-family: "Exo 2", sans-serif;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+/* Selected projects tags */
+.eoyr-selected-projects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  min-height: 0;
+}
+
+.eoyr-selected-projects:empty {
+  display: none;
+}
+
+.eoyr-project-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--eoyr-neon-blue);
+  color: var(--eoyr-black);
+  border-radius: 3px;
+  font-family: "Audiowide", sans-serif;
+  font-size: 0.75rem;
+  animation: tagAppear 0.2s ease;
+}
+
+@keyframes tagAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.eoyr-project-tag .tag-remove {
+  cursor: pointer;
+  font-weight: bold;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.eoyr-project-tag .tag-remove:hover {
+  opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .eoyr-project-checkboxes {
+    max-height: 120px;
+  }
+  
+  .eoyr-project-checkbox {
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .eoyr-project-checkbox .project-name {
+    font-size: 0.8rem;
+  }
+}
+

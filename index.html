@@ -328,11 +328,13 @@ document.addEventListener("DOMContentLoaded", () => {
             <input type="text" id="eoyr-search" class="eoyr-filter-input" placeholder="Search messages, authors..." aria-label="Search commits">
           </div>
           
-          <div class="eoyr-filter-group">
-            <label for="eoyr-filter-repos">Filter by Project</label>
-            <select id="eoyr-filter-repos" class="eoyr-filter-select" multiple aria-label="Select projects to filter">
-              <option value="">All Projects</option>
-            </select>
+          <div class="eoyr-filter-group eoyr-project-filter">
+            <label>Filter by Project</label>
+            <div class="eoyr-project-checkboxes" id="eoyr-filter-repos" aria-label="Select projects to filter">
+              <!-- Project checkboxes will be populated by JavaScript -->
+              <div class="eoyr-project-loading">Loading projects...</div>
+            </div>
+            <div class="eoyr-selected-projects" id="eoyr-selected-projects"></div>
           </div>
           
           <div class="eoyr-filter-group">
