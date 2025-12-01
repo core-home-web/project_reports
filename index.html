@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   <a href="analytics.html" class="nav-link-desktop w-inline-block">
                     <div>ANALYTICS</div>
                   </a>
-                  <a href="#" onclick="document.querySelector('.navbar-right-content').scrollIntoView({behavior: 'smooth'}); return false;" class="nav-link-desktop w-inline-block">
+                  <a href="#" onclick="openMenuToWebsites(); return false;" class="nav-link-desktop w-inline-block">
                     <div>WEBSITES</div>
                   </a>
                 </div>
@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 </a>
                               </div>
                               <div style="-webkit-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="nav-animate-3">
-                                <a href="#" onclick="document.querySelector('.navbar-right-content').scrollIntoView({behavior: 'smooth'}); return false;" class="nav-link-item is-main-link w-inline-block">
+                                <a href="#" onclick="return false;" class="nav-link-item is-main-link w-inline-block">
                                   <div class="nav-link-text">Websites</div>
                                 </a>
                               </div>
@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             </div>
                             <div class="navbar-right-last-element">
                               <div style="-webkit-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="nav-animate-3">
-                                <a href="index.html" class="w-inline-block">
+                                <a href="#" onclick="closeMenuAndNavigate('index.html'); return false;" class="w-inline-block">
                                   <div class="scale-on-hover">
                                     <div class="navbar-right-text">View all reports → </div>
                                   </div>
@@ -363,6 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
   <script src="js/eoyr-filters.js" type="text/javascript"></script>
   <script src="js/eoyr.js" type="text/javascript"></script>
   <script src="js/color-picker.js" type="text/javascript"></script>
+  <script src="js/nav-menu.js" type="text/javascript"></script>
 
 </body>
 </html>

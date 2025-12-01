@@ -123,6 +123,16 @@
   display: block;
 }
 
+/* Websites panel highlight when opened via WEBSITES link */
+.navbar-right-content.websites-highlight {
+  background: var(--eoyr-neon-green-bg, rgba(0, 255, 65, 0.1)) !important;
+  border: 2px solid var(--eoyr-neon-green, #00ff41) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 0 30px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3)) !important;
+  padding: 1rem !important;
+  transition: all 0.3s ease !important;
+}
+
 /* Color Picker Button - Make it look like an obvious button */
 .nav-color-picker-button {
   display: inline-block !important;
