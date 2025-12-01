@@ -763,6 +763,63 @@ async function handleGetCommits(request, env) {
 }
 
 /**
+ * Debug endpoint to test GitHub API connection
+ */
+async function handleDebug(request, env) {
+  const results = {
+    tokenExists: !!env.GITHUB_TOKEN,
+    tokenLength: env.GITHUB_TOKEN ? env.GITHUB_TOKEN.length : 0,
+    tokenPrefix: env.GITHUB_TOKEN ? env.GITHUB_TOKEN.substring(0, 4) + '...' : 'none',
+    kvExists: !!env.EOYR_CACHE,
+    reposConfigExists: !!env.REPOS_CONFIG,
+    githubApiTest: null,
+    error: null
+  };
+  
+  // Test GitHub API with a simple request
+  if (env.GITHUB_TOKEN) {
+    try {
+      const config = await getRepos(env);
+      const testRepo = config.repos[0]?.name || 'core_render_portal';
+      const testUrl = `https://api.github.com/repos/${config.organization}/${testRepo}/commits?per_page=1`;
+      
+      const response = await fetch(testUrl, {
+        headers: {
+          'Authorization': `token ${env.GITHUB_TOKEN}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'User-Agent': 'EOYR-Dashboard/1.0'
+        }
+      });
+      
+      results.githubApiTest = {
+        status: response.status,
+        statusText: response.statusText,
+        rateLimit: response.headers.get('X-RateLimit-Remaining'),
+        rateLimitReset: response.headers.get('X-RateLimit-Reset')
+      };
+      
+      if (!response.ok) {
+        const errorBody = await response.text();
+        results.githubApiTest.errorBody = errorBody.substring(0, 500);
+      } else {
+        const commits = await response.json();
+        results.githubApiTest.commitCount = commits.length;
+        if (commits.length > 0) {
+          results.githubApiTest.latestCommitDate = commits[0].commit?.author?.date;
+          results.githubApiTest.latestCommitMessage = commits[0].commit?.message?.substring(0, 100);
+        }
+      }
+    } catch (error) {
+      results.error = error.message;
+    }
+  }
+  
+  return new Response(JSON.stringify(results, null, 2), {
+    headers: { 'Content-Type': 'application/json' }
+  });
+}
+
+/**
  * Part 4: Webhook Handler for Cache Invalidation
  */
 
@@ -860,6 +917,8 @@ export default {
       // Route requests
       if (path === '/api/repos' && request.method === 'GET') {
         response = await handleGetRepos(env);
+      } else if (path === '/api/debug' && request.method === 'GET') {
+        response = await handleDebug(request, env);
       } else if (path === '/api/commits' && request.method === 'GET') {
         response = await handleGetCommits(request, env);
       } else if (path === '/api/weeks' && request.method === 'GET') {
