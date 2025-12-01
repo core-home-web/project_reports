@@ -623,7 +623,8 @@
 /* Group header styling - Matrix retro-futuristic */
 .group-header {
   background-color: var(--eoyr-dark-green);
-  cursor: pointer;
+  cursor: pointer !important;
+  pointer-events: auto !important;
   transition: all 0.3s ease;
   padding: 1.5rem 2rem !important;
   border: 1px solid var(--eoyr-neon-green);
@@ -631,6 +632,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  user-select: none;
 }
 
 .group-header:hover {
@@ -644,6 +646,17 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  pointer-events: none;
+}
+
+/* Allow interactions to pass through to parent */
+.group-header * {
+  pointer-events: none;
+}
+
+/* Re-enable for specific interactive elements if needed */
+.group-header {
+  pointer-events: auto !important;
 }
 
 .group-header-main {
