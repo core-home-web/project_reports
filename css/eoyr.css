@@ -11,10 +11,16 @@
  * - main-wrapper-2, cube-wrapper, floating-block
  */
 
-/* CSS Variable Fallbacks - Protect against Webflow CSS variable changes */
+/* CSS Variable Fallbacks - Matrix Neon Green Theme */
 :root {
-  --eoyr-neon-blue: var(--neon-blue, #b6fff5);
-  --eoyr-black: var(--black, #000);
+  --eoyr-neon-green: #00ff41;
+  --eoyr-neon-green-dim: #00cc33;
+  --eoyr-neon-green-glow: rgba(0, 255, 65, 0.3);
+  --eoyr-black: #0a0a0a;
+  --eoyr-dark-green: #001a00;
+  
+  /* Legacy alias - point to green */
+  --eoyr-neon-blue: var(--eoyr-neon-green);
 }
 
 /* Filter Controls Section - Styled to match stories page */
@@ -451,24 +457,81 @@
    Commit Group and Commit Row Styles
    =================================== */
 
-/* Group header styling */
+/* Group header styling - Matrix retro-futuristic */
 .group-header {
-  background-color: var(--eoyr-black);
+  background-color: var(--eoyr-dark-green);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  padding: 1.5rem 2rem !important;
+  border: 1px solid var(--eoyr-neon-green);
+  box-shadow: 0 0 15px var(--eoyr-neon-green-glow), inset 0 0 30px rgba(0, 255, 65, 0.05);
 }
 
 .group-header:hover {
-  background-color: var(--eoyr-neon-blue);
-  color: var(--eoyr-black);
+  background-color: rgba(0, 255, 65, 0.15);
+  box-shadow: 0 0 25px var(--eoyr-neon-green-glow), inset 0 0 40px rgba(0, 255, 65, 0.1);
 }
 
 .group-header:hover .block-title {
-  color: var(--eoyr-black);
+  text-shadow: 0 0 10px var(--eoyr-neon-green);
+}
+
+/* Week header layout - full width utilization */
+.group-header .block-title-wrapper {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2rem;
+  width: 100%;
+}
+
+.group-header .block-year {
+  flex: 0 0 auto;
+  min-width: 180px;
+}
+
+.group-header .block-year .block-title {
+  font-family: "Audiowide", sans-serif;
+  font-size: 1.4rem;
+  color: var(--eoyr-neon-green);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 8px var(--eoyr-neon-green-glow);
+  white-space: nowrap;
+}
+
+.group-header .block-client {
+  flex: 1 1 auto;
+}
+
+.group-header .block-client .block-title {
+  font-family: "Exo 2", sans-serif;
+  font-size: 1.1rem;
+  color: var(--eoyr-neon-green-dim);
+  font-weight: 400;
+}
+
+.group-header .block-studio,
+.group-header .block-type {
+  flex: 0 0 auto;
+}
+
+.group-header .block-studio .block-title,
+.group-header .block-type .block-title {
+  font-family: "Exo 2", sans-serif;
+  font-size: 1rem;
+  color: var(--eoyr-neon-green);
+  background: rgba(0, 255, 65, 0.1);
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--eoyr-neon-green-dim);
+  border-radius: 3px;
 }
 
 .group-toggle {
   transition: transform 0.3s ease;
+  color: var(--eoyr-neon-green);
 }
 
 .group-toggle.rotated {
@@ -476,8 +539,44 @@
 }
 
 .group-toggle svg {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  filter: drop-shadow(0 0 5px var(--eoyr-neon-green-glow));
+}
+
+/* Responsive week headers */
+@media (max-width: 991px) {
+  .group-header {
+    padding: 1.25rem 1.5rem !important;
+  }
+  
+  .group-header .block-title-wrapper {
+    gap: 1rem;
+  }
+  
+  .group-header .block-year .block-title {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .group-header {
+    padding: 1rem !important;
+  }
+  
+  .group-header .block-title-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .group-header .block-year {
+    min-width: auto;
+  }
+  
+  .group-header .block-year .block-title {
+    font-size: 1.1rem;
+  }
 }
 
 /* Commits container */
@@ -492,14 +591,14 @@
   pointer-events: none;
 }
 
-/* Commit row styling */
+/* Commit row styling - Matrix theme */
 .commit-row {
   margin-left: 2rem;
 }
 
 .commit-block {
-  background-color: rgba(0, 0, 0, 0.5);
-  border-left: 3px solid var(--eoyr-neon-blue);
+  background-color: rgba(0, 20, 0, 0.6);
+  border-left: 3px solid var(--eoyr-neon-green);
 }
 
 .commit-content {
@@ -508,12 +607,13 @@
   align-items: flex-start;
   gap: 1rem;
   text-decoration: none;
-  color: var(--eoyr-neon-blue);
+  color: var(--eoyr-neon-green);
   transition: all 0.2s ease;
 }
 
 .commit-content:hover {
-  background-color: rgba(182, 255, 245, 0.1);
+  background-color: rgba(0, 255, 65, 0.08);
+  box-shadow: inset 0 0 20px rgba(0, 255, 65, 0.05);
 }
 
 /* Commit details layout */
@@ -525,19 +625,20 @@
   flex: 1;
 }
 
-/* SHA badge */
+/* SHA badge - Matrix style */
 .commit-sha {
   flex-shrink: 0;
 }
 
 .sha-badge {
-  font-family: monospace;
+  font-family: "Courier New", monospace;
   font-size: 0.85rem;
-  background-color: rgba(182, 255, 245, 0.15);
-  color: var(--eoyr-neon-blue);
+  background-color: rgba(0, 255, 65, 0.1);
+  color: var(--eoyr-neon-green);
   padding: 0.25rem 0.5rem;
   border-radius: 3px;
-  border: 1px solid var(--eoyr-neon-blue);
+  border: 1px solid var(--eoyr-neon-green-dim);
+  text-shadow: 0 0 5px var(--eoyr-neon-green-glow);
 }
 
 /* Commit message */
@@ -550,7 +651,7 @@
   font-family: "Exo 2", sans-serif;
   font-size: 0.95rem;
   font-weight: 400;
-  color: var(--eoyr-neon-blue);
+  color: var(--eoyr-neon-green);
   margin: 0;
   line-height: 1.4;
   word-break: break-word;
@@ -562,36 +663,38 @@
   gap: 1rem;
   flex-shrink: 0;
   font-size: 0.8rem;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 .commit-repo {
   font-family: "Audiowide", sans-serif;
-  color: var(--eoyr-neon-blue);
-  background-color: rgba(182, 255, 245, 0.1);
+  color: var(--eoyr-neon-green);
+  background-color: rgba(0, 255, 65, 0.1);
   padding: 0.15rem 0.5rem;
   border-radius: 2px;
+  border: 1px solid rgba(0, 255, 65, 0.3);
 }
 
 .commit-author {
   font-family: "Exo 2", sans-serif;
-  color: var(--eoyr-neon-blue);
+  color: var(--eoyr-neon-green-dim);
 }
 
 .commit-date {
   font-family: "Exo 2", sans-serif;
-  color: var(--eoyr-neon-blue);
+  color: var(--eoyr-neon-green-dim);
   opacity: 0.7;
 }
 
 /* Hover effects */
 .commit-content:hover .sha-badge {
-  background-color: var(--eoyr-neon-blue);
+  background-color: var(--eoyr-neon-green);
   color: var(--eoyr-black);
+  text-shadow: none;
 }
 
 .commit-content:hover .commit-message {
-  color: var(--eoyr-neon-blue);
+  text-shadow: 0 0 8px var(--eoyr-neon-green-glow);
 }
 
 /* Responsive commit rows */
@@ -690,9 +793,10 @@
 }
 
 .eoyr-project-checkbox.active {
-  background-color: var(--eoyr-neon-blue);
-  border-color: var(--eoyr-neon-blue);
+  background-color: var(--eoyr-neon-green);
+  border-color: var(--eoyr-neon-green);
   color: var(--eoyr-black);
+  box-shadow: 0 0 10px var(--eoyr-neon-green-glow);
 }
 
 .eoyr-project-checkbox input[type="checkbox"] {
@@ -750,12 +854,13 @@
   align-items: center;
   gap: 0.35rem;
   padding: 0.25rem 0.5rem;
-  background-color: var(--eoyr-neon-blue);
+  background-color: var(--eoyr-neon-green);
   color: var(--eoyr-black);
   border-radius: 3px;
   font-family: "Audiowide", sans-serif;
   font-size: 0.75rem;
   animation: tagAppear 0.2s ease;
+  box-shadow: 0 0 8px var(--eoyr-neon-green-glow);
 }
 
 @keyframes tagAppear {
