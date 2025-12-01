@@ -9,31 +9,42 @@ function toggleMenu() {
   if (menuButton) menuButton.click();
 }
 
-// Open menu and highlight websites panel with flashing effect
+// Highlight individual project cards with flashing effect (called from menu Websites link)
+function highlightProjectCards() {
+  const cards = document.querySelectorAll('.project-card');
+  
+  if (cards.length > 0) {
+    // Scroll to the first card
+    cards[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+    // Add flash class to each card
+    cards.forEach(card => {
+      // Remove any existing flash class first
+      card.classList.remove('card-flash');
+      
+      // Force reflow to restart animation
+      void card.offsetWidth;
+      
+      // Add flash class to trigger animation
+      card.classList.add('card-flash');
+    });
+    
+    // Remove class after animation completes (4 flashes × 0.3s = 1.2s)
+    setTimeout(() => {
+      cards.forEach(card => {
+        card.classList.remove('card-flash');
+      });
+    }, 1200);
+  }
+}
+
+// Open menu and highlight websites panel with flashing effect (called from nav bar WEBSITES link)
 function openMenuToWebsites() {
   toggleMenu();
   
   // Add highlight class after menu animation starts
   setTimeout(() => {
-    const panel = document.querySelector('.navbar-right-content');
-    if (panel) {
-      // Remove any existing highlight class first
-      panel.classList.remove('websites-highlight');
-      
-      // Force reflow to restart animation
-      void panel.offsetWidth;
-      
-      // Add highlight class to trigger flashing animation
-      panel.classList.add('websites-highlight');
-      
-      // Scroll to the panel
-      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      
-      // Remove class after animation completes (4 flashes × 0.4s = 1.6s)
-      setTimeout(() => {
-        panel.classList.remove('websites-highlight');
-      }, 1600);
-    }
+    highlightProjectCards();
   }, 300);
 }
 
@@ -86,4 +97,5 @@ window.openMenuToWebsites = openMenuToWebsites;
 window.closeMenuAndNavigate = closeMenuAndNavigate;
 window.closeMenu = closeMenu;
 window.toggleMenu = toggleMenu;
+window.highlightProjectCards = highlightProjectCards;
 

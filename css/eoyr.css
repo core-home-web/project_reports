@@ -132,27 +132,28 @@
 .navbar-right-content.websites-highlight {
   border-radius: 12px !important;
   padding: 1rem !important;
-  animation: websitesFlash 0.4s ease-in-out 4;
 }
 
-/* Flash animation for websites panel - flashes 4 times then returns to normal */
-@keyframes websitesFlash {
+/* Individual project card flashing animation */
+.project-card.card-flash {
+  animation: cardFlash 0.3s ease-in-out 4;
+}
+
+/* Flash animation for individual project cards - flashes 4 times at 0.3s each */
+@keyframes cardFlash {
   0%, 100% {
     background: transparent;
     box-shadow: none;
-    border: 2px solid transparent;
   }
   50% {
-    background: var(--eoyr-neon-green-bg-hover, rgba(0, 255, 65, 0.15));
-    border: 2px solid var(--eoyr-neon-green, #00ff41);
-    box-shadow: 0 0 40px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.4));
+    background: var(--eoyr-neon-green-bg-hover, rgba(0, 255, 65, 0.25)) !important;
+    box-shadow: 0 0 30px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.5)),
+                inset 0 0 20px var(--eoyr-neon-green-bg, rgba(0, 255, 65, 0.1)) !important;
   }
 }
 
 /* Ensure text remains visible during flash */
-.navbar-right-content.websites-highlight .navbar-right-item,
-.navbar-right-content.websites-highlight .project-card,
-.navbar-right-content.websites-highlight a {
+.project-card.card-flash {
   color: var(--eoyr-neon-green, #00ff41) !important;
   position: relative;
   z-index: 1;
