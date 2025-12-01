@@ -5,7 +5,8 @@
 
 import { Application } from 'https://unpkg.com/@splinetool/runtime@1.0.54/build/runtime.js';
 
-let splineApp = null;
+// Store multiple Spline app instances
+const splineApps = {};
 
 /**
  * Initialize the Spline logo on a canvas element
@@ -20,51 +21,59 @@ async function initSplineLogo(canvasId, sceneUrl) {
   }
   
   try {
-    splineApp = new Application(canvas);
-    await splineApp.load(sceneUrl);
+    const app = new Application(canvas);
+    await app.load(sceneUrl);
     
-    console.log('Spline logo loaded successfully');
+    // Store the app instance by canvas ID
+    splineApps[canvasId] = app;
+    
+    console.log('Spline logo loaded successfully:', canvasId);
     
     // Apply current theme color on load
     applySplineColor();
   } catch (error) {
-    console.error('Failed to load Spline scene:', error);
+    console.error('Failed to load Spline scene:', canvasId, error);
   }
 }
 
 /**
- * Apply the current theme color to all Spline logo objects
+ * Apply the current theme color to all Spline logo objects in all instances
  */
 function applySplineColor() {
-  if (!splineApp) return;
-  
   // Get the current theme color from CSS variable
   const themeColor = getComputedStyle(document.documentElement)
     .getPropertyValue('--eoyr-neon-green').trim() || '#00ff41';
   
   console.log('Applying Spline color:', themeColor);
   
-  // Update Ellipse (outer ring)
-  updateObjectColor('Ellipse', themeColor);
-  
-  // Update Core Home SVG parent group
-  updateObjectColor('Core Home SVG', themeColor);
-  
-  // Update all Shape objects (0-12) - the individual letter shapes
-  for (let i = 0; i <= 12; i++) {
-    updateObjectColor(`Shape ${i}`, themeColor);
-  }
+  // Apply to all Spline app instances
+  Object.keys(splineApps).forEach(canvasId => {
+    const app = splineApps[canvasId];
+    if (!app) return;
+    
+    // Update Ellipse (outer ring)
+    updateObjectColorInApp(app, 'Ellipse', themeColor);
+    
+    // Update Core Home SVG parent group
+    updateObjectColorInApp(app, 'Core Home SVG', themeColor);
+    
+    // Update all Shape objects (0-12) - the individual letter shapes
+    for (let i = 0; i <= 12; i++) {
+      updateObjectColorInApp(app, `Shape ${i}`, themeColor);
+    }
+  });
 }
 
 /**
- * Update the color of a specific Spline object
+ * Update the color of a specific Spline object in a specific app instance
+ * @param {Application} app - Spline Application instance
  * @param {string} objectName - Name of the object in Spline
  * @param {string} hexColor - Hex color code to apply
  */
-function updateObjectColor(objectName, hexColor) {
-  if (!splineApp) return;
+function updateObjectColorInApp(app, objectName, hexColor) {
+  if (!app) return;
   
-  const obj = splineApp.findObjectByName(objectName);
+  const obj = app.findObjectByName(objectName);
   if (obj) {
     // Try different material color properties
     if (obj.material) {
