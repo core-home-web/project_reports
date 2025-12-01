@@ -447,3 +447,201 @@
   background-color: #333333 !important; /* was #fff5ef - light beige */
 }
 
+/* ===================================
+   Commit Group and Commit Row Styles
+   =================================== */
+
+/* Group header styling */
+.group-header {
+  background-color: var(--eoyr-black);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.group-header:hover {
+  background-color: var(--eoyr-neon-blue);
+  color: var(--eoyr-black);
+}
+
+.group-header:hover .block-title {
+  color: var(--eoyr-black);
+}
+
+.group-toggle {
+  transition: transform 0.3s ease;
+}
+
+.group-toggle.rotated {
+  transform: rotate(45deg);
+}
+
+.group-toggle svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Commits container */
+.commits-container {
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.commits-container.collapsed {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Commit row styling */
+.commit-row {
+  margin-left: 2rem;
+}
+
+.commit-block {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-left: 3px solid var(--eoyr-neon-blue);
+}
+
+.commit-content {
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  text-decoration: none;
+  color: var(--eoyr-neon-blue);
+  transition: all 0.2s ease;
+}
+
+.commit-content:hover {
+  background-color: rgba(182, 255, 245, 0.1);
+}
+
+/* Commit details layout */
+.commit-details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+/* SHA badge */
+.commit-sha {
+  flex-shrink: 0;
+}
+
+.sha-badge {
+  font-family: monospace;
+  font-size: 0.85rem;
+  background-color: rgba(182, 255, 245, 0.15);
+  color: var(--eoyr-neon-blue);
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  border: 1px solid var(--eoyr-neon-blue);
+}
+
+/* Commit message */
+.commit-message-wrapper {
+  flex: 1;
+  min-width: 200px;
+}
+
+.commit-message {
+  font-family: "Exo 2", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--eoyr-neon-blue);
+  margin: 0;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* Commit metadata */
+.commit-meta {
+  display: flex;
+  gap: 1rem;
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.commit-repo {
+  font-family: "Audiowide", sans-serif;
+  color: var(--eoyr-neon-blue);
+  background-color: rgba(182, 255, 245, 0.1);
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
+}
+
+.commit-author {
+  font-family: "Exo 2", sans-serif;
+  color: var(--eoyr-neon-blue);
+}
+
+.commit-date {
+  font-family: "Exo 2", sans-serif;
+  color: var(--eoyr-neon-blue);
+  opacity: 0.7;
+}
+
+/* Hover effects */
+.commit-content:hover .sha-badge {
+  background-color: var(--eoyr-neon-blue);
+  color: var(--eoyr-black);
+}
+
+.commit-content:hover .commit-message {
+  color: var(--eoyr-neon-blue);
+}
+
+/* Responsive commit rows */
+@media (max-width: 991px) {
+  .commit-row {
+    margin-left: 1rem;
+  }
+  
+  .commit-details {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .commit-meta {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 767px) {
+  .commit-row {
+    margin-left: 0.5rem;
+  }
+  
+  .commit-content {
+    padding: 0.5rem;
+    flex-direction: column;
+  }
+  
+  .commit-meta {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 479px) {
+  .commit-row {
+    margin-left: 0;
+  }
+  
+  .sha-badge {
+    font-size: 0.75rem;
+  }
+  
+  .commit-message {
+    font-size: 0.85rem;
+  }
+  
+  .commit-meta {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+

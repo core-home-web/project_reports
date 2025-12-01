@@ -112,9 +112,12 @@ class FilterManager {
       searchMode: 'range', // 'range' or 'day'
       repos: [],
       sortBy: 'date',
-      sortOrder: 'desc'
+      sortOrder: 'desc',
+      groupBy: 'week', // 'day', 'week', 'month', 'year'
+      search: '' // Search term for commit messages
     };
     
+    this.searchDebounceTimeout = null;
     this.loadFromURL();
     this.setupEventListeners();
   }
@@ -149,6 +152,12 @@ class FilterManager {
     }
     if (params.has('preset')) {
       this.currentFilters.datePreset = params.get('preset');
+    }
+    if (params.has('groupBy')) {
+      this.currentFilters.groupBy = params.get('groupBy');
+    }
+    if (params.has('search')) {
+      this.currentFilters.search = params.get('search');
     }
     
     // If in day mode and day is set, use it
@@ -204,6 +213,12 @@ class FilterManager {
     }
     if (this.currentFilters.datePreset) {
       params.set('preset', this.currentFilters.datePreset);
+    }
+    if (this.currentFilters.groupBy) {
+      params.set('groupBy', this.currentFilters.groupBy);
+    }
+    if (this.currentFilters.search) {
+      params.set('search', this.currentFilters.search);
     }
     
     const newURL = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
@@ -309,6 +324,35 @@ class FilterManager {
     // Initialize date inputs first
     this.initializeDateInputs();
     
+    // Initialize groupBy and search inputs
+    this.initializeGroupAndSearchInputs();
+    
+    // Group by selector
+    const groupBySelect = document.getElementById('eoyr-group-by');
+    if (groupBySelect) {
+      groupBySelect.addEventListener('change', () => {
+        this.currentFilters.groupBy = groupBySelect.value;
+        this.updateURL();
+        this.applyFilters();
+      });
+    }
+    
+    // Search input with debounce
+    const searchInput = document.getElementById('eoyr-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        // Debounce search to avoid excessive API calls
+        if (this.searchDebounceTimeout) {
+          clearTimeout(this.searchDebounceTimeout);
+        }
+        this.searchDebounceTimeout = setTimeout(() => {
+          this.currentFilters.search = searchInput.value.trim();
+          this.updateURL();
+          this.applyFilters();
+        }, 500);
+      });
+    }
+    
     // Search mode selector
     const searchModeSelect = document.getElementById('eoyr-search-mode');
     if (searchModeSelect) {
@@ -401,6 +445,21 @@ class FilterManager {
   }
   
   /**
+   * Initializes groupBy and search input values from current filters
+   */
+  initializeGroupAndSearchInputs() {
+    const groupBySelect = document.getElementById('eoyr-group-by');
+    if (groupBySelect && this.currentFilters.groupBy) {
+      groupBySelect.value = this.currentFilters.groupBy;
+    }
+    
+    const searchInput = document.getElementById('eoyr-search');
+    if (searchInput && this.currentFilters.search) {
+      searchInput.value = this.currentFilters.search;
+    }
+  }
+  
+  /**
    * Sets date preset and updates date range
    * @param {string} preset - Preset name
    */
@@ -446,7 +505,9 @@ class FilterManager {
       searchMode: 'range',
       repos: [],
       sortBy: 'date',
-      sortOrder: 'desc'
+      sortOrder: 'desc',
+      groupBy: 'week',
+      search: ''
     };
     
     // Reset UI
@@ -474,6 +535,13 @@ class FilterManager {
     const sortOrderSelect = document.getElementById('eoyr-sort-order');
     if (sortBySelect) sortBySelect.value = 'date';
     if (sortOrderSelect) sortOrderSelect.value = 'desc';
+    
+    // Reset groupBy and search
+    const groupBySelect = document.getElementById('eoyr-group-by');
+    if (groupBySelect) groupBySelect.value = 'week';
+    
+    const searchInput = document.getElementById('eoyr-search');
+    if (searchInput) searchInput.value = '';
     
     // Update preset buttons
     document.querySelectorAll('.eoyr-date-preset').forEach(btn => {

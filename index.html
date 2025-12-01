@@ -291,7 +291,17 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           
           <div class="eoyr-filter-group">
-            <label for="eoyr-search-mode">Search Mode</label>
+            <label for="eoyr-group-by">Group By</label>
+            <select id="eoyr-group-by" class="eoyr-filter-select" aria-label="Group commits by">
+              <option value="day">Day</option>
+              <option value="week" selected>Week</option>
+              <option value="month">Month</option>
+              <option value="year">Year</option>
+            </select>
+          </div>
+          
+          <div class="eoyr-filter-group">
+            <label for="eoyr-search-mode">Date Mode</label>
             <select id="eoyr-search-mode" class="eoyr-filter-select" aria-label="Search mode">
               <option value="range">Date Range</option>
               <option value="day">Single Day</option>
@@ -311,6 +321,11 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="eoyr-filter-group" id="eoyr-day-filter" style="display: none;">
             <label for="eoyr-date-day">Select Day</label>
             <input type="date" id="eoyr-date-day" class="eoyr-filter-input" aria-label="Select day">
+          </div>
+          
+          <div class="eoyr-filter-group">
+            <label for="eoyr-search">Search Commits</label>
+            <input type="text" id="eoyr-search" class="eoyr-filter-input" placeholder="Search messages, authors..." aria-label="Search commits">
           </div>
           
           <div class="eoyr-filter-group">
