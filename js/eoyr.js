@@ -218,18 +218,14 @@ function renderCommitGroups(data, sortOptions = {}) {
     headerContent.style.cursor = 'pointer';
     
     headerContent.innerHTML = `
-      <div class="block-title-wrapper">
-        <div class="block-year">
-          <h4 class="block-title">${group.label}</h4>
+      <div class="group-header-content">
+        <div class="group-header-main">
+          <h3 class="group-date-label">${group.label}</h3>
+          <div class="group-projects-list">${group.repos.join(' • ')}</div>
         </div>
-        <div class="block-client">
-          <h4 class="block-title">${group.repos.join(', ')}</h4>
-        </div>
-        <div class="block-studio">
-          <h4 class="block-title">${group.commitCount} ${group.commitCount === 1 ? 'commit' : 'commits'}</h4>
-        </div>
-        <div class="block-type">
-          <h4 class="block-title">${group.repoCount} ${group.repoCount === 1 ? 'project' : 'projects'}</h4>
+        <div class="group-header-stats">
+          <span class="group-stat">${group.commitCount} ${group.commitCount === 1 ? 'commit' : 'commits'}</span>
+          <span class="group-stat">${group.repoCount} ${group.repoCount === 1 ? 'project' : 'projects'}</span>
         </div>
       </div>
       <div class="block-actions-wrapper">

@@ -465,66 +465,61 @@
   padding: 1.5rem 2rem !important;
   border: 1px solid var(--eoyr-neon-green);
   box-shadow: 0 0 15px var(--eoyr-neon-green-glow), inset 0 0 30px rgba(0, 255, 65, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .group-header:hover {
-  background-color: rgba(0, 255, 65, 0.15);
-  box-shadow: 0 0 25px var(--eoyr-neon-green-glow), inset 0 0 40px rgba(0, 255, 65, 0.1);
+  background-color: rgba(0, 255, 65, 0.12);
+  box-shadow: 0 0 25px var(--eoyr-neon-green-glow), inset 0 0 40px rgba(0, 255, 65, 0.08);
 }
 
-.group-header:hover .block-title {
-  text-shadow: 0 0 10px var(--eoyr-neon-green);
+/* Group header content layout */
+.group-header-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-/* Week header layout - full width utilization */
-.group-header .block-title-wrapper {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 2rem;
-  width: 100%;
+.group-header-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.group-header .block-year {
-  flex: 0 0 auto;
-  min-width: 180px;
-}
-
-.group-header .block-year .block-title {
+.group-date-label {
   font-family: "Audiowide", sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   color: var(--eoyr-neon-green);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  text-shadow: 0 0 8px var(--eoyr-neon-green-glow);
-  white-space: nowrap;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 10px var(--eoyr-neon-green-glow);
+  margin: 0;
+  line-height: 1.2;
 }
 
-.group-header .block-client {
-  flex: 1 1 auto;
-}
-
-.group-header .block-client .block-title {
-  font-family: "Exo 2", sans-serif;
-  font-size: 1.1rem;
-  color: var(--eoyr-neon-green-dim);
-  font-weight: 400;
-}
-
-.group-header .block-studio,
-.group-header .block-type {
-  flex: 0 0 auto;
-}
-
-.group-header .block-studio .block-title,
-.group-header .block-type .block-title {
+.group-projects-list {
   font-family: "Exo 2", sans-serif;
   font-size: 1rem;
+  color: var(--eoyr-neon-green-dim);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.group-header-stats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.group-stat {
+  font-family: "Exo 2", sans-serif;
+  font-size: 0.9rem;
   color: var(--eoyr-neon-green);
   background: rgba(0, 255, 65, 0.1);
-  padding: 0.3rem 0.8rem;
+  padding: 0.35rem 0.75rem;
   border: 1px solid var(--eoyr-neon-green-dim);
   border-radius: 3px;
 }
@@ -532,6 +527,7 @@
 .group-toggle {
   transition: transform 0.3s ease;
   color: var(--eoyr-neon-green);
+  margin-left: 1rem;
 }
 
 .group-toggle.rotated {
@@ -544,38 +540,47 @@
   filter: drop-shadow(0 0 5px var(--eoyr-neon-green-glow));
 }
 
+/* Hover effects for group header */
+.group-header:hover .group-date-label {
+  text-shadow: 0 0 15px var(--eoyr-neon-green-glow), 0 0 30px var(--eoyr-neon-green-glow);
+}
+
+.group-header:hover .group-stat {
+  background: rgba(0, 255, 65, 0.2);
+}
+
 /* Responsive week headers */
 @media (max-width: 991px) {
   .group-header {
     padding: 1.25rem 1.5rem !important;
   }
   
-  .group-header .block-title-wrapper {
-    gap: 1rem;
-  }
-  
-  .group-header .block-year .block-title {
-    font-size: 1.2rem;
+  .group-date-label {
+    font-size: 1.3rem;
   }
 }
 
 @media (max-width: 767px) {
   .group-header {
     padding: 1rem !important;
-  }
-  
-  .group-header .block-title-wrapper {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: 1rem;
   }
   
-  .group-header .block-year {
-    min-width: auto;
-  }
-  
-  .group-header .block-year .block-title {
+  .group-date-label {
     font-size: 1.1rem;
+  }
+  
+  .group-projects-list {
+    font-size: 0.9rem;
+  }
+  
+  .group-toggle {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    margin-left: 0;
   }
 }
 
