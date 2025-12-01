@@ -12,12 +12,12 @@ const COLOR_THEMES = {
     glow: 'rgba(0, 255, 65, 0.3)',
     dark: '#001a00'
   },
-  blue: {
-    name: 'Cyber Blue',
-    primary: '#00d4ff',
-    dim: '#00a8cc',
-    glow: 'rgba(0, 212, 255, 0.3)',
-    dark: '#001a1a'
+  white: {
+    name: 'Clean White',
+    primary: '#ffffff',
+    dim: '#cccccc',
+    glow: 'rgba(255, 255, 255, 0.3)',
+    dark: '#1a1a1a'
   },
   purple: {
     name: 'Neon Purple',

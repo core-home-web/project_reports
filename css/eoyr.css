@@ -21,6 +21,35 @@
   
   /* Legacy alias - point to green */
   --eoyr-neon-blue: var(--eoyr-neon-green);
+  
+  /* Override Webflow's hardcoded blue */
+  --neon-blue: var(--eoyr-neon-green);
+}
+
+/* ===================================
+   Override Webflow Static Blue Borders
+   These override hardcoded #b6fff5 values
+   in wanderlostgalaxy.webflow.css
+   =================================== */
+
+.floating-block,
+.static-block,
+.preview-wrapper,
+.block {
+  border-color: var(--eoyr-neon-green) !important;
+}
+
+.block-content.empty {
+  background-color: var(--eoyr-neon-green) !important;
+  box-shadow: 0 0 10rem 0.1px var(--eoyr-neon-green) !important;
+}
+
+.cube-top-svg {
+  color: var(--eoyr-neon-green) !important;
+}
+
+.cursor-dot {
+  border-color: var(--eoyr-neon-green) !important;
 }
 
 /* Filter Controls Section - Styled to match stories page */
