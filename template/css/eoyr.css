@@ -1,0 +1,1458 @@
+/**
+ * End of Year Review Dashboard Styles
+ * Styled to match stories.html layout and design
+ * 
+ * WEBFLOW DEPENDENCY: Uses class names from wanderlostgalaxy.webflow.css
+ * If Webflow re-export changes these, update accordingly:
+ * - static-cube, block-wrapper, static-block, cube-top
+ * - block-content, block-title-wrapper, block-title
+ * - block-year, block-client, block-studio, block-type
+ * - block-actions-wrapper, icon-3
+ * - main-wrapper-2, cube-wrapper, floating-block
+ */
+
+/* CSS Variable Fallbacks - Matrix Neon Green Theme */
+:root {
+  --eoyr-neon-green: #00ff41;
+  --eoyr-neon-green-dim: #00cc33;
+  --eoyr-neon-green-glow: rgba(0, 255, 65, 0.3);
+  --eoyr-black: #0a0a0a;
+  --eoyr-dark-green: #001a00;
+  
+  /* Translucent variations for backgrounds and borders */
+  --eoyr-neon-green-bg: rgba(0, 255, 65, 0.1);
+  --eoyr-neon-green-bg-subtle: rgba(0, 255, 65, 0.05);
+  --eoyr-neon-green-bg-hover: rgba(0, 255, 65, 0.15);
+  --eoyr-neon-green-border: rgba(0, 255, 65, 0.3);
+  
+  /* Legacy alias - point to green */
+  --eoyr-neon-blue: var(--eoyr-neon-green);
+  
+  /* Override Webflow's hardcoded blue */
+  --neon-blue: var(--eoyr-neon-green);
+}
+
+/* ===================================
+   Override Webflow Static Blue Borders
+   These override hardcoded #b6fff5 values
+   in wanderlostgalaxy.webflow.css
+   =================================== */
+
+.floating-block,
+.static-block,
+.preview-wrapper,
+.block {
+  border-color: var(--eoyr-neon-green) !important;
+}
+
+.block-content.empty {
+  background-color: var(--eoyr-neon-green) !important;
+  box-shadow: 0 0 10rem 0.1px var(--eoyr-neon-green) !important;
+}
+
+.cube-top-svg {
+  color: var(--eoyr-neon-green) !important;
+}
+
+.cursor-dot {
+  border-color: var(--eoyr-neon-green) !important;
+}
+
+/* ===================================
+   Dynamic Theme Hover States
+   These override hardcoded hover colors
+   =================================== */
+
+/* Block content hover (GitHub Activity Reports title, etc.) */
+.block-content:hover {
+  background-color: var(--eoyr-neon-green) !important;
+  box-shadow: 0 0 10rem 0.1px var(--eoyr-neon-green) !important;
+  color: var(--eoyr-black) !important;
+}
+
+/* Ensure ALL child elements have black text on hover */
+.block-content:hover *,
+.block-content:hover .block-title,
+.block-content:hover .block-title-wrapper,
+.block-content:hover h4,
+.block-content:hover span,
+.block-content:hover .commit-message,
+.block-content:hover .commit-repo,
+.block-content:hover .sha-badge,
+.block-content:hover .commit-author,
+.block-content:hover .commit-date {
+  color: var(--eoyr-black) !important;
+  text-shadow: none !important;
+}
+
+/* Badges should also have black text and border on hover */
+.block-content:hover .commit-repo,
+.block-content:hover .sha-badge {
+  background-color: rgba(0, 0, 0, 0.15) !important;
+  border-color: var(--eoyr-black) !important;
+}
+
+/* Menu button - override orange background */
+.nav-toggle-inner {
+  background-color: var(--eoyr-neon-green) !important;
+  color: var(--eoyr-black) !important;
+}
+
+.nav-toggle-icon-line {
+  background-color: var(--eoyr-black) !important;
+}
+
+.nav-toggle-text {
+  color: var(--eoyr-black) !important;
+}
+
+/* Override Webflow's hardcoded orange nav colors */
+.nav-link-desktop {
+  color: var(--eoyr-neon-green) !important;
+}
+
+.nav-link-desktop:hover {
+  color: var(--eoyr-neon-green) !important;
+  text-shadow: 0 0 10px var(--eoyr-neon-green-glow) !important;
+}
+
+/* Spline 3D Logo */
+.spline-logo {
+  width: 2.8rem;
+  height: 2.8rem;
+  display: block;
+  pointer-events: none; /* Disable interaction since it's just a logo */
+}
+
+#spline-logo-canvas {
+  background: transparent;
+}
+
+/* Spline logo in fullscreen menu */
+.menu-spline-logo-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1rem 0;
+  flex-shrink: 0;
+}
+
+.spline-logo-menu {
+  width: 120px;
+  height: 120px;
+  min-width: 120px;
+  min-height: 120px;
+  display: block;
+  pointer-events: none;
+  background: transparent;
+}
+
+@media (max-width: 767px) {
+  .menu-spline-logo-container {
+    justify-content: center;
+    padding: 0.5rem 0;
+  }
+  
+  .spline-logo-menu {
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+    min-height: 80px;
+  }
+}
+
+/* Authentication UI Styles */
+.auth-ui-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.auth-user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 255, 65, 0.1);
+  border: 1px solid var(--eoyr-neon-green);
+  border-radius: 4px;
+}
+
+.auth-user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--eoyr-neon-green);
+}
+
+.auth-user-name {
+  color: var(--eoyr-neon-green);
+  font-size: 0.9rem;
+}
+
+.auth-login-button,
+.auth-logout-button {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid var(--eoyr-neon-green);
+  color: var(--eoyr-neon-green);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.auth-login-button:hover,
+.auth-logout-button:hover {
+  background: var(--eoyr-neon-green);
+  color: #000;
+}
+
+/* Repository Settings Modal */
+.repo-settings-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.repo-settings-modal-content {
+  background: #1a1a1a;
+  border: 2px solid var(--eoyr-neon-green);
+  border-radius: 8px;
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+}
+
+.repo-settings-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--eoyr-neon-green);
+}
+
+.repo-settings-modal-header h2 {
+  color: var(--eoyr-neon-green);
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.repo-settings-modal-close {
+  background: none;
+  border: none;
+  color: var(--eoyr-neon-green);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.repo-settings-modal-close:hover {
+  color: #fff;
+}
+
+.repo-settings-modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.repo-settings-description {
+  color: #ccc;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.repo-selector-container {
+  margin-bottom: 1.5rem;
+}
+
+.repo-selector-search {
+  margin-bottom: 1rem;
+}
+
+.repo-selector-search-input {
+  width: 100%;
+  padding: 0.75rem;
+  background: #0a0a0a;
+  border: 1px solid var(--eoyr-neon-green);
+  color: var(--eoyr-neon-green);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.repo-selector-search-input:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+.repo-selector-list {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
+.repo-selector-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(0, 255, 65, 0.1);
+  transition: background 0.2s;
+}
+
+.repo-selector-item:last-child {
+  border-bottom: none;
+}
+
+.repo-selector-item:hover {
+  background: rgba(0, 255, 65, 0.05);
+}
+
+.repo-selector-item.selected {
+  background: rgba(0, 255, 65, 0.1);
+}
+
+.repo-selector-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: var(--eoyr-neon-green);
+}
+
+.repo-selector-label {
+  flex: 1;
+  cursor: pointer;
+}
+
+.repo-selector-name {
+  color: var(--eoyr-neon-green);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.repo-selector-fullname {
+  color: #999;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.repo-selector-description {
+  color: #ccc;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.repo-selector-empty,
+.repo-selector-loading,
+.repo-selector-error {
+  text-align: center;
+  padding: 2rem;
+  color: #999;
+}
+
+.repo-settings-modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 255, 65, 0.3);
+}
+
+@media (max-width: 767px) {
+  .repo-settings-modal {
+    padding: 1rem;
+  }
+  
+  .repo-settings-modal-content {
+    max-height: 95vh;
+  }
+  
+  .repo-selector-list {
+    max-height: 300px;
+  }
+  
+  .auth-ui-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Websites panel highlight when opened via WEBSITES link */
+.navbar-right-content.websites-highlight {
+  border-radius: 12px !important;
+  padding: 1rem !important;
+}
+
+/* Individual project card flashing animation */
+.project-card.card-flash {
+  animation: cardFlash 0.3s ease-in-out 4;
+}
+
+/* Flash animation for individual project cards - flashes 4 times at 0.3s each */
+@keyframes cardFlash {
+  0%, 100% {
+    background: transparent;
+    box-shadow: none;
+  }
+  50% {
+    background: var(--eoyr-neon-green-bg-hover, rgba(0, 255, 65, 0.25)) !important;
+    box-shadow: 0 0 30px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.5)),
+                inset 0 0 20px var(--eoyr-neon-green-bg, rgba(0, 255, 65, 0.1)) !important;
+  }
+}
+
+/* Ensure text remains visible during flash */
+.project-card.card-flash {
+  color: var(--eoyr-neon-green, #00ff41) !important;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease !important;
+}
+
+/* Color Picker Button - Make it look like an obvious button */
+.nav-color-picker-button {
+  display: inline-block !important;
+  padding: 0.75rem 1.5rem !important;
+  border: 2px solid var(--eoyr-neon-green) !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  transition: all 0.3s ease !important;
+  margin-top: 0.5rem !important;
+}
+
+.nav-color-picker-button:hover {
+  background: var(--eoyr-neon-green) !important;
+  box-shadow: 0 0 20px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3)) !important;
+}
+
+.nav-color-picker-button:hover .nav-link-text {
+  color: var(--eoyr-black) !important;
+}
+
+.nav-color-picker-button .nav-link-text {
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* Filter Controls Section - Styled to match stories page */
+.eoyr-filters {
+  padding: 2rem 4rem;
+  background-color: transparent; /* Transparent to show SVG cube lines */
+  border-bottom: 2px solid var(--eoyr-neon-green);
+  margin-bottom: 0;
+  position: relative;
+  z-index: 10;
+}
+
+@media (max-width: 991px) {
+  .eoyr-filters {
+    padding: 2rem 6vw;
+  }
+}
+
+@media (max-width: 767px) {
+  .eoyr-filters {
+    padding: 1.5rem 1rem;
+  }
+}
+
+.eoyr-filters-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  position: relative;
+  z-index: 10;
+}
+
+/* Sort row - positioned above the SVG cube */
+.eoyr-sort-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  width: 100%;
+  max-width: 1200px;
+  margin: 1rem auto 0;
+  padding: 1rem 0 2rem;
+  background-color: var(--eoyr-black, #0a0a0a);
+  position: relative;
+  z-index: 10;
+}
+
+.eoyr-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 150px;
+  flex: 1 1 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.eoyr-filter-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--eoyr-neon-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: "Audiowide", sans-serif;
+}
+
+.eoyr-filter-input,
+.eoyr-filter-select {
+  padding: 0.75rem;
+  border: 2px solid var(--eoyr-neon-green);
+  border-radius: 0;
+  font-size: 1rem;
+  background: var(--eoyr-black, #0a0a0a);
+  color: var(--eoyr-neon-green);
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+  font-family: "Exo 2", sans-serif;
+  position: relative;
+  z-index: 10;
+}
+
+.eoyr-filter-input:focus,
+.eoyr-filter-select:focus {
+  outline: none;
+  border-color: var(--eoyr-neon-blue);
+  background-color: rgba(0, 255, 65, 0.1);
+  box-shadow: 0 0 10rem 0.1px var(--eoyr-neon-blue);
+}
+
+.eoyr-filter-button {
+  padding: 0.75rem 1.5rem;
+  background: var(--eoyr-black);
+  color: var(--eoyr-neon-blue);
+  border: 2px solid var(--eoyr-neon-blue);
+  border-radius: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s, background-color 0.2s, box-shadow 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: "Audiowide", sans-serif;
+}
+
+.eoyr-filter-button:hover {
+  color: var(--eoyr-black);
+  background-color: var(--eoyr-neon-blue);
+  box-shadow: 0 0 10rem 0.1px var(--eoyr-neon-blue);
+}
+
+.eoyr-filter-button:active {
+  transform: scale(0.98);
+}
+
+.eoyr-filter-button.secondary {
+  background: var(--eoyr-black);
+  border-color: var(--eoyr-neon-blue);
+  color: var(--eoyr-neon-blue);
+}
+
+.eoyr-filter-button.secondary:hover {
+  color: var(--eoyr-black);
+  background-color: var(--eoyr-neon-blue);
+}
+
+/* Date Range Presets */
+.eoyr-date-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.eoyr-date-preset {
+  padding: 0.5rem 1rem;
+  background: var(--eoyr-black);
+  border: 2px solid var(--eoyr-neon-blue);
+  border-radius: 0;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--eoyr-neon-blue);
+  font-family: "Exo 2", sans-serif;
+}
+
+.eoyr-date-preset:hover {
+  background: rgba(0, 255, 65, 0.1);
+  box-shadow: 0 0 5rem 0.1px var(--eoyr-neon-green);
+}
+
+.eoyr-date-preset.active {
+  background: var(--eoyr-neon-green);
+  color: var(--eoyr-black);
+  border-color: var(--eoyr-neon-blue);
+}
+
+/* Week Listing Section - Match stories.html structure */
+.eoyr-week-list {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* Use stories.html static-cube structure */
+.eoyr-static-cube {
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+/* Header row matching stories.html */
+.eoyr-week-header {
+  display: none; /* Hidden - using block-title-wrapper structure instead */
+}
+
+/* Week row wrapper matching block-wrapper */
+.eoyr-week-wrapper {
+  position: relative;
+}
+
+/* Week block matching static-block */
+.eoyr-week-block {
+  z-index: 0;
+  background-color: var(--eoyr-black);
+  border: 2px solid var(--eoyr-neon-blue);
+  margin-top: -2px;
+  position: relative;
+}
+
+/* Week content matching block-content */
+.eoyr-week-content {
+  z-index: 0;
+  color: var(--eoyr-neon-blue);
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  text-decoration: none;
+  transition: color 0.2s, box-shadow 0.2s, background-color 0.2s;
+  display: flex;
+  position: relative;
+}
+
+.eoyr-week-content:hover {
+  z-index: 1;
+  color: var(--eoyr-black);
+  background-color: var(--eoyr-neon-blue);
+  box-shadow: 0 0 10rem 0.1px var(--eoyr-neon-blue);
+}
+
+/* Title wrapper matching block-title-wrapper */
+.eoyr-week-title-wrapper {
+  flex: 1;
+  justify-content: flex-start;
+  padding-left: 1.125rem;
+  padding-right: 1.125rem;
+  display: flex;
+}
+
+/* Week date matching block-year */
+.eoyr-week-date {
+  width: 4.875rem;
+  padding-right: 1.125rem;
+}
+
+.eoyr-week-date .block-title {
+  text-transform: capitalize;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: "Audiowide", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 400;
+}
+
+/* Projects matching block-client */
+.eoyr-week-projects {
+  width: 13.6875rem;
+  padding-right: 1.125rem;
+}
+
+.eoyr-week-projects .block-title {
+  text-transform: capitalize;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: "Audiowide", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 400;
+}
+
+/* Commit count matching block-studio */
+.eoyr-week-commit-count {
+  width: 12rem;
+  padding-right: 1.125rem;
+}
+
+.eoyr-week-commit-count .block-title {
+  text-transform: capitalize;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: "Audiowide", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 400;
+}
+
+/* Project type matching block-type */
+.eoyr-week-type {
+  width: 16rem;
+}
+
+.eoyr-week-type .block-title {
+  text-transform: capitalize;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: "Audiowide", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 400;
+}
+
+/* Actions wrapper matching block-actions-wrapper */
+.eoyr-week-actions {
+  justify-content: flex-end;
+  padding-right: 1.125rem;
+  display: flex;
+}
+
+.eoyr-week-view-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: currentColor;
+}
+
+/* Project tags styling */
+.eoyr-week-project-tag {
+  display: inline-block;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* Empty State */
+.eoyr-empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--eoyr-neon-blue);
+  background-color: var(--eoyr-black);
+  border: 2px solid var(--eoyr-neon-blue);
+  margin: 2rem;
+}
+
+.eoyr-empty-state h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--eoyr-neon-blue);
+  font-family: "Audiowide", sans-serif;
+}
+
+.eoyr-empty-state p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--eoyr-neon-blue);
+  font-family: "Exo 2", sans-serif;
+}
+
+/* Loading State */
+.eoyr-loading {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--eoyr-neon-blue);
+  background-color: var(--eoyr-black);
+}
+
+.eoyr-loading p {
+  color: var(--eoyr-neon-blue);
+  font-family: "Exo 2", sans-serif;
+}
+
+.eoyr-loading-spinner {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 255, 65, 0.1);
+  border-top-color: var(--eoyr-neon-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Mobile Responsive - Match stories.html breakpoints */
+@media (max-width: 991px) {
+  .eoyr-week-date {
+    width: 4.375rem;
+  }
+  
+  .eoyr-week-projects {
+    width: 11.25rem;
+  }
+  
+  .eoyr-week-title-wrapper {
+    padding-left: 0.875rem;
+    padding-right: 0.875rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .eoyr-filters-container {
+    flex-direction: column;
+  }
+  
+  .eoyr-filter-group {
+    width: 100%;
+  }
+  
+  .eoyr-sort-row {
+    flex-direction: column;
+    padding: 1rem 0;
+  }
+  
+  .eoyr-sort-row .eoyr-filter-group {
+    width: 100%;
+  }
+  
+  .eoyr-week-date {
+    padding-right: 0.875rem;
+  }
+  
+  .eoyr-week-type {
+    display: none;
+  }
+  
+  .eoyr-week-projects {
+    width: 8rem;
+  }
+}
+
+@media (max-width: 479px) {
+  .eoyr-week-date {
+    padding-right: 0.875rem;
+  }
+  
+  .eoyr-week-type {
+    display: none;
+  }
+  
+  .eoyr-week-projects {
+    width: 8rem;
+  }
+}
+
+/* Accessibility: High contrast for clickable elements */
+.eoyr-week-content:focus,
+.eoyr-filter-button:focus,
+.eoyr-date-preset:focus {
+  outline: 3px solid var(--eoyr-neon-blue);
+  outline-offset: 2px;
+}
+
+/* Ensure clickable elements are highly visible */
+.eoyr-week-content {
+  cursor: pointer;
+}
+
+.eoyr-filter-button {
+  min-height: 44px; /* Touch target size */
+}
+
+.eoyr-date-preset {
+  min-height: 36px;
+}
+
+/* Reuse stories.html block-title class */
+.eoyr-week-content .block-title {
+  text-transform: capitalize;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: "Audiowide", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 400;
+}
+
+/* Stories page navbar color overrides - dark theme */
+/* Left panel: subtle dark tint of theme color, Right panel: pure dark */
+.navbar-left {
+  background-color: var(--eoyr-dark-green, #001a00) !important;
+  background: linear-gradient(135deg, var(--eoyr-dark-green, #001a00) 0%, rgba(0, 0, 0, 0.95) 100%) !important;
+}
+
+.navbar-right {
+  background-color: var(--eoyr-black, #0a0a0a) !important;
+}
+
+.navbar-right-item {
+  background-color: #1a1a1a !important; /* was #ffede3 - very light beige */
+}
+
+.navbar-right-item:hover {
+  background-color: #333333 !important; /* was #fff5ef - light beige */
+}
+
+/* ===================================
+   Commit Group and Commit Row Styles
+   =================================== */
+
+/* Group header styling - Matrix retro-futuristic */
+.group-header {
+  background-color: var(--eoyr-dark-green);
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  transition: all 0.3s ease;
+  padding: 1.5rem 2rem !important;
+  border: 1px solid var(--eoyr-neon-green);
+  box-shadow: 0 0 15px var(--eoyr-neon-green-glow), inset 0 0 30px rgba(0, 255, 65, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+.group-header:hover {
+  background-color: rgba(0, 255, 65, 0.12);
+  box-shadow: 0 0 25px var(--eoyr-neon-green-glow), inset 0 0 40px rgba(0, 255, 65, 0.08);
+}
+
+/* Group header content layout */
+.group-header-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  pointer-events: none;
+}
+
+/* Allow interactions to pass through to parent */
+.group-header * {
+  pointer-events: none;
+}
+
+/* Re-enable for specific interactive elements if needed */
+.group-header {
+  pointer-events: auto !important;
+}
+
+.group-header-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.group-date-label {
+  font-family: "Audiowide", sans-serif;
+  font-size: 1.5rem;
+  color: var(--eoyr-neon-green);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 10px var(--eoyr-neon-green-glow);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.group-projects-list {
+  font-family: "Exo 2", sans-serif;
+  font-size: 1rem;
+  color: var(--eoyr-neon-green-dim);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.group-header-stats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.group-stat {
+  font-family: "Exo 2", sans-serif;
+  font-size: 0.9rem;
+  color: var(--eoyr-neon-green);
+  background: rgba(0, 255, 65, 0.1);
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--eoyr-neon-green-dim);
+  border-radius: 3px;
+}
+
+.group-toggle {
+  transition: transform 0.3s ease;
+  color: var(--eoyr-neon-green);
+  margin-left: 1rem;
+}
+
+.group-toggle.rotated {
+  transform: rotate(45deg);
+}
+
+.group-toggle svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  filter: drop-shadow(0 0 5px var(--eoyr-neon-green-glow));
+}
+
+/* Hover effects for group header */
+.group-header:hover .group-date-label {
+  text-shadow: 0 0 15px var(--eoyr-neon-green-glow), 0 0 30px var(--eoyr-neon-green-glow);
+}
+
+.group-header:hover .group-stat {
+  background: rgba(0, 255, 65, 0.2);
+}
+
+/* Responsive week headers */
+@media (max-width: 991px) {
+  .group-header {
+    padding: 1.25rem 1.5rem !important;
+  }
+  
+  .group-date-label {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .group-header {
+    padding: 1rem !important;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .group-date-label {
+    font-size: 1.1rem;
+  }
+  
+  .group-projects-list {
+    font-size: 0.9rem;
+  }
+  
+  .group-toggle {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    margin-left: 0;
+  }
+}
+
+/* Commits container */
+.commits-container {
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.commits-container.collapsed {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Commit row styling - Matrix theme */
+.commit-row {
+  margin-left: 2rem;
+}
+
+.commit-block {
+  background-color: rgba(0, 20, 0, 0.6);
+  border-left: 3px solid var(--eoyr-neon-green);
+}
+
+.commit-content {
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  text-decoration: none;
+  color: var(--eoyr-neon-green);
+  transition: all 0.2s ease;
+}
+
+.commit-content:hover {
+  background-color: rgba(0, 255, 65, 0.08);
+  box-shadow: inset 0 0 20px rgba(0, 255, 65, 0.05);
+}
+
+/* Commit details layout */
+.commit-details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+/* SHA badge - Matrix style */
+.commit-sha {
+  flex-shrink: 0;
+}
+
+.sha-badge {
+  font-family: "Courier New", monospace;
+  font-size: 0.85rem;
+  background-color: var(--eoyr-neon-green-bg, rgba(0, 255, 65, 0.1));
+  color: var(--eoyr-neon-green);
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  border: 1px solid var(--eoyr-neon-green-dim);
+  text-shadow: 0 0 5px var(--eoyr-neon-green-glow);
+}
+
+/* Commit message */
+.commit-message-wrapper {
+  flex: 1;
+  min-width: 200px;
+}
+
+.commit-message {
+  font-family: "Exo 2", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--eoyr-neon-green);
+  margin: 0;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* Commit metadata */
+.commit-meta {
+  display: flex;
+  gap: 1rem;
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+.commit-repo {
+  font-family: "Audiowide", sans-serif;
+  color: var(--eoyr-neon-green);
+  background-color: var(--eoyr-neon-green-bg, rgba(0, 255, 65, 0.1));
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
+  border: 1px solid var(--eoyr-neon-green-border, rgba(0, 255, 65, 0.3));
+}
+
+.commit-author {
+  font-family: "Exo 2", sans-serif;
+  color: var(--eoyr-neon-green-dim);
+}
+
+.commit-date {
+  font-family: "Exo 2", sans-serif;
+  color: var(--eoyr-neon-green-dim);
+  opacity: 0.7;
+}
+
+/* Hover effects */
+.commit-content:hover .sha-badge {
+  background-color: var(--eoyr-neon-green);
+  color: var(--eoyr-black);
+  text-shadow: none;
+}
+
+.commit-content:hover .commit-message {
+  text-shadow: 0 0 8px var(--eoyr-neon-green-glow);
+}
+
+/* Responsive commit rows */
+@media (max-width: 991px) {
+  .commit-row {
+    margin-left: 1rem;
+  }
+  
+  .commit-details {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .commit-meta {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 767px) {
+  .commit-row {
+    margin-left: 0.5rem;
+  }
+  
+  .commit-content {
+    padding: 0.5rem;
+    flex-direction: column;
+  }
+  
+  .commit-meta {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 479px) {
+  .commit-row {
+    margin-left: 0;
+  }
+  
+  .sha-badge {
+    font-size: 0.75rem;
+  }
+  
+  .commit-message {
+    font-size: 0.85rem;
+  }
+  
+  .commit-meta {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+
+/* ===================================
+   Improved Project Filter UI
+   =================================== */
+
+.eoyr-project-filter {
+  max-width: 100%;
+}
+
+.eoyr-project-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: var(--eoyr-black, #0a0a0a);
+  border: 1px solid var(--eoyr-neon-green);
+  border-radius: 4px;
+  max-height: 150px;
+  overflow-y: auto;
+  position: relative;
+  z-index: 10;
+}
+
+.eoyr-project-loading {
+  color: var(--eoyr-neon-blue);
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+/* Custom checkbox styling */
+.eoyr-project-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.35rem 0.6rem;
+  background-color: var(--eoyr-neon-green-bg-subtle, rgba(0, 255, 65, 0.05));
+  border: 1px solid var(--eoyr-neon-green-border, rgba(0, 255, 65, 0.3));
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.eoyr-project-checkbox:hover {
+  background-color: var(--eoyr-neon-green-bg-hover, rgba(0, 255, 65, 0.15));
+  border-color: var(--eoyr-neon-green);
+}
+
+.eoyr-project-checkbox.active {
+  background-color: var(--eoyr-neon-green);
+  border-color: var(--eoyr-neon-green);
+  color: var(--eoyr-black);
+  box-shadow: 0 0 10px var(--eoyr-neon-green-glow);
+}
+
+.eoyr-project-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.eoyr-project-checkbox .checkbox-indicator {
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-radius: 2px;
+  margin-right: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.eoyr-project-checkbox.active .checkbox-indicator {
+  background-color: var(--eoyr-black);
+}
+
+.eoyr-project-checkbox .checkbox-indicator svg {
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.eoyr-project-checkbox.active .checkbox-indicator svg {
+  opacity: 1;
+}
+
+.eoyr-project-checkbox .project-name {
+  font-family: "Exo 2", sans-serif;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+/* Selected projects tags */
+.eoyr-selected-projects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  min-height: 0;
+}
+
+.eoyr-selected-projects:empty {
+  display: none;
+}
+
+.eoyr-project-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--eoyr-neon-green);
+  color: var(--eoyr-black);
+  border-radius: 3px;
+  font-family: "Audiowide", sans-serif;
+  font-size: 0.75rem;
+  animation: tagAppear 0.2s ease;
+  box-shadow: 0 0 8px var(--eoyr-neon-green-glow);
+}
+
+@keyframes tagAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.eoyr-project-tag .tag-remove {
+  cursor: pointer;
+  font-weight: bold;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.eoyr-project-tag .tag-remove:hover {
+  opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .eoyr-project-checkboxes {
+    max-height: 120px;
+  }
+  
+  .eoyr-project-checkbox {
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .eoyr-project-checkbox .project-name {
+    font-size: 0.8rem;
+  }
+}
+
+/* ===================================
+   Navigation Project Cards
+   =================================== */
+
+.project-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.project-card {
+  display: block;
+  padding: 1.25rem 1.5rem;
+  background: var(--eoyr-dark-green, #001a00);
+  border: 1px solid var(--eoyr-neon-green-dim, #00cc33);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.project-card:hover {
+  border-color: var(--eoyr-neon-green, #00ff41);
+  background: var(--eoyr-neon-green-bg, rgba(0, 255, 65, 0.08));
+  box-shadow: 0 0 20px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
+  transform: translateX(5px);
+}
+
+.project-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.project-title {
+  font-family: "Audiowide", sans-serif;
+  font-size: 1.1rem;
+  color: var(--eoyr-neon-green, #00ff41) !important;
+  text-shadow: 0 0 8px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
+}
+
+.project-description {
+  font-family: "Exo 2", sans-serif;
+  font-size: 0.9rem;
+  color: var(--eoyr-neon-green-dim, #00cc33);
+  line-height: 1.4;
+}
+
+/* Navigation thin font for styleguide link */
+.nav-link-thin {
+  font-weight: 300 !important;
+  font-family: "Exo 2", sans-serif !important;
+}
+
+/* Ensure navigation uses theme colors - defined above in "Left panel" section */
+
+.nav-link-item,
+.nav-link-item:hover {
+  color: var(--eoyr-neon-green, #00ff41);
+}
+
+.nav-link-text {
+  color: var(--eoyr-neon-green, #00ff41);
+  text-shadow: 0 0 5px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.2));
+}
+
+.navbar-right-text {
+  color: var(--eoyr-neon-green, #00ff41);
+}
+
