@@ -53,6 +53,20 @@ const COLOR_THEMES = {
 const THEME_STORAGE_KEY = 'eoyr-color-theme';
 
 /**
+ * Convert hex color to RGB components
+ * @param {string} hex - Hex color code
+ * @returns {object} RGB components {r, g, b}
+ */
+function hexToRgb(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : { r: 0, g: 255, b: 65 }; // fallback to green
+}
+
+/**
  * Apply a color theme to the document
  * @param {string} themeName - Name of the theme to apply
  */
@@ -61,12 +75,19 @@ function applyColorTheme(themeName) {
   if (!theme) return;
   
   const root = document.documentElement;
+  const rgb = hexToRgb(theme.primary);
   
   // Update CSS variables
   root.style.setProperty('--eoyr-neon-green', theme.primary);
   root.style.setProperty('--eoyr-neon-green-dim', theme.dim);
   root.style.setProperty('--eoyr-neon-green-glow', theme.glow);
   root.style.setProperty('--eoyr-dark-green', theme.dark);
+  
+  // Set translucent color variations for backgrounds and borders
+  root.style.setProperty('--eoyr-neon-green-bg', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.1)`);
+  root.style.setProperty('--eoyr-neon-green-bg-subtle', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.05)`);
+  root.style.setProperty('--eoyr-neon-green-bg-hover', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.15)`);
+  root.style.setProperty('--eoyr-neon-green-border', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.3)`);
   
   // Also update the legacy blue variable alias
   root.style.setProperty('--eoyr-neon-blue', theme.primary);

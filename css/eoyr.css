@@ -19,6 +19,12 @@
   --eoyr-black: #0a0a0a;
   --eoyr-dark-green: #001a00;
   
+  /* Translucent variations for backgrounds and borders */
+  --eoyr-neon-green-bg: rgba(0, 255, 65, 0.1);
+  --eoyr-neon-green-bg-subtle: rgba(0, 255, 65, 0.05);
+  --eoyr-neon-green-bg-hover: rgba(0, 255, 65, 0.15);
+  --eoyr-neon-green-border: rgba(0, 255, 65, 0.3);
+  
   /* Legacy alias - point to green */
   --eoyr-neon-blue: var(--eoyr-neon-green);
   
@@ -50,6 +56,32 @@
 
 .cursor-dot {
   border-color: var(--eoyr-neon-green) !important;
+}
+
+/* ===================================
+   Dynamic Theme Hover States
+   These override hardcoded hover colors
+   =================================== */
+
+/* Block content hover (GitHub Activity Reports title, etc.) */
+.block-content:hover {
+  background-color: var(--eoyr-neon-green) !important;
+  box-shadow: 0 0 10rem 0.1px var(--eoyr-neon-green) !important;
+  color: var(--eoyr-black) !important;
+}
+
+/* Menu button - override orange background */
+.nav-toggle-inner {
+  background-color: var(--eoyr-neon-green) !important;
+  color: var(--eoyr-black) !important;
+}
+
+.nav-toggle-icon-line {
+  background-color: var(--eoyr-black) !important;
+}
+
+.nav-toggle-text {
+  color: var(--eoyr-black) !important;
 }
 
 /* Filter Controls Section - Styled to match stories page */
@@ -667,7 +699,7 @@
 .sha-badge {
   font-family: "Courier New", monospace;
   font-size: 0.85rem;
-  background-color: rgba(0, 255, 65, 0.1);
+  background-color: var(--eoyr-neon-green-bg, rgba(0, 255, 65, 0.1));
   color: var(--eoyr-neon-green);
   padding: 0.25rem 0.5rem;
   border-radius: 3px;
@@ -703,10 +735,10 @@
 .commit-repo {
   font-family: "Audiowide", sans-serif;
   color: var(--eoyr-neon-green);
-  background-color: rgba(0, 255, 65, 0.1);
+  background-color: var(--eoyr-neon-green-bg, rgba(0, 255, 65, 0.1));
   padding: 0.15rem 0.5rem;
   border-radius: 2px;
-  border: 1px solid rgba(0, 255, 65, 0.3);
+  border: 1px solid var(--eoyr-neon-green-border, rgba(0, 255, 65, 0.3));
 }
 
 .commit-author {
@@ -814,16 +846,16 @@
   align-items: center;
   cursor: pointer;
   padding: 0.35rem 0.6rem;
-  background-color: rgba(0, 255, 65, 0.05);
-  border: 1px solid rgba(0, 255, 65, 0.3);
+  background-color: var(--eoyr-neon-green-bg-subtle, rgba(0, 255, 65, 0.05));
+  border: 1px solid var(--eoyr-neon-green-border, rgba(0, 255, 65, 0.3));
   border-radius: 4px;
   transition: all 0.2s ease;
   user-select: none;
 }
 
 .eoyr-project-checkbox:hover {
-  background-color: rgba(0, 255, 65, 0.15);
-  border-color: var(--eoyr-neon-blue);
+  background-color: var(--eoyr-neon-green-bg-hover, rgba(0, 255, 65, 0.15));
+  border-color: var(--eoyr-neon-green);
 }
 
 .eoyr-project-checkbox.active {
@@ -956,7 +988,7 @@
 
 .project-card:hover {
   border-color: var(--eoyr-neon-green, #00ff41);
-  background: rgba(0, 255, 65, 0.08);
+  background: var(--eoyr-neon-green-bg, rgba(0, 255, 65, 0.08));
   box-shadow: 0 0 20px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
   transform: translateX(5px);
 }
