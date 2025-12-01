@@ -269,7 +269,13 @@ function openColorPicker() {
   // Grid swatches
   modal.querySelectorAll('.color-picker-swatch').forEach(swatch => {
     swatch.addEventListener('click', () => {
-      applyColorTheme(swatch.dataset.theme, false);
+      const themeName = swatch.dataset.theme;
+      // Update wheelSelectedIndex to keep in sync
+      const themeIndex = THEME_KEYS.indexOf(themeName);
+      if (themeIndex !== -1) {
+        wheelSelectedIndex = themeIndex;
+      }
+      applyColorTheme(themeName, false);
     });
   });
   
