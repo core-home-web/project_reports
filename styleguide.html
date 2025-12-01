@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html data-wf-page="styleguide" data-wf-site="6635cff5b151554d559fb0ae">
+<head>
+  <meta charset="utf-8">
+  <title>Styleguide - GitHub Dashboard</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link href="css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="css/wanderlostgalaxy.webflow.css" rel="stylesheet" type="text/css">
+  <link href="css/eoyr.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">WebFont.load({  google: {    families: ["Audiowide:regular","Exo 2:100,200,300,regular,500,600,700,800,900"]  }});</script>
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+  <style>
+    .styleguide-wrapper {
+      min-height: 100vh;
+      background-color: var(--eoyr-black, #0a0a0a);
+      padding: 4rem 2rem;
+    }
+    
+    .styleguide-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .styleguide-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid var(--eoyr-neon-green, #00ff41);
+    }
+    
+    .styleguide-title {
+      font-family: "Audiowide", sans-serif;
+      font-size: 3rem;
+      color: var(--eoyr-neon-green, #00ff41);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0 0 1rem 0;
+      text-shadow: 0 0 20px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
+    }
+    
+    .styleguide-subtitle {
+      font-family: "Exo 2", sans-serif;
+      font-size: 1.2rem;
+      color: var(--eoyr-neon-green-dim, #00cc33);
+      margin: 0;
+    }
+    
+    .styleguide-section {
+      margin-bottom: 4rem;
+      padding: 2rem;
+      border: 1px solid var(--eoyr-neon-green-dim, #00cc33);
+      border-radius: 8px;
+      background: rgba(0, 255, 65, 0.02);
+    }
+    
+    .section-title {
+      font-family: "Audiowide", sans-serif;
+      font-size: 1.5rem;
+      color: var(--eoyr-neon-green, #00ff41);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 0 0 2rem 0;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--eoyr-neon-green-dim, #00cc33);
+    }
+    
+    /* Color Palette */
+    .color-palette {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .color-swatch {
+      text-align: center;
+    }
+    
+    .swatch-preview {
+      width: 100%;
+      height: 80px;
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      border: 2px solid var(--eoyr-neon-green-dim, #00cc33);
+      box-shadow: 0 0 15px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
+    }
+    
+    .swatch-name {
+      font-family: "Exo 2", sans-serif;
+      font-size: 0.9rem;
+      color: var(--eoyr-neon-green, #00ff41);
+      margin: 0 0 0.25rem 0;
+    }
+    
+    .swatch-value {
+      font-family: "Courier New", monospace;
+      font-size: 0.8rem;
+      color: var(--eoyr-neon-green-dim, #00cc33);
+    }
+    
+    /* Typography */
+    .typography-samples {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    
+    .type-sample {
+      padding: 1.5rem;
+      border: 1px solid rgba(0, 255, 65, 0.2);
+      border-radius: 4px;
+    }
+    
+    .type-label {
+      font-family: "Exo 2", sans-serif;
+      font-size: 0.75rem;
+      color: var(--eoyr-neon-green-dim, #00cc33);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+    
+    .type-audiowide {
+      font-family: "Audiowide", sans-serif;
+      font-size: 2rem;
+      color: var(--eoyr-neon-green, #00ff41);
+      text-shadow: 0 0 10px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
+    }
+    
+    .type-exo {
+      font-family: "Exo 2", sans-serif;
+      font-size: 1.25rem;
+      color: var(--eoyr-neon-green, #00ff41);
+    }
+    
+    .type-mono {
+      font-family: "Courier New", monospace;
+      font-size: 1rem;
+      color: var(--eoyr-neon-green, #00ff41);
+      background: rgba(0, 255, 65, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    
+    /* Buttons */
+    .button-samples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    
+    .sample-button {
+      font-family: "Audiowide", sans-serif;
+      font-size: 0.9rem;
+      padding: 0.75rem 1.5rem;
+      border: 2px solid var(--eoyr-neon-green, #00ff41);
+      background: transparent;
+      color: var(--eoyr-neon-green, #00ff41);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .sample-button:hover {
+      background: var(--eoyr-neon-green, #00ff41);
+      color: var(--eoyr-black, #0a0a0a);
+      box-shadow: 0 0 20px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.5));
+    }
+    
+    .sample-button.filled {
+      background: var(--eoyr-neon-green, #00ff41);
+      color: var(--eoyr-black, #0a0a0a);
+    }
+    
+    .sample-button.filled:hover {
+      background: transparent;
+      color: var(--eoyr-neon-green, #00ff41);
+    }
+    
+    /* Inputs */
+    .input-samples {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-width: 400px;
+    }
+    
+    .sample-input {
+      font-family: "Exo 2", sans-serif;
+      font-size: 1rem;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--eoyr-neon-green-dim, #00cc33);
+      background: rgba(0, 255, 65, 0.05);
+      color: var(--eoyr-neon-green, #00ff41);
+      border-radius: 4px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    
+    .sample-input:focus {
+      border-color: var(--eoyr-neon-green, #00ff41);
+      box-shadow: 0 0 15px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
+    }
+    
+    .sample-input::placeholder {
+      color: var(--eoyr-neon-green-dim, #00cc33);
+      opacity: 0.6;
+    }
+    
+    .sample-select {
+      font-family: "Exo 2", sans-serif;
+      font-size: 1rem;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--eoyr-neon-green-dim, #00cc33);
+      background: rgba(0, 255, 65, 0.05);
+      color: var(--eoyr-neon-green, #00ff41);
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+    }
+    
+    /* Badges */
+    .badge-samples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+    
+    .sample-badge {
+      font-family: "Exo 2", sans-serif;
+      font-size: 0.85rem;
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--eoyr-neon-green-dim, #00cc33);
+      background: rgba(0, 255, 65, 0.1);
+      color: var(--eoyr-neon-green, #00ff41);
+      border-radius: 3px;
+    }
+    
+    .sample-badge.filled {
+      background: var(--eoyr-neon-green, #00ff41);
+      color: var(--eoyr-black, #0a0a0a);
+      border-color: var(--eoyr-neon-green, #00ff41);
+    }
+    
+    .sha-badge-sample {
+      font-family: "Courier New", monospace;
+      font-size: 0.85rem;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid var(--eoyr-neon-green-dim, #00cc33);
+      background: rgba(0, 255, 65, 0.1);
+      color: var(--eoyr-neon-green, #00ff41);
+      border-radius: 3px;
+      text-shadow: 0 0 5px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
+    }
+    
+    /* Glow Effects */
+    .glow-samples {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    
+    .glow-box {
+      padding: 2rem;
+      text-align: center;
+      border: 2px solid var(--eoyr-neon-green, #00ff41);
+      border-radius: 8px;
+      font-family: "Audiowide", sans-serif;
+      color: var(--eoyr-neon-green, #00ff41);
+    }
+    
+    .glow-box.subtle {
+      box-shadow: 0 0 10px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.2));
+    }
+    
+    .glow-box.medium {
+      box-shadow: 0 0 20px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
+    }
+    
+    .glow-box.strong {
+      box-shadow: 0 0 30px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.4)), 
+                  0 0 60px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.2));
+    }
+    
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: "Exo 2", sans-serif;
+      font-size: 1rem;
+      color: var(--eoyr-neon-green, #00ff41);
+      text-decoration: none;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+    }
+    
+    .back-link:hover {
+      text-shadow: 0 0 10px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.5));
+    }
+    
+    @media (max-width: 768px) {
+      .styleguide-wrapper {
+        padding: 2rem 1rem;
+      }
+      
+      .styleguide-title {
+        font-size: 2rem;
+      }
+      
+      .styleguide-section {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="styleguide-wrapper">
+    <div class="styleguide-container">
+      <a href="index.html" class="back-link">← Back to Reports</a>
+      
+      <header class="styleguide-header">
+        <h1 class="styleguide-title">Styleguide</h1>
+        <p class="styleguide-subtitle">Matrix-inspired design system for GitHub Activity Reports</p>
+      </header>
+      
+      <!-- Color Palette -->
+      <section class="styleguide-section">
+        <h2 class="section-title">Color Palette</h2>
+        <div class="color-palette">
+          <div class="color-swatch">
+            <div class="swatch-preview" style="background: #00ff41;"></div>
+            <p class="swatch-name">Neon Green (Primary)</p>
+            <p class="swatch-value">#00ff41</p>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-preview" style="background: #00cc33;"></div>
+            <p class="swatch-name">Neon Green Dim</p>
+            <p class="swatch-value">#00cc33</p>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-preview" style="background: rgba(0, 255, 65, 0.3);"></div>
+            <p class="swatch-name">Neon Green Glow</p>
+            <p class="swatch-value">rgba(0,255,65,0.3)</p>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-preview" style="background: #0a0a0a;"></div>
+            <p class="swatch-name">Background Black</p>
+            <p class="swatch-value">#0a0a0a</p>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-preview" style="background: #001a00;"></div>
+            <p class="swatch-name">Dark Green</p>
+            <p class="swatch-value">#001a00</p>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Typography -->
+      <section class="styleguide-section">
+        <h2 class="section-title">Typography</h2>
+        <div class="typography-samples">
+          <div class="type-sample">
+            <p class="type-label">Audiowide - Headings & Accents</p>
+            <p class="type-audiowide">WEEK OF NOV 10 - NOV 16, 2025</p>
+          </div>
+          <div class="type-sample">
+            <p class="type-label">Exo 2 - Body Text</p>
+            <p class="type-exo">The quick brown fox jumps over the lazy dog. This font is used for body text, descriptions, and general content throughout the dashboard.</p>
+          </div>
+          <div class="type-sample">
+            <p class="type-label">Monospace - Code & SHA</p>
+            <span class="type-mono">c2d6962</span>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Buttons -->
+      <section class="styleguide-section">
+        <h2 class="section-title">Buttons</h2>
+        <div class="button-samples">
+          <button class="sample-button">Outline Button</button>
+          <button class="sample-button filled">Filled Button</button>
+          <button class="sample-button" disabled style="opacity: 0.5; cursor: not-allowed;">Disabled</button>
+        </div>
+      </section>
+      
+      <!-- Form Inputs -->
+      <section class="styleguide-section">
+        <h2 class="section-title">Form Inputs</h2>
+        <div class="input-samples">
+          <input type="text" class="sample-input" placeholder="Text input...">
+          <input type="date" class="sample-input">
+          <select class="sample-select">
+            <option>Select an option</option>
+            <option>Week</option>
+            <option>Month</option>
+            <option>Year</option>
+          </select>
+        </div>
+      </section>
+      
+      <!-- Badges -->
+      <section class="styleguide-section">
+        <h2 class="section-title">Badges</h2>
+        <div class="badge-samples">
+          <span class="sample-badge">47 commits</span>
+          <span class="sample-badge">5 projects</span>
+          <span class="sample-badge filled">Active</span>
+          <span class="sha-badge-sample">c2d6962</span>
+          <span class="sha-badge-sample">474e319</span>
+        </div>
+      </section>
+      
+      <!-- Glow Effects -->
+      <section class="styleguide-section">
+        <h2 class="section-title">Glow Effects</h2>
+        <div class="glow-samples">
+          <div class="glow-box subtle">Subtle Glow</div>
+          <div class="glow-box medium">Medium Glow</div>
+          <div class="glow-box strong">Strong Glow</div>
+        </div>
+      </section>
+      
+    </div>
+  </div>
+  
+  <script src="js/color-picker.js"></script>
+</body>
+</html>

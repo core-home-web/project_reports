@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html data-wf-page="how-it-works" data-wf-site="6635cff5b151554d559fb0ae">
+<head>
+  <meta charset="utf-8">
+  <title>How Reports Work - GitHub Dashboard</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link href="css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="css/wanderlostgalaxy.webflow.css" rel="stylesheet" type="text/css">
+  <link href="css/eoyr.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">WebFont.load({  google: {    families: ["Audiowide:regular","Exo 2:100,200,300,regular,500,600,700,800,900"]  }});</script>
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+  <style>
+    .guide-wrapper {
+      min-height: 100vh;
+      background-color: var(--eoyr-black, #0a0a0a);
+      padding: 4rem 2rem;
+    }
+    
+    .guide-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .guide-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid var(--eoyr-neon-green, #00ff41);
+    }
+    
+    .guide-title {
+      font-family: "Audiowide", sans-serif;
+      font-size: 2.5rem;
+      color: var(--eoyr-neon-green, #00ff41);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 0 0 1rem 0;
+      text-shadow: 0 0 20px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
+    }
+    
+    .guide-subtitle {
+      font-family: "Exo 2", sans-serif;
+      font-size: 1.2rem;
+      color: var(--eoyr-neon-green-dim, #00cc33);
+      margin: 0;
+    }
+    
+    .guide-section {
+      margin-bottom: 3rem;
+    }
+    
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .section-number {
+      font-family: "Audiowide", sans-serif;
+      font-size: 2rem;
+      color: var(--eoyr-neon-green, #00ff41);
+      background: var(--eoyr-dark-green, #001a00);
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--eoyr-neon-green, #00ff41);
+      border-radius: 8px;
+      box-shadow: 0 0 15px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
+      flex-shrink: 0;
+    }
+    
+    .section-title {
+      font-family: "Audiowide", sans-serif;
+      font-size: 1.4rem;
+      color: var(--eoyr-neon-green, #00ff41);
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .section-content {
+      padding-left: 76px;
+    }
+    
+    .section-text {
+      font-family: "Exo 2", sans-serif;
+      font-size: 1.1rem;
+      color: var(--eoyr-neon-green-dim, #00cc33);
+      line-height: 1.7;
+      margin: 0 0 1rem 0;
+    }
+    
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+    
+    .feature-item {
+      font-family: "Exo 2", sans-serif;
+      font-size: 1rem;
+      color: var(--eoyr-neon-green, #00ff41);
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.5rem;
+      background: rgba(0, 255, 65, 0.05);
+      border-left: 3px solid var(--eoyr-neon-green, #00ff41);
+      border-radius: 0 4px 4px 0;
+    }
+    
+    .feature-item strong {
+      color: var(--eoyr-neon-green, #00ff41);
+    }
+    
+    .tip-box {
+      background: var(--eoyr-dark-green, #001a00);
+      border: 1px solid var(--eoyr-neon-green-dim, #00cc33);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    
+    .tip-label {
+      font-family: "Audiowide", sans-serif;
+      font-size: 0.8rem;
+      color: var(--eoyr-neon-green, #00ff41);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+    
+    .tip-text {
+      font-family: "Exo 2", sans-serif;
+      font-size: 1rem;
+      color: var(--eoyr-neon-green-dim, #00cc33);
+      margin: 0;
+    }
+    
+    .cta-section {
+      text-align: center;
+      padding: 3rem;
+      background: var(--eoyr-dark-green, #001a00);
+      border: 2px solid var(--eoyr-neon-green, #00ff41);
+      border-radius: 12px;
+      margin-top: 4rem;
+      box-shadow: 0 0 30px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.2));
+    }
+    
+    .cta-title {
+      font-family: "Audiowide", sans-serif;
+      font-size: 1.5rem;
+      color: var(--eoyr-neon-green, #00ff41);
+      margin: 0 0 1rem 0;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      font-family: "Audiowide", sans-serif;
+      font-size: 1rem;
+      padding: 1rem 2rem;
+      background: var(--eoyr-neon-green, #00ff41);
+      color: var(--eoyr-black, #0a0a0a);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+    
+    .cta-button:hover {
+      box-shadow: 0 0 30px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.5));
+      transform: translateY(-2px);
+    }
+    
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: "Exo 2", sans-serif;
+      font-size: 1rem;
+      color: var(--eoyr-neon-green, #00ff41);
+      text-decoration: none;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+    }
+    
+    .back-link:hover {
+      text-shadow: 0 0 10px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.5));
+    }
+    
+    @media (max-width: 768px) {
+      .guide-wrapper {
+        padding: 2rem 1rem;
+      }
+      
+      .guide-title {
+        font-size: 1.8rem;
+      }
+      
+      .section-content {
+        padding-left: 0;
+        margin-top: 1rem;
+      }
+      
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .section-number {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="guide-wrapper">
+    <div class="guide-container">
+      <a href="index.html" class="back-link">← Back to Reports</a>
+      
+      <header class="guide-header">
+        <h1 class="guide-title">How Reports Work</h1>
+        <p class="guide-subtitle">Your guide to navigating the GitHub Activity Dashboard</p>
+      </header>
+      
+      <!-- Section 1: Overview -->
+      <section class="guide-section">
+        <div class="section-header">
+          <div class="section-number">1</div>
+          <h2 class="section-title">What You'll See</h2>
+        </div>
+        <div class="section-content">
+          <p class="section-text">
+            The dashboard displays all your GitHub commits organized by time periods. 
+            Each group shows the date range, which projects had activity, and how many 
+            commits were made. Click any group to see all the individual commits with 
+            their full messages.
+          </p>
+          <ul class="feature-list">
+            <li class="feature-item"><strong>Week Groups:</strong> Commits organized by week (Monday-Sunday)</li>
+            <li class="feature-item"><strong>Commit Details:</strong> SHA, message, author, date, and project</li>
+            <li class="feature-item"><strong>Quick Links:</strong> Click any commit to view it on GitHub</li>
+          </ul>
+        </div>
+      </section>
+      
+      <!-- Section 2: Date Filtering -->
+      <section class="guide-section">
+        <div class="section-header">
+          <div class="section-number">2</div>
+          <h2 class="section-title">Filter by Date</h2>
+        </div>
+        <div class="section-content">
+          <p class="section-text">
+            Use the date range presets to quickly jump to common time periods, or set 
+            a custom date range using the date pickers.
+          </p>
+          <ul class="feature-list">
+            <li class="feature-item"><strong>This Week:</strong> Current Monday through today</li>
+            <li class="feature-item"><strong>Last Week:</strong> Previous full week</li>
+            <li class="feature-item"><strong>Last Month:</strong> Past 30 days</li>
+            <li class="feature-item"><strong>Last 3 Months:</strong> Past 90 days (default view)</li>
+            <li class="feature-item"><strong>Year to Date:</strong> January 1st through today</li>
+            <li class="feature-item"><strong>Custom:</strong> Pick any start and end date</li>
+          </ul>
+          <div class="tip-box">
+            <p class="tip-label">💡 Tip</p>
+            <p class="tip-text">Switch to "Single Day" mode in Date Mode to find commits from a specific day.</p>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Section 3: Group By -->
+      <section class="guide-section">
+        <div class="section-header">
+          <div class="section-number">3</div>
+          <h2 class="section-title">Change Grouping</h2>
+        </div>
+        <div class="section-content">
+          <p class="section-text">
+            The "Group By" dropdown lets you organize commits into different time buckets:
+          </p>
+          <ul class="feature-list">
+            <li class="feature-item"><strong>Day:</strong> See commits for each individual day</li>
+            <li class="feature-item"><strong>Week:</strong> Group commits by week (default)</li>
+            <li class="feature-item"><strong>Month:</strong> Summarize activity by month</li>
+            <li class="feature-item"><strong>Year:</strong> High-level yearly overview</li>
+          </ul>
+        </div>
+      </section>
+      
+      <!-- Section 4: Project Filtering -->
+      <section class="guide-section">
+        <div class="section-header">
+          <div class="section-number">4</div>
+          <h2 class="section-title">Filter by Project</h2>
+        </div>
+        <div class="section-content">
+          <p class="section-text">
+            Click the project checkboxes to show only commits from specific repositories. 
+            Selected projects appear as tags below the checkbox list. Click the × on any 
+            tag to remove that filter.
+          </p>
+          <div class="tip-box">
+            <p class="tip-label">💡 Tip</p>
+            <p class="tip-text">Leave all projects unchecked to see commits from all repositories.</p>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Section 5: Search -->
+      <section class="guide-section">
+        <div class="section-header">
+          <div class="section-number">5</div>
+          <h2 class="section-title">Search Commits</h2>
+        </div>
+        <div class="section-content">
+          <p class="section-text">
+            Use the search box to find commits containing specific text. The search 
+            looks through commit messages, author names, and repository names.
+          </p>
+          <ul class="feature-list">
+            <li class="feature-item"><strong>Search by keyword:</strong> "fix", "feature", "update"</li>
+            <li class="feature-item"><strong>Search by author:</strong> Your name or collaborators</li>
+            <li class="feature-item"><strong>Search by project:</strong> Repository name</li>
+          </ul>
+        </div>
+      </section>
+      
+      <!-- Section 6: Sorting -->
+      <section class="guide-section">
+        <div class="section-header">
+          <div class="section-number">6</div>
+          <h2 class="section-title">Sort Results</h2>
+        </div>
+        <div class="section-content">
+          <p class="section-text">
+            Control how groups are ordered using the Sort By and Sort Order dropdowns:
+          </p>
+          <ul class="feature-list">
+            <li class="feature-item"><strong>By Date:</strong> Order groups chronologically</li>
+            <li class="feature-item"><strong>By Commit Count:</strong> Most or least active periods first</li>
+            <li class="feature-item"><strong>Newest/Oldest First:</strong> Reverse the sort direction</li>
+          </ul>
+        </div>
+      </section>
+      
+      <!-- CTA -->
+      <div class="cta-section">
+        <h3 class="cta-title">Ready to Explore?</h3>
+        <a href="index.html" class="cta-button">View Reports</a>
+      </div>
+      
+    </div>
+  </div>
+  
+  <script src="js/color-picker.js"></script>
+</body>
+</html>
+
