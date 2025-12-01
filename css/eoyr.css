@@ -188,9 +188,11 @@
 /* Filter Controls Section - Styled to match stories page */
 .eoyr-filters {
   padding: 2rem 4rem;
-  background-color: var(--eoyr-black);
-  border-bottom: 2px solid var(--eoyr-neon-blue);
+  background-color: var(--eoyr-black, #0a0a0a);
+  border-bottom: 2px solid var(--eoyr-neon-green);
   margin-bottom: 0;
+  position: relative;
+  z-index: 10;
 }
 
 @media (max-width: 991px) {
@@ -212,6 +214,9 @@
   flex-wrap: wrap;
   gap: 1rem;
   align-items: flex-end;
+  position: relative;
+  z-index: 10;
+  padding-bottom: 2rem;
 }
 
 .eoyr-filter-group {
@@ -220,6 +225,8 @@
   gap: 0.5rem;
   min-width: 150px;
   flex: 1 1 auto;
+  position: relative;
+  z-index: 10;
 }
 
 .eoyr-filter-group label {
@@ -234,13 +241,15 @@
 .eoyr-filter-input,
 .eoyr-filter-select {
   padding: 0.75rem;
-  border: 2px solid var(--eoyr-neon-blue);
+  border: 2px solid var(--eoyr-neon-green);
   border-radius: 0;
   font-size: 1rem;
-  background: var(--eoyr-black);
-  color: var(--eoyr-neon-blue);
+  background: var(--eoyr-black, #0a0a0a);
+  color: var(--eoyr-neon-green);
   transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
   font-family: "Exo 2", sans-serif;
+  position: relative;
+  z-index: 10;
 }
 
 .eoyr-filter-input:focus,
@@ -942,11 +951,13 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   padding: 0.75rem;
-  background-color: var(--eoyr-black);
-  border: 1px solid var(--eoyr-neon-blue);
+  background-color: var(--eoyr-black, #0a0a0a);
+  border: 1px solid var(--eoyr-neon-green);
   border-radius: 4px;
   max-height: 150px;
   overflow-y: auto;
+  position: relative;
+  z-index: 10;
 }
 
 .eoyr-project-loading {
