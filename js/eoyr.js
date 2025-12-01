@@ -312,6 +312,9 @@ function renderCommitGroups(data, sortOptions = {}) {
   
   // Add click handlers for group toggling
   setupGroupToggle();
+  
+  // Setup the Expand All / Collapse All toggle button (groups start collapsed)
+  setupToggleAll();
 }
 
 /**
@@ -341,9 +344,80 @@ function setupGroupToggle() {
         if (toggleIcon) {
           toggleIcon.classList.toggle('rotated', isHidden);
         }
+        // Update toggle all button text based on current state
+        updateToggleAllButton();
       }
     });
   });
+}
+
+/**
+ * Sets up the Expand All / Collapse All toggle button
+ */
+function setupToggleAll() {
+  const toggleBtn = document.getElementById('eoyr-toggle-all');
+  if (!toggleBtn) return;
+  
+  // Default state: groups are collapsed, so button says "Expand All"
+  collapseAllGroups();
+  
+  toggleBtn.addEventListener('click', () => {
+    const allCollapsed = areAllGroupsCollapsed();
+    
+    if (allCollapsed) {
+      expandAllGroups();
+    } else {
+      collapseAllGroups();
+    }
+  });
+}
+
+/**
+ * Checks if all groups are currently collapsed
+ * @returns {boolean}
+ */
+function areAllGroupsCollapsed() {
+  const containers = document.querySelectorAll('[data-group-commits]');
+  if (containers.length === 0) return true;
+  
+  return Array.from(containers).every(c => c.classList.contains('collapsed'));
+}
+
+/**
+ * Expands all commit groups
+ */
+function expandAllGroups() {
+  document.querySelectorAll('[data-group-commits]').forEach(container => {
+    container.classList.remove('collapsed');
+  });
+  document.querySelectorAll('.group-toggle').forEach(icon => {
+    icon.classList.remove('rotated');
+  });
+  updateToggleAllButton();
+}
+
+/**
+ * Collapses all commit groups
+ */
+function collapseAllGroups() {
+  document.querySelectorAll('[data-group-commits]').forEach(container => {
+    container.classList.add('collapsed');
+  });
+  document.querySelectorAll('.group-toggle').forEach(icon => {
+    icon.classList.add('rotated');
+  });
+  updateToggleAllButton();
+}
+
+/**
+ * Updates the Expand All / Collapse All button text based on current state
+ */
+function updateToggleAllButton() {
+  const toggleBtn = document.getElementById('eoyr-toggle-all');
+  if (!toggleBtn) return;
+  
+  const allCollapsed = areAllGroupsCollapsed();
+  toggleBtn.textContent = allCollapsed ? 'Expand All' : 'Collapse All';
 }
 
 /**
