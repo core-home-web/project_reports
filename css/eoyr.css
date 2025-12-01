@@ -598,13 +598,13 @@
 }
 
 /* Stories page navbar color overrides - dark theme */
-/* Change brown/beige backgrounds to dark theme (light black and dark grey) */
+/* Left panel: subtle dark tint of theme color, Right panel: pure dark */
 .navbar-left {
-  background-color: #1a1a1a !important; /* was #fff5ef - light beige */
+  background-color: var(--eoyr-dark-green, #0a1f0d) !important; /* subtle dark theme color tint */
 }
 
 .navbar-right {
-  background-color: #2a2a2a !important; /* was #e7d4ca - light brown */
+  background-color: #0a0a0a !important; /* pure dark for contrast */
 }
 
 .navbar-right-item {
@@ -1120,10 +1120,13 @@
   font-family: "Exo 2", sans-serif !important;
 }
 
-/* Ensure navigation uses green theme */
-.navbar-left,
+/* Ensure navigation uses theme colors */
+.navbar-left {
+  background-color: var(--eoyr-dark-green, #0a1f0d) !important; /* subtle theme color tint */
+}
+
 .navbar-right {
-  background-color: var(--eoyr-black, #0a0a0a) !important;
+  background-color: var(--eoyr-black, #0a0a0a) !important; /* pure dark */
 }
 
 .nav-link-item,
