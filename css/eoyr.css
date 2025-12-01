@@ -216,7 +216,21 @@
   align-items: flex-end;
   position: relative;
   z-index: 10;
-  padding-bottom: 2rem;
+}
+
+/* Sort row - positioned above the SVG cube */
+.eoyr-sort-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  width: 100%;
+  max-width: 1200px;
+  margin: 1rem auto 0;
+  padding: 1rem 0 2rem;
+  background-color: var(--eoyr-black, #0a0a0a);
+  position: relative;
+  z-index: 10;
 }
 
 .eoyr-filter-group {
@@ -545,6 +559,15 @@
   }
   
   .eoyr-filter-group {
+    width: 100%;
+  }
+  
+  .eoyr-sort-row {
+    flex-direction: column;
+    padding: 1rem 0;
+  }
+  
+  .eoyr-sort-row .eoyr-filter-group {
     width: 100%;
   }
   
