@@ -3,7 +3,7 @@
  * Handles GitHub OAuth authentication and session management
  */
 
-const API_BASE_URL = window.API_BASE_URL || window.location.origin;
+const API_BASE_URL = window.API_BASE_URL || (window.API_BASE_URL = window.location.origin);
 
 let currentUser = null;
 

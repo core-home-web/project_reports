@@ -3,7 +3,11 @@
  * Handles fetching and selecting GitHub repositories
  */
 
-const API_BASE_URL = window.API_BASE_URL || window.location.origin;
+// Use existing API_BASE_URL if defined, otherwise set it
+if (typeof window.API_BASE_URL === 'undefined') {
+  window.API_BASE_URL = window.location.origin;
+}
+const API_BASE_URL = window.API_BASE_URL;
 
 let availableRepos = [];
 let selectedRepos = [];
