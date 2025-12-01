@@ -320,6 +320,12 @@ function getCacheKey(endpoint, params = {}) {
  * @returns {Promise<Object|null>} Cached data or null
  */
 async function getCachedData(env, key) {
+  // Skip caching if KV namespace is not available
+  if (!env.EOYR_CACHE) {
+    console.log('KV namespace not available, skipping cache read');
+    return null;
+  }
+  
   try {
     const cached = await env.EOYR_CACHE.get(key, 'json');
     if (cached && cached.expires > Date.now()) {
@@ -339,6 +345,12 @@ async function getCachedData(env, key) {
  * @param {number} ttl - Time to live in seconds
  */
 async function setCachedData(env, key, data, ttl = CACHE_TTL) {
+  // Skip caching if KV namespace is not available
+  if (!env.EOYR_CACHE) {
+    console.log('KV namespace not available, skipping cache write');
+    return;
+  }
+  
   try {
     const cacheValue = {
       data: data,

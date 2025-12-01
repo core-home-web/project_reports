@@ -4,10 +4,11 @@ compatibility_date = "2025-11-30"
 workers_dev = true
 preview_urls = true
 
-# KV Namespace binding
-[[kv_namespaces]]
-binding = "EOYR_CACHE"
-id = "da03e8cf85c9420b9db2831526f8aa8f"
+# Note: KV Namespace binding was removed due to namespace not found error.
+# To enable caching, create a new KV namespace in Cloudflare Dashboard and add:
+# [[kv_namespaces]]
+# binding = "EOYR_CACHE"
+# id = "your-kv-namespace-id"
 
 # Note: Environment variables (GITHUB_TOKEN, GITHUB_ORG, WEBHOOK_SECRET, REPOS_CONFIG)
 # should be set in Cloudflare Dashboard under Settings > Variables and Secrets
