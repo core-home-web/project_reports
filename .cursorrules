@@ -17,6 +17,7 @@
 5. **Clean code**: Modular, well-commented, consistent naming conventions
 6. **Scalable**: Design for growth (more repos, more data, more users)
 7. **Reusable**: Components and functions should be generic enough for other use cases
+8. **Test before pushing**: After every new implementation, run a test to ensure the console doesn't report errors. If there are no errors, push to the git repo
 
 ### UI/UX Design Guidelines
 - **User-centered design**: Keep end users at the center of every decision
