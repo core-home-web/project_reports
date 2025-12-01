@@ -106,6 +106,31 @@
   color: var(--eoyr-black) !important;
 }
 
+/* Color Picker Button - Make it look like an obvious button */
+.nav-color-picker-button {
+  display: inline-block !important;
+  padding: 0.75rem 1.5rem !important;
+  border: 2px solid var(--eoyr-neon-green) !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  transition: all 0.3s ease !important;
+  margin-top: 0.5rem !important;
+}
+
+.nav-color-picker-button:hover {
+  background: var(--eoyr-neon-green) !important;
+  box-shadow: 0 0 20px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3)) !important;
+}
+
+.nav-color-picker-button:hover .nav-link-text {
+  color: var(--eoyr-black) !important;
+}
+
+.nav-color-picker-button .nav-link-text {
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+}
+
 /* Filter Controls Section - Styled to match stories page */
 .eoyr-filters {
   padding: 2rem 4rem;
