@@ -70,6 +70,28 @@
   color: var(--eoyr-black) !important;
 }
 
+/* Ensure ALL child elements have black text on hover */
+.block-content:hover *,
+.block-content:hover .block-title,
+.block-content:hover .block-title-wrapper,
+.block-content:hover h4,
+.block-content:hover span,
+.block-content:hover .commit-message,
+.block-content:hover .commit-repo,
+.block-content:hover .sha-badge,
+.block-content:hover .commit-author,
+.block-content:hover .commit-date {
+  color: var(--eoyr-black) !important;
+  text-shadow: none !important;
+}
+
+/* Badges should also have black text and border on hover */
+.block-content:hover .commit-repo,
+.block-content:hover .sha-badge {
+  background-color: rgba(0, 0, 0, 0.15) !important;
+  border-color: var(--eoyr-black) !important;
+}
+
 /* Menu button - override orange background */
 .nav-toggle-inner {
   background-color: var(--eoyr-neon-green) !important;
