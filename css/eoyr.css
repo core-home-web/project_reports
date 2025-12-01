@@ -188,7 +188,7 @@
 /* Filter Controls Section - Styled to match stories page */
 .eoyr-filters {
   padding: 2rem 4rem;
-  background-color: var(--eoyr-black, #0a0a0a);
+  background-color: transparent; /* Transparent to show SVG cube lines */
   border-bottom: 2px solid var(--eoyr-neon-green);
   margin-bottom: 0;
   position: relative;
