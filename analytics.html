@@ -51,7 +51,7 @@
     
     .analytics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 2rem;
       margin-top: 2rem;
     }
@@ -64,6 +64,9 @@
       transition: all 0.3s ease;
       text-decoration: none;
       display: block;
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
     }
     
     .analytics-card:hover {
@@ -206,8 +209,24 @@
       </header>
       
       <div class="analytics-grid">
+        <!-- BKLYN Steel Co -->
+        <button onclick="requestAnalyticsReport('BKLYN Steel Co')" class="analytics-card">
+          <svg class="analytics-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 3v18h18V3H3zm16 16H5V5h14v14zM7 7h4v10H7V7zm6 4h4v6h-4v-6zm0-4h4v2h-4V7z"/>
+          </svg>
+          <h3 class="analytics-card-title">BKLYN Steel Co</h3>
+          <p class="analytics-card-description">Brooklyn-inspired espresso machines and coffee craftsmanship</p>
+          <p class="analytics-card-url">s5eerhxmam7z8dzh-61741072543.shopifypreview.com</p>
+          <span class="analytics-button">
+            Request Analytics Report
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </span>
+        </button>
+        
         <!-- Hydragear Bottle -->
-        <a href="https://analytics.google.com/analytics/web/#/p123456789/reports/dashboard" target="_blank" class="analytics-card">
+        <button onclick="requestAnalyticsReport('Hydragear Bottle')" class="analytics-card">
           <svg class="analytics-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
             <path d="M3 3v18h18V3H3zm16 16H5V5h14v14zM7 7h4v10H7V7zm6 4h4v6h-4v-6zm0-4h4v2h-4V7z"/>
           </svg>
@@ -215,47 +234,31 @@
           <p class="analytics-card-description">Hydration that goes wherever you go - premium insulated bottles for the bold traveler</p>
           <p class="analytics-card-url">hydragearbottle.com</p>
           <span class="analytics-button">
-            View Analytics
+            Request Analytics Report
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
             </svg>
           </span>
-        </a>
+        </button>
         
-        <!-- Spice St Market -->
-        <a href="https://analytics.google.com/analytics/web/#/p987654321/reports/dashboard" target="_blank" class="analytics-card">
+        <!-- Manna Hydration -->
+        <button onclick="requestAnalyticsReport('Manna Hydration')" class="analytics-card">
           <svg class="analytics-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
             <path d="M3 3v18h18V3H3zm16 16H5V5h14v14zM7 7h4v10H7V7zm6 4h4v6h-4v-6zm0-4h4v2h-4V7z"/>
           </svg>
-          <h3 class="analytics-card-title">Spice St Market</h3>
-          <p class="analytics-card-description">Add flavor to the everyday - curated spice packs for home cooks</p>
-          <p class="analytics-card-url">spicestmarket.com</p>
+          <h3 class="analytics-card-title">Manna Hydration</h3>
+          <p class="analytics-card-description">Premium hydration solutions for your active lifestyle</p>
+          <p class="analytics-card-url">mannahydration.com</p>
           <span class="analytics-button">
-            View Analytics
+            Request Analytics Report
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
             </svg>
           </span>
-        </a>
-        
-        <!-- People of Spice -->
-        <a href="https://analytics.google.com/analytics/web/#/p456789123/reports/dashboard" target="_blank" class="analytics-card">
-          <svg class="analytics-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M3 3v18h18V3H3zm16 16H5V5h14v14zM7 7h4v10H7V7zm6 4h4v6h-4v-6zm0-4h4v2h-4V7z"/>
-          </svg>
-          <h3 class="analytics-card-title">People of Spice</h3>
-          <p class="analytics-card-description">Unique & authentic flavors - savor the knowledge of having a world of spices</p>
-          <p class="analytics-card-url">peopleofspice.com</p>
-          <span class="analytics-button">
-            View Analytics
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
-            </svg>
-          </span>
-        </a>
+        </button>
         
         <!-- Outlaw Spice -->
-        <a href="https://analytics.google.com/analytics/web/#/p789123456/reports/dashboard" target="_blank" class="analytics-card">
+        <button onclick="requestAnalyticsReport('Outlaw Spice')" class="analytics-card">
           <svg class="analytics-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
             <path d="M3 3v18h18V3H3zm16 16H5V5h14v14zM7 7h4v10H7V7zm6 4h4v6h-4v-6zm0-4h4v2h-4V7z"/>
           </svg>
@@ -263,12 +266,92 @@
           <p class="analytics-card-description">Unleash your inner grill master - bold seasonings for BBQ and tailgates</p>
           <p class="analytics-card-url">outlawspice.com</p>
           <span class="analytics-button">
-            View Analytics
+            Request Analytics Report
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
             </svg>
           </span>
-        </a>
+        </button>
+        
+        <!-- People of Spice -->
+        <button onclick="requestAnalyticsReport('People of Spice')" class="analytics-card">
+          <svg class="analytics-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 3v18h18V3H3zm16 16H5V5h14v14zM7 7h4v10H7V7zm6 4h4v6h-4v-6zm0-4h4v2h-4V7z"/>
+          </svg>
+          <h3 class="analytics-card-title">People of Spice</h3>
+          <p class="analytics-card-description">Unique & authentic flavors - savor the knowledge of having a world of spices</p>
+          <p class="analytics-card-url">peopleofspice.com</p>
+          <span class="analytics-button">
+            Request Analytics Report
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </span>
+        </button>
+        
+        <!-- Render Portal -->
+        <button onclick="requestAnalyticsReport('Render Portal')" class="analytics-card">
+          <svg class="analytics-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 3v18h18V3H3zm16 16H5V5h14v14zM7 7h4v10H7V7zm6 4h4v6h-4v-6zm0-4h4v2h-4V7z"/>
+          </svg>
+          <h3 class="analytics-card-title">Render Portal</h3>
+          <p class="analytics-card-description">3D render request & management system for product visualization</p>
+          <p class="analytics-card-url">core-render-portal.vercel.app</p>
+          <span class="analytics-button">
+            Request Analytics Report
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </span>
+        </button>
+        
+        <!-- Spice St Market -->
+        <button onclick="requestAnalyticsReport('Spice St Market')" class="analytics-card">
+          <svg class="analytics-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 3v18h18V3H3zm16 16H5V5h14v14zM7 7h4v10H7V7zm6 4h4v6h-4v-6zm0-4h4v2h-4V7z"/>
+          </svg>
+          <h3 class="analytics-card-title">Spice St Market</h3>
+          <p class="analytics-card-description">Add flavor to the everyday - curated spice packs for home cooks</p>
+          <p class="analytics-card-url">spicestmarket.com</p>
+          <span class="analytics-button">
+            Request Analytics Report
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </span>
+        </button>
+        
+        <!-- TAL Hydration -->
+        <button onclick="requestAnalyticsReport('TAL Hydration')" class="analytics-card">
+          <svg class="analytics-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 3v18h18V3H3zm16 16H5V5h14v14zM7 7h4v10H7V7zm6 4h4v6h-4v-6zm0-4h4v2h-4V7z"/>
+          </svg>
+          <h3 class="analytics-card-title">TAL Hydration</h3>
+          <p class="analytics-card-description">Durable water bottles and tumblers for every adventure</p>
+          <p class="analytics-card-url">talhydration.com</p>
+          <span class="analytics-button">
+            Request Analytics Report
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </span>
+        </button>
+        
+        <!-- Thyme & Table -->
+        <button onclick="requestAnalyticsReport('Thyme & Table')" class="analytics-card">
+          <svg class="analytics-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 3v18h18V3H3zm16 16H5V5h14v14zM7 7h4v10H7V7zm6 4h4v6h-4v-6zm0-4h4v2h-4V7z"/>
+          </svg>
+          <h3 class="analytics-card-title">Thyme & Table</h3>
+          <p class="analytics-card-description">Trend-forward kitchen and home essentials with vibrant style</p>
+          <p class="analytics-card-url">shopthymeandtable.com</p>
+          <span class="analytics-button">
+            Request Analytics Report
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </span>
+        </button>
       </div>
       
       <div class="analytics-note">
@@ -282,6 +365,37 @@
   </div>
   
   <script src="js/color-picker.js"></script>
+  
+  <script>
+    function requestAnalyticsReport(websiteName) {
+      // Prompt user for their email address
+      const userEmail = prompt(`Request Analytics Report for ${websiteName}\n\nPlease enter your email address to receive the report:`);
+      
+      if (!userEmail) {
+        return; // User cancelled
+      }
+      
+      // Basic email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(userEmail)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+      
+      // Send email notification using mailto link
+      const subject = `Analytics Report Request for ${websiteName}`;
+      const body = `Analytics Report Request for ${websiteName}\n\nSend report to: ${userEmail}`;
+      const mailtoLink = `mailto:corehomeweb2@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      
+      // Open mail client
+      window.location.href = mailtoLink;
+      
+      // Show confirmation
+      setTimeout(() => {
+        alert(`Request submitted! An email notification has been sent to corehomeweb2@gmail.com with your request for ${websiteName} analytics.`);
+      }, 500);
+    }
+  </script>
 </body>
 </html>
 
