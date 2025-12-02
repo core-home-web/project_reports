@@ -48,6 +48,19 @@ pointer-events: none;
 .opening-block {
 pointer-events: none;
 }
+.project-preview {
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 0, 0.2);
+  margin-bottom: 16px;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 50, 0, 0.4) 100%);
+}
+.project-card-content {
+  display: flex;
+  flex-direction: column;
+}
 </style>
     </div>
   <div class="remove-webflow-interactions w-embed w-script">
@@ -198,6 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
                               <div class="scale-on-hover">
                                 <a href="https://hydragearbottle.com" target="_blank" class="navbar-right-item project-card w-inline-block">
                                   <div class="project-card-content">
+                                    <iframe src="https://hydragearbottle.com" class="project-preview" frameborder="0"></iframe>
                                     <div class="navbar-right-text project-title">Hydragear Bottle</div>
                                     <div class="project-description">Hydration that goes wherever you go - premium insulated bottles for the bold traveler</div>
                                   </div>
@@ -206,6 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
                               <div class="scale-on-hover">
                                 <a href="https://spicestmarket.com" target="_blank" class="navbar-right-item project-card w-inline-block">
                                   <div class="project-card-content">
+                                    <iframe src="https://spicestmarket.com" class="project-preview" frameborder="0"></iframe>
                                     <div class="navbar-right-text project-title">Spice St Market</div>
                                     <div class="project-description">Add flavor to the everyday - curated spice packs for home cooks</div>
                                   </div>
@@ -214,6 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
                               <div class="scale-on-hover">
                                 <a href="https://peopleofspice.com" target="_blank" class="navbar-right-item project-card w-inline-block">
                                   <div class="project-card-content">
+                                    <iframe src="https://peopleofspice.com" class="project-preview" frameborder="0"></iframe>
                                     <div class="navbar-right-text project-title">People of Spice</div>
                                     <div class="project-description">Unique & authentic flavors - savor the knowledge of having a world of spices</div>
                                   </div>
@@ -222,6 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
                               <div class="scale-on-hover">
                                 <a href="https://outlawspice.com" target="_blank" class="navbar-right-item project-card w-inline-block">
                                   <div class="project-card-content">
+                                    <iframe src="https://outlawspice.com" class="project-preview" frameborder="0"></iframe>
                                     <div class="navbar-right-text project-title">Outlaw Spice</div>
                                     <div class="project-description">Unleash your inner grill master - bold seasonings for BBQ and tailgates</div>
                                   </div>
