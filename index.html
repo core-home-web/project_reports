@@ -74,10 +74,32 @@ pointer-events: none;
   display: flex;
   flex-direction: column;
 }
-.menu-spline-logo-container spline-viewer {
+.menu-spline-logo-container {
+  width: 100%;
+  height: 200px;
+  margin: 1.5em 0;
+}
+.menu-spline-logo-container canvas {
   width: 100%;
   height: 100%;
   display: block;
+}
+.page-padding.is-navbar {
+  max-height: 100svh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.navbar-left-inner {
+  max-height: 100svh;
+  overflow: hidden;
+}
+.nav-links-column.is-main {
+  flex-shrink: 0;
+}
+.nav-links-column:not(.is-main) {
+  flex-shrink: 0;
+  margin-top: auto;
 }
 .project-preview-image {
   width: 100%;
@@ -199,7 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             </div>
                             <!-- Spline Logo in Menu -->
                             <div class="menu-spline-logo-container">
-                              <spline-viewer url="https://prod.spline.design/9yMJUr26hCivv0YV/scene.splinecode"></spline-viewer>
+                              <canvas id="spline-menu-logo" class="spline-logo-menu"></canvas>
                             </div>
                             <div class="nav-links-column">
                               <div style="-webkit-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="nav-animate-1">
@@ -479,24 +501,23 @@ document.addEventListener("DOMContentLoaded", () => {
       if (typeof initSplineLogo === 'function') {
         // Main navbar logo
         initSplineLogo('spline-logo-canvas', 'https://prod.spline.design/TiU9lObPNAba4cNs/scene.splinecode');
+        // Menu logo with big 3D scene
+        initSplineLogo('spline-menu-logo', 'https://prod.spline.design/9yMJUr26hCivv0YV/scene.splinecode');
       }
       
-      // Handle spline-viewer reinitialization when menu opens
+      // Handle menu logo reinitialization when menu opens
       const navbarMenu = document.querySelector('.navbar-fullscreen-component');
-      const splineViewer = document.querySelector('.menu-spline-logo-container spline-viewer');
       
-      if (navbarMenu && splineViewer) {
+      if (navbarMenu) {
         const observer = new MutationObserver((mutations) => {
           mutations.forEach((mutation) => {
             if (mutation.attributeName === 'style') {
               const isVisible = navbarMenu.style.display !== 'none';
-              if (isVisible) {
-                // Force spline-viewer to refresh by removing and re-adding
-                const parent = splineViewer.parentElement;
-                const newViewer = document.createElement('spline-viewer');
-                newViewer.setAttribute('url', 'https://prod.spline.design/9yMJUr26hCivv0YV/scene.splinecode');
-                parent.innerHTML = '';
-                parent.appendChild(newViewer);
+              if (isVisible && typeof initSplineLogo === 'function') {
+                // Reinitialize menu logo when menu becomes visible
+                setTimeout(() => {
+                  initSplineLogo('spline-menu-logo', 'https://prod.spline.design/9yMJUr26hCivv0YV/scene.splinecode');
+                }, 100);
               }
             }
           });
