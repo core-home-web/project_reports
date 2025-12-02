@@ -1,497 +1,343 @@
-# Implementation Roadmap
+# Development Roadmap
 
 ## Current Status
 
-This template provides the **foundation** for a multi-tenant GitHub dashboard. The basic structure is in place, but key features require implementation.
+This template provides the foundation for a multi-tenant GitHub dashboard. The core architecture is in place, but several features need implementation to achieve full functionality.
 
-### What's Included
+### ✅ Completed
 
-✅ **Frontend Structure**
-- HTML layout with authentication UI placeholders
-- Dashboard components (filters, date picker, week views)
-- CSS styling from parent project
-- JavaScript modules (auth.js, repo-selector.js, eoyr.js)
+- **Frontend UI**: Dashboard interface with week/day views
+- **Styling**: Responsive design with Webflow-based CSS
+- **Repository Selector UI**: Interface for selecting repositories
+- **Authentication UI**: Login/logout buttons and user profile display
+- **Worker Structure**: Basic Cloudflare Worker setup
+- **Deployment Configuration**: Vercel and Wrangler configs
+- **Documentation**: Comprehensive guides for architecture, deployment, customization
 
-✅ **Backend Structure**
-- Cloudflare Worker skeleton (`workers/github-commits.js`)
-- Wrangler configuration (`wrangler.toml`)
-- KV namespace setup guide
+### 🚧 In Progress / Needs Implementation
 
-✅ **Documentation**
-- Architecture overview
-- Deployment guide
-- This roadmap
-- Customization guide
-
-### What Needs Implementation
-
-❌ **OAuth Authentication** (Phase 1)
-- GitHub OAuth endpoints in Worker
-- Session management with KV
-- Token encryption/decryption
-- Frontend auth UI integration
-
-❌ **User Data Storage** (Phase 2)
-- User profile storage
-- Repository selection storage
-- User preferences
-- Cache isolation per user
-
-❌ **Multi-Tenant APIs** (Phase 3)
-- User-scoped API endpoints
-- Repository selection APIs
-- User-specific GitHub API calls
-
-❌ **Repository Selector UI** (Phase 3)
-- Fetch available repos from GitHub
-- Display repo list with checkboxes
-- Save/load user selections
-- Integrate with dashboard
+- **OAuth Integration**: GitHub OAuth flow (endpoints defined, needs implementation)
+- **Session Management**: Session creation, validation, and storage in KV
+- **User Data Storage**: KV schema for user tokens, repos, preferences
+- **User-Scoped APIs**: Update endpoints to handle per-user data
+- **Token Encryption**: Encrypt GitHub tokens before storing
+- **Repository Management**: Save/load user repository selection
+- **Cache Isolation**: User-scoped caching strategy
 
 ## Implementation Phases
 
-### Phase 1: OAuth Foundation (Est. 8-12 hours)
-
-Build the authentication system to allow users to login with GitHub.
-
-#### 1.1 Worker OAuth Endpoints
-
-**File:** [`workers/github-commits.js`](workers/github-commits.js)
+### Phase 1: OAuth Foundation ⏳
+
+**Objective**: Implement secure GitHub authentication
+
+**Tasks**:
+1. Add OAuth endpoints to Worker
+   - `GET /auth/github` - Initiate OAuth flow
+   - `GET /auth/github/callback` - Handle callback
+   - `GET /auth/logout` - Clear session
+   - `GET /auth/me` - Get current user
+
+2. Implement session management
+   - Generate secure session tokens
+   - Store sessions in KV with TTL
+   - Validate sessions on protected routes
+   - Set HTTP-only cookies
+
+3. Create authentication module (`js/auth.js`)
+   - `checkAuth()` - Check login status
+   - `redirectToLogin()` - Initiate OAuth
+   - `getCurrentUser()` - Fetch user profile
+   - `logout()` - Clear session
+
+4. Add authentication UI
+   - Login button on homepage
+   - User profile display when logged in
+   - Logout button in navigation
+   - Protected routes redirect to login
+
+**Estimated Time**: 1-2 days
+
+**Files to Modify**:
+- [`workers/github-commits.js`](workers/github-commits.js)
+- [`js/auth.js`](js/auth.js)
+- [`index.html`](index.html)
+
+### Phase 2: User Data Storage 🔄
+
+**Objective**: Store and retrieve user-specific data
+
+**Tasks**:
+1. Implement KV storage helpers
+   - `getUserFromSession(request)` - Extract user from cookie
+   - `getUserToken(env, userId)` - Get user's GitHub token
+   - `saveUserToken(env, userId, token)` - Store encrypted token
+   - `getUserRepos(env, userId)` - Get user's selected repos
+   - `saveUserRepos(env, userId, repos)` - Store repo selection
+
+2. Add token encryption
+   - Use Web Crypto API (SubtleCrypto)
+   - Encrypt tokens before KV storage
+   - Decrypt when needed for API calls
+
+3. Update API endpoints to be user-scoped
+   - Extract userId from session
+   - Use user's GitHub token for API calls
+   - Filter data based on user's selected repos
+
+4. Implement middleware
+   - Session validation middleware
+   - Error handling for auth failures
+   - Rate limiting per user (optional)
+
+**Estimated Time**: 2-3 days
+
+**Files to Modify**:
+- [`workers/github-commits.js`](workers/github-commits.js)
+- [`wrangler.toml`](wrangler.toml)
+
+### Phase 3: Repository Selection 📦
+
+**Objective**: Allow users to select which repositories to track
+
+**Tasks**:
+1. Build repository selector UI
+   - Modal or settings page
+   - List available repos from GitHub
+   - Checkboxes for selection
+   - Search/filter functionality
+   - Save button
+
+2. Create repo selector module (`js/repo-selector.js`)
+   - `fetchAvailableRepos()` - Get all accessible repos
+   - `loadSelectedRepos()` - Load saved selection
+   - `saveRepos(repos)` - Persist to backend
+   - `renderRepoList(repos)` - Render UI
+
+3. Add backend endpoints
+   - `GET /api/user/repos/available` - List all repos
+   - `POST /api/user/repos` - Save selection
+   - `GET /api/user/repos` - Get saved selection
+
+4. Update commit fetching
+   - Use user's selected repos
+   - Handle empty selection gracefully
+   - Show placeholder when no repos selected
+
+**Estimated Time**: 2-3 days
+
+**Files to Modify**:
+- [`js/repo-selector.js`](js/repo-selector.js)
+- [`index.html`](index.html)
+- [`css/eoyr.css`](css/eoyr.css)
+- [`workers/github-commits.js`](workers/github-commits.js)
 
-```javascript
-// Implement these endpoints:
-GET  /auth/github
-     - Generate state token (CSRF protection)
-     - Store state in KV with 10-min TTL
-     - Redirect to GitHub OAuth authorize URL
-
-GET  /auth/github/callback?code=XXX&state=YYY
-     - Validate state parameter
-     - Exchange code for access token
-     - Create user profile in KV
-     - Generate session token
-     - Set HTTP-only session cookie
-     - Redirect to dashboard
-
-GET  /auth/logout
-     - Delete session from KV
-     - Clear session cookie
-     - Redirect to login page
-
-GET  /auth/me
-     - Validate session cookie
-     - Return user profile
-     - Returns: {userId, username, avatarUrl}
-```
-
-**Helper Functions Needed:**
-- `generateState()` - Create random CSRF token
-- `validateState(state)` - Verify state exists in KV
-- `exchangeCodeForToken(code)` - Call GitHub OAuth token endpoint
-- `createSession(userId)` - Generate session token, store in KV
-- `validateSession(request)` - Extract and validate session cookie
-- `encryptToken(token)` - Encrypt GitHub token before storage
-- `decryptToken(encrypted)` - Decrypt GitHub token
-
-#### 1.2 Frontend Auth Integration
+### Phase 4: Polish & Security 🔐
 
-**File:** [`js/auth.js`](js/auth.js)
+**Objective**: Production-ready security and UX
 
-```javascript
-// Implement these functions:
-async function checkAuth()
-     - Fetch /auth/me
-     - If 401, redirect to login page
-     - If 200, return user info
-
-function redirectToLogin()
-     - Redirect to /auth/github
+**Tasks**:
+1. Security enhancements
+   - CSRF protection (state parameter)
+   - Input sanitization
+   - Rate limiting
+   - Secure cookie settings
+   - Token rotation strategy
 
-async function logout()
-     - Fetch /auth/logout
-     - Clear local state
-     - Redirect to login page
-
-async function getCurrentUser()
-     - Return cached user info from checkAuth()
-```
+2. Error handling
+   - Graceful OAuth failures
+   - API error messages
+   - Network failure recovery
+   - Session expiration handling
 
-**File:** [`index.html`](index.html)
+3. Loading states
+   - Skeleton screens
+   - Spinner components
+   - Progress indicators
+   - Optimistic updates
 
-- Add login button (shown when not authenticated)
-- Add user profile display in header (username, avatar)
-- Add logout button in dropdown menu
-- Call `checkAuth()` on page load
+4. Testing
+   - Manual testing of OAuth flow
+   - Test session management
+   - Verify data isolation
+   - Browser compatibility testing
 
-#### 1.3 Session Management
+**Estimated Time**: 1-2 days
 
-**Storage Schema:**
-```
-session:${token} → {userId, createdAt, expiresAt}
-oauth:state:${state} → {createdAt}
-```
+**Files to Modify**:
+- All worker and frontend files
+- [`css/eoyr.css`](css/eoyr.css)
 
-**Security Requirements:**
-- Session tokens: 32+ random bytes (hex encoded)
-- HTTP-only cookies with Secure and SameSite=Strict
-- 30-day session expiration
-- State tokens expire after 10 minutes
+## Future Features (Post-MVP)
 
-#### 1.4 Testing Phase 1
+### User Preferences 🎨
 
-- [ ] Can click "Login with GitHub"
-- [ ] Redirected to GitHub OAuth
-- [ ] After authorization, redirected back to dashboard
-- [ ] See username/avatar in header
-- [ ] Session persists after page reload
-- [ ] Can logout successfully
+**Description**: Allow users to customize their dashboard experience
 
----
+**Features**:
+- Default date range selection
+- Week start day (Monday vs Sunday)
+- Timezone settings
+- Color theme preferences
+- Data display options (compact vs detailed)
 
-### Phase 2: User Data Storage (Est. 6-8 hours)
+**Complexity**: Medium
+**Estimated Time**: 2-3 days
 
-Implement user-specific data storage and retrieval.
+### Team Dashboards 👥
 
-#### 2.1 User Profile Management
+**Description**: Support organization/team-level views
 
-**File:** [`workers/github-commits.js`](workers/github-commits.js)
-
-```javascript
-// Add helper functions:
-async function createUserProfile(env, userId, githubData)
-     - Store user:${userId}:profile
-     - Store user:${userId}:token (encrypted)
-
-async function getUserProfile(env, userId)
-     - Fetch user:${userId}:profile
-
-async function getUserToken(env, userId)
-     - Fetch user:${userId}:token
-     - Decrypt and return
-```
-
-**Storage Schema:**
-```
-user:${userId}:profile → {userId, username, avatarUrl, email, createdAt}
-user:${userId}:token → encrypted_github_token
-user:${userId}:repos → [repo1, repo2, ...]
-user:${userId}:preferences → {defaultDateRange, weekStartDay}
-```
-
-#### 2.2 Preferences API
-
-**File:** [`workers/github-commits.js`](workers/github-commits.js)
-
-```javascript
-// Implement endpoints:
-GET  /api/user/preferences
-     - Return user preferences or defaults
-
-POST /api/user/preferences
-     - Save user preferences
-     - Body: {defaultDateRange, weekStartDay, theme}
-```
-
-#### 2.3 Cache Isolation
-
-Update all caching to include userId in key:
-
-```javascript
-// Old: cache:repos
-// New: cache:${userId}:repos
-
-// Old: cache:commits:${params}
-// New: cache:${userId}:commits:${params}
-```
-
-#### 2.4 Testing Phase 2
-
-- [ ] User profile stored on first login
-- [ ] User profile retrieved on subsequent visits
-- [ ] GitHub token stored encrypted
-- [ ] Preferences can be saved and loaded
-- [ ] Different users have isolated data
-
----
-
-### Phase 3: Repository Selection (Est. 8-10 hours)
-
-Allow users to select which repositories to track.
-
-#### 3.1 Repository APIs
-
-**File:** [`workers/github-commits.js`](workers/github-commits.js)
-
-```javascript
-// Implement endpoints:
-GET  /api/user/repos/available
-     - Use user's GitHub token
-     - Fetch all repos from GitHub API
-     - Return: [{fullName, description, language, stars, private}]
-
-GET  /api/user/repos
-     - Fetch user:${userId}:repos from KV
-     - Return selected repo list
-
-POST /api/user/repos
-     - Save repos to user:${userId}:repos
-     - Clear cached commit data
-     - Body: {repos: [repo1, repo2, ...]}
-```
-
-#### 3.2 Repository Selector UI
-
-**File:** [`js/repo-selector.js`](js/repo-selector.js)
-
-```javascript
-async function fetchAvailableRepos()
-     - Call /api/user/repos/available
-     - Return list of all accessible repos
-
-async function loadSelectedRepos()
-     - Call /api/user/repos
-     - Return user's selected repos
-
-async function saveRepos(repos)
-     - Call POST /api/user/repos
-     - Update dashboard with new selection
-
-function renderRepoList(allRepos, selectedRepos)
-     - Display searchable list
-     - Checkboxes for selection
-     - Save button
-```
-
-**File:** [`index.html`](index.html)
-
-Add repository selector modal/page:
-- "Select Repositories" button in settings
-- Modal with searchable repo list
-- Checkboxes to select/deselect
-- Search/filter functionality
-- "Select All" / "Deselect All" buttons
-- Save button
-
-#### 3.3 Update Commit Fetching
-
-**File:** [`workers/github-commits.js`](workers/github-commits.js)
-
-Update `/api/commits` endpoint:
-- Get user from session
-- Load user's selected repos
-- If no repos selected, use all available repos
-- Fetch commits using user's GitHub token
-- Cache with user-scoped key
-
-#### 3.4 Testing Phase 3
-
-- [ ] Can view list of available repos
-- [ ] Can select/deselect repos
-- [ ] Selection is saved and persists
-- [ ] Dashboard shows commits from selected repos only
-- [ ] Changing selection updates dashboard
-
----
-
-### Phase 4: Polish & Security (Est. 6-8 hours)
-
-Improve UX, add error handling, and enhance security.
-
-#### 4.1 Error Handling
-
-**Worker:**
-- Catch and log all errors
-- Return user-friendly error messages
-- Handle GitHub API rate limits gracefully
-- Handle expired/invalid tokens
-
-**Frontend:**
-- Display error messages to users
-- Loading states during API calls
-- Retry logic for transient failures
-- Graceful degradation
-
-#### 4.2 Loading States
-
-Add loading indicators:
-- During authentication
-- While fetching repos
-- While loading commit data
-- During repo selection save
-
-#### 4.3 Security Enhancements
-
-- [ ] Validate all user inputs
-- [ ] Sanitize data before displaying
-- [ ] Implement rate limiting per user
-- [ ] Add CORS headers properly
-- [ ] Review token encryption implementation
-- [ ] Audit session management
-- [ ] Test for XSS vulnerabilities
-- [ ] Test for CSRF vulnerabilities
-
-#### 4.4 Performance Optimization
-
-- [ ] Optimize cache TTLs
-- [ ] Reduce unnecessary API calls
-- [ ] Minimize KV read/write operations
-- [ ] Lazy load repository list
-- [ ] Paginate large commit lists
-
-#### 4.5 UX Improvements
-
-- [ ] Better empty states (no repos selected, no commits)
-- [ ] Helpful onboarding for first-time users
-- [ ] Keyboard shortcuts
-- [ ] Mobile responsiveness
-- [ ] Accessibility audit (WCAG compliance)
-
-#### 4.6 Testing Phase 4
-
-- [ ] All error cases handled gracefully
-- [ ] Loading states work correctly
-- [ ] Performance is acceptable with large datasets
-- [ ] Works on mobile devices
-- [ ] Accessible to screen readers
-
----
-
-## Future Enhancements (Post-Launch)
-
-### Webhooks Integration
-
-Real-time updates when commits are pushed:
-
-```javascript
-POST /webhook/github
-     - Validate webhook signature
-     - Extract repo and commit info
-     - Invalidate cache for affected users
-     - Optionally trigger notifications
-```
-
-**Benefit:** Reduces GitHub API calls, provides real-time updates
-
-### Team Dashboards
-
-Allow users to create shared dashboards for teams:
-
-```javascript
-team:${teamId}:members → [userId1, userId2, ...]
-team:${teamId}:repos → [repo1, repo2, ...]
-```
-
-**Features:**
+**Features**:
+- Create teams/organizations
 - Invite team members
-- Aggregate commits across team
-- Team-wide statistics
-- Shared date ranges and filters
+- Aggregate team commit data
+- Team-level analytics
+- Role-based access control
 
-### Custom Metrics
+**Complexity**: High
+**Estimated Time**: 1-2 weeks
 
-Let users define custom commit categories:
+### Advanced Analytics 📊
 
-```javascript
-user:${userId}:categories → [
-  {name: "Bug Fixes", pattern: "fix:|bug:"},
-  {name: "Features", pattern: "feat:|feature:"}
-]
-```
+**Description**: Deeper insights into commit patterns
 
-**Features:**
-- Tag commits by category
-- Category-based filtering
-- Category statistics
+**Features**:
+- Commit timing heatmaps
+- Language/file type analysis
+- Contributor statistics
+- Trends over time
+- Comparative analytics
 
-### Export & Reports
+**Complexity**: Medium-High
+**Estimated Time**: 1 week
 
-Generate downloadable reports:
+### Webhook Integration 🔄
 
-```javascript
-GET /api/export/pdf?start=...&end=...
-GET /api/export/csv?start=...&end=...
-```
+**Description**: Real-time updates via GitHub webhooks
 
-**Formats:**
-- PDF summary report
+**Features**:
+- Register webhooks on selected repos
+- Handle push events
+- Invalidate cache on new commits
+- Real-time dashboard updates
+- Notification system
+
+**Complexity**: Medium
+**Estimated Time**: 3-5 days
+
+### Export & Reporting 📄
+
+**Description**: Generate shareable reports
+
+**Features**:
+- PDF report generation
 - CSV data export
-- Weekly email summaries
+- Shareable public links
+- Email reports
+- Scheduled reports
 
-### Advanced Analytics
+**Complexity**: Medium
+**Estimated Time**: 1 week
 
-More insights from commit data:
+### Multi-Platform Support 🌐
 
-- Code churn analysis (lines added/removed)
-- Contribution patterns (time of day, day of week)
-- Language breakdown
-- Commit message sentiment analysis
-- Productivity trends
+**Description**: Support other Git platforms
 
-### Integrations
+**Features**:
+- GitLab integration
+- Bitbucket integration
+- Self-hosted Git servers
+- Unified multi-platform view
 
-Connect with other tools:
+**Complexity**: High
+**Estimated Time**: 2-3 weeks per platform
 
-- Slack notifications
-- Discord webhooks
-- Email digests
-- Calendar integration (time tracking)
-- Jira/Linear issue linking
+### Mobile App 📱
 
----
+**Description**: Native mobile applications
 
-## Success Metrics
+**Features**:
+- React Native or Flutter app
+- Push notifications
+- Offline data caching
+- Touch-optimized UI
 
-### Technical Metrics
+**Complexity**: Very High
+**Estimated Time**: 2-3 months
 
-- **Response Time:** < 200ms for cached requests
-- **Error Rate:** < 1% of requests
-- **Uptime:** > 99.9%
-- **GitHub API Usage:** < 50% of rate limit
+## Known Limitations
 
-### User Metrics
+### Current Architecture
+- **KV Eventual Consistency**: Updates may take time to propagate globally
+- **Worker CPU Limits**: Limited to 50ms CPU time per request (Workers free tier)
+- **Rate Limits**: GitHub API has 5000 requests/hour per user
+- **Cache Strategy**: Simple TTL-based caching (no smart invalidation)
 
-- **Time to First Value:** < 2 minutes from signup to seeing data
-- **Daily Active Users:** Track retention
-- **Repositories per User:** Average selection size
-- **Feature Usage:** Which features are used most
+### Technical Debt
+- No automated testing
+- No CI/CD pipeline
+- Limited error monitoring
+- No performance profiling
+- Manual deployment process
 
-### Business Metrics (if applicable)
+## Contributing
 
-- **User Signups:** Growth rate
-- **Upgrade Rate:** Free to paid conversion (if offering paid tiers)
-- **Churn Rate:** User retention
-- **Support Tickets:** Measure product quality
+We welcome contributions! Here's how you can help:
 
----
+### Priority Areas
+1. **Implement OAuth flow** - Most critical missing piece
+2. **Add automated tests** - Improve code quality
+3. **Improve documentation** - Help others understand the code
+4. **UI/UX enhancements** - Make it more beautiful
+5. **Performance optimization** - Speed up data loading
 
-## Contribution Guidelines
+### Contribution Guidelines
 
-Want to implement features from this roadmap?
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/your-feature`
+3. **Follow code style**: Use existing patterns
+4. **Comment your code**: Explain complex logic
+5. **Test thoroughly**: Manual testing at minimum
+6. **Submit a pull request**: With clear description
 
-1. **Choose a phase** - Start with Phase 1 if OAuth isn't done
-2. **Read the architecture** - Understand system design first
-3. **Make a branch** - Create a feature branch
-4. **Implement & test** - Build and test the feature
-5. **Document changes** - Update relevant docs
-6. **Submit PR** - Include tests and documentation
+### Code Standards
+- **Naming**: camelCase for functions, kebab-case for files
+- **Comments**: Explain why, not what
+- **Modularity**: Small, focused functions
+- **Error handling**: Always handle errors gracefully
+- **Security**: Never commit secrets
 
-### Code Quality Standards
+## Release Schedule
 
-- Write clear, commented code
-- Follow existing naming conventions
-- Add error handling
-- Include loading states
-- Test on multiple browsers
-- Verify mobile responsiveness
-- Check accessibility
+### v0.1.0 (Current) - Template Foundation
+- Basic UI and structure
+- Documentation and deployment guides
 
----
+### v0.2.0 (Target: Q1 2026) - MVP
+- Complete OAuth implementation
+- User-scoped data storage
+- Repository selection
+- Basic security measures
 
-## Questions or Issues?
+### v0.3.0 (Target: Q2 2026) - Enhanced Features
+- User preferences
+- Advanced analytics
+- Webhook support
+- Export functionality
 
-- Review [`ARCHITECTURE.md`](ARCHITECTURE.md) for system design
-- Check [`DEPLOYMENT.md`](DEPLOYMENT.md) for setup help
-- See [`CUSTOMIZATION.md`](CUSTOMIZATION.md) for branding changes
+### v1.0.0 (Target: Q3 2026) - Production Ready
+- Full test coverage
+- Performance optimization
+- Complete documentation
+- Security audit
+- Monitoring and logging
 
-This is an open roadmap - adapt it to your needs!
+## Questions or Ideas?
 
+Open an issue on GitHub to:
+- Ask questions about implementation
+- Suggest new features
+- Report bugs or issues
+- Discuss architecture decisions
+
+We're excited to see what you build with this template!

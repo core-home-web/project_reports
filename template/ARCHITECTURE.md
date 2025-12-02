@@ -1,338 +1,354 @@
-# Architecture Overview
+# Architecture Documentation
 
-## System Design
+## System Overview
 
-This multi-tenant GitHub dashboard is built as a serverless SaaS application with clear separation between frontend, backend, and storage layers.
+This is a multi-tenant SaaS GitHub dashboard that allows users to authenticate with their GitHub account, select repositories to track, and view personalized commit reports organized by ISO week.
+
+## Technology Stack
+
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript
+- **Backend**: Cloudflare Workers (Serverless API)
+- **Storage**: Cloudflare KV (Key-Value store)
+- **Hosting**: Vercel (Frontend), Cloudflare Workers (Backend)
+- **Authentication**: GitHub OAuth 2.0
+
+## System Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                         User Browser                         │
-│  ┌─────────────┐  ┌──────────────┐  ┌──────────────────┐   │
-│  │   Auth UI   │  │  Dashboard   │  │  Repo Selector   │   │
-│  └─────────────┘  └──────────────┘  └──────────────────┘   │
-└────────────┬────────────────────────────────────────────────┘
-             │ HTTPS + Session Cookies
-             │
-┌────────────▼────────────────────────────────────────────────┐
-│              Cloudflare Worker (API Layer)                   │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐  │
-│  │ OAuth Routes │  │  User APIs   │  │  Commit APIs     │  │
-│  │ /auth/*      │  │ /api/user/*  │  │  /api/commits    │  │
-│  └──────────────┘  └──────────────┘  └──────────────────┘  │
-└────────┬───────────────────────────────────────┬────────────┘
-         │                                       │
-         │ Store/Retrieve                        │ Fetch
-         │                                       │
-┌────────▼────────────────────┐      ┌──────────▼──────────┐
-│   Cloudflare KV Storage     │      │   GitHub REST API   │
-│  ┌─────────────────────┐    │      │                     │
-│  │ User Tokens         │    │      │  • Repos            │
-│  │ User Profiles       │    │      │  • Commits          │
-│  │ Repo Selections     │    │      │  • Contributors     │
-│  │ Sessions            │    │      │                     │
-│  │ Cached Data         │    │      └─────────────────────┘
-│  └─────────────────────┘    │
-└─────────────────────────────┘
+┌─────────────┐
+│   Browser   │
+│  (Vercel)   │
+└──────┬──────┘
+       │
+       │ HTTPS
+       │
+┌──────▼──────────────────┐
+│  Cloudflare Worker      │
+│  - OAuth Handler        │
+│  - Session Manager      │
+│  - GitHub API Proxy     │
+└──────┬──────────────────┘
+       │
+       ├─────────────┬─────────────┐
+       │             │             │
+┌──────▼──────┐ ┌───▼────────┐ ┌──▼──────────┐
+│ Cloudflare  │ │   GitHub   │ │   Session   │
+│     KV      │ │    API     │ │   Cookies   │
+│ (User Data) │ │            │ │             │
+└─────────────┘ └────────────┘ └─────────────┘
 ```
 
 ## Authentication Flow
 
-### Initial Login
+### 1. Initial Login
+```
+User clicks "Login with GitHub"
+  ↓
+Redirect to /auth/github
+  ↓
+Worker generates state token (CSRF protection)
+  ↓
+Redirect to GitHub OAuth authorize URL
+  ↓
+User authorizes app on GitHub
+  ↓
+GitHub redirects to /auth/github/callback?code=XXX&state=YYY
+  ↓
+Worker validates state token
+  ↓
+Worker exchanges code for access token
+  ↓
+Worker stores encrypted token in KV
+  ↓
+Worker creates session token
+  ↓
+Set HTTP-only cookie with session token
+  ↓
+Redirect to dashboard
+```
 
-1. **User clicks "Login with GitHub"**
-   - Frontend redirects to `/auth/github`
-   
-2. **Worker generates OAuth state**
-   - Creates random CSRF token
-   - Stores state in KV with 10-minute TTL
-   - Redirects to GitHub OAuth authorize URL
+### 2. Authenticated Requests
+```
+Browser sends request with session cookie
+  ↓
+Worker validates session token
+  ↓
+Worker retrieves userId from session
+  ↓
+Worker retrieves user's GitHub token from KV
+  ↓
+Worker makes GitHub API request with user's token
+  ↓
+Return user-scoped data
+```
 
-3. **User authorizes on GitHub**
-   - GitHub redirects back to `/auth/github/callback?code=XXX&state=YYY`
-
-4. **Worker exchanges code for token**
-   - Validates state matches stored value
-   - Exchanges code for access token via GitHub API
-   - Creates user record in KV
-   - Generates session token
-   - Sets HTTP-only secure cookie
-   - Redirects to dashboard
-
-### Authenticated Requests
-
-1. **Browser sends request with session cookie**
-2. **Worker validates session**
-   - Extracts session token from cookie
-   - Looks up session in KV: `session:${token}`
-   - Retrieves userId from session
-3. **Worker retrieves user's GitHub token**
-   - Fetches from KV: `user:${userId}:token`
-   - Decrypts token
-4. **Worker makes GitHub API request**
-   - Uses user's token (not a global token)
-   - Respects user's permissions
-5. **Response returned to user**
+### 3. Logout
+```
+User clicks logout
+  ↓
+Worker deletes session from KV
+  ↓
+Clear session cookie
+  ↓
+Redirect to login page
+```
 
 ## Data Storage Schema
 
-### Cloudflare KV Namespaces
+### Cloudflare KV Structure
 
-**Primary Namespace: `EOYR_DATA`**
+All user data is isolated by userId to ensure multi-tenant security.
 
-```
-Key Pattern                           | Value                      | TTL
---------------------------------------|----------------------------|--------
-user:${userId}:token                  | Encrypted GitHub token     | Never
-user:${userId}:profile                | {username, avatar, email}  | Never
-user:${userId}:repos                  | [repo1, repo2, ...]        | Never
-user:${userId}:preferences            | {dateRange, weekStart}     | Never
-session:${sessionToken}               | {userId, createdAt}        | 30 days
-cache:${userId}:repos                 | GitHub repos response      | 1 hour
-cache:${userId}:commits:${params}     | Commits data               | 1 hour
-oauth:state:${stateToken}             | {createdAt}                | 10 min
-```
-
-### User Data Isolation
-
-- **Every user has unique keys** prefixed with their userId
-- **Sessions map to userId** for user identification
-- **Cached data is user-scoped** preventing data leaks
-- **GitHub tokens are encrypted** using Worker secrets
-- **No cross-user data access** enforced at KV key level
-
-### Example User Record
-
+#### User Authentication
 ```javascript
-// user:github123:profile
+// Key: user:{userId}:token
+// Value: Encrypted GitHub access token
 {
-  "userId": "github123",
-  "username": "johndoe",
-  "avatarUrl": "https://avatars.githubusercontent.com/u/123",
-  "email": "john@example.com",
-  "createdAt": "2025-01-15T10:30:00Z"
+  "token": "gho_encrypted...",
+  "encryptedAt": "2025-12-02T10:30:00Z"
 }
 
-// user:github123:repos
-[
-  "johndoe/my-project",
-  "company/shared-repo",
-  "johndoe/another-project"
-]
-
-// user:github123:preferences
+// Key: user:{userId}:profile
+// Value: User profile information
 {
-  "defaultDateRange": "last-year",
-  "weekStartDay": "monday",
-  "theme": "dark"
+  "id": 12345,
+  "login": "username",
+  "name": "User Name",
+  "avatar_url": "https://avatars.githubusercontent.com/...",
+  "email": "user@example.com"
 }
 ```
+
+#### Session Management
+```javascript
+// Key: session:{sessionToken}
+// Value: Session data
+{
+  "userId": "12345",
+  "createdAt": "2025-12-02T10:30:00Z",
+  "expiresAt": "2026-01-01T10:30:00Z"
+}
+// TTL: 30 days (configurable)
+```
+
+#### Repository Selection
+```javascript
+// Key: user:{userId}:repos
+// Value: Selected repositories
+{
+  "repos": [
+    "owner/repo1",
+    "owner/repo2"
+  ],
+  "updatedAt": "2025-12-02T10:30:00Z"
+}
+```
+
+#### User Preferences
+```javascript
+// Key: user:{userId}:preferences
+// Value: User settings
+{
+  "defaultDateRange": "last3Months",
+  "weekStartDay": "monday",
+  "timezone": "America/New_York"
+}
+```
+
+#### Cache Data (User-Scoped)
+```javascript
+// Key: cache:{userId}:commits:{repoOwner}:{repoName}:{startDate}:{endDate}
+// Value: Cached commit data
+{
+  "data": [...],
+  "cachedAt": "2025-12-02T10:30:00Z"
+}
+// TTL: 1 hour (configurable)
+```
+
+## API Endpoints
+
+### Authentication Endpoints
+
+**GET /auth/github**
+- Initiates OAuth flow
+- Generates CSRF state token
+- Redirects to GitHub authorization URL
+
+**GET /auth/github/callback**
+- Handles OAuth callback
+- Validates state token
+- Exchanges code for access token
+- Creates session
+- Stores user data in KV
+
+**GET /auth/logout**
+- Deletes session from KV
+- Clears session cookie
+- Redirects to home
+
+**GET /auth/me**
+- Returns current user profile
+- Requires authentication
+
+### Data Endpoints (All require authentication)
+
+**GET /api/user/repos/available**
+- Lists all repos user has access to on GitHub
+- Uses user's GitHub token
+
+**GET /api/user/repos**
+- Returns user's selected repositories
+
+**POST /api/user/repos**
+- Saves user's repository selection
+- Body: `{ "repos": ["owner/repo1", "owner/repo2"] }`
+
+**GET /api/commits**
+- Returns commits for user's selected repos
+- Query params: `?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD`
+- User-scoped and cached
+
+**GET /api/weeks**
+- Returns commit data grouped by ISO week
+- Query params: `?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD`
+- User-scoped and cached
 
 ## Frontend Architecture
 
-### Page Structure
-
+### File Structure
 ```
-/index.html              - Main dashboard (requires auth)
-/auth/callback.html      - OAuth callback handler (optional SPA route)
-/analytics.html          - Analytics view
-/stories.html            - Stories view
+template/
+├── index.html          # Main dashboard
+├── analytics.html      # Analytics view
+├── stories.html        # Stories/timeline view
+├── css/
+│   ├── eoyr.css       # Dashboard-specific styles
+│   └── *.css          # Base Webflow styles
+└── js/
+    ├── auth.js        # Authentication module
+    ├── repo-selector.js   # Repository selection
+    ├── eoyr.js        # Main dashboard logic
+    ├── eoyr-filters.js    # Filtering/sorting
+    └── *.js           # Supporting modules
 ```
 
 ### JavaScript Modules
 
-```
-js/
-├── auth.js              - Authentication logic
-│   ├── checkAuth()
-│   ├── redirectToLogin()
-│   ├── handleCallback()
-│   └── logout()
-│
-├── eoyr.js              - Core dashboard logic
-│   ├── fetchCommits()
-│   ├── renderWeeks()
-│   └── updateStats()
-│
-├── repo-selector.js     - Repository selection UI
-│   ├── fetchAvailableRepos()
-│   ├── loadSelectedRepos()
-│   └── saveRepos()
-│
-├── eoyr-filters.js      - Filtering and sorting
-│   ├── applyFilters()
-│   └── sortData()
-│
-└── nav-menu.js          - Navigation and UI
-```
+**auth.js**
+- `checkAuth()` - Verifies user is logged in
+- `redirectToLogin()` - Redirects to OAuth flow
+- `getCurrentUser()` - Fetches user profile
+- `logout()` - Logs out user
 
-### State Management
+**repo-selector.js**
+- `fetchAvailableRepos()` - Gets user's GitHub repos
+- `loadSelectedRepos()` - Loads saved selection
+- `saveRepos(repos)` - Persists repo selection
+- `renderRepoList()` - Renders UI
 
-- **Session state**: Stored in HTTP-only cookies (managed by Worker)
-- **User state**: Fetched from `/api/user/me` on page load
-- **Dashboard state**: In-memory (repos, commits, filters)
-- **URL state**: Query parameters for sharing (dates, repos, filters)
-
-## Backend API Endpoints
-
-### Authentication Endpoints
-
-```
-GET  /auth/github
-     - Initiates OAuth flow
-     - Redirects to GitHub
-
-GET  /auth/github/callback?code=XXX&state=YYY
-     - Handles OAuth callback
-     - Creates session
-     - Returns: Redirect to dashboard
-
-GET  /auth/logout
-     - Clears session
-     - Returns: Redirect to login
-
-GET  /auth/me
-     - Returns current user info
-     - Returns: {userId, username, avatar}
-```
-
-### User Data Endpoints
-
-```
-GET  /api/user/repos/available
-     - Lists all repos user can access from GitHub
-     - Returns: [{fullName, description, language, stars}]
-
-GET  /api/user/repos
-     - Gets user's selected repos
-     - Returns: [repo1, repo2, ...]
-
-POST /api/user/repos
-     - Saves user's repo selection
-     - Body: {repos: [repo1, repo2, ...]}
-     - Returns: {success: true}
-
-GET  /api/user/preferences
-     - Gets user preferences
-     - Returns: {dateRange, weekStart, ...}
-
-POST /api/user/preferences
-     - Updates user preferences
-     - Body: {dateRange, weekStart, ...}
-     - Returns: {success: true}
-```
-
-### Commit Data Endpoints
-
-```
-GET  /api/commits?start=YYYY-MM-DD&end=YYYY-MM-DD&repos=repo1,repo2
-     - Fetches commits for user's selected repos
-     - Automatically scoped to authenticated user
-     - Returns: [{sha, message, author, date, repo}, ...]
-
-GET  /api/weeks?year=2025
-     - Groups commits by ISO week
-     - Returns: [{weekNum, start, end, commits: [...]}]
-
-GET  /api/stats?start=YYYY-MM-DD&end=YYYY-MM-DD
-     - Aggregate statistics
-     - Returns: {totalCommits, activeRepos, topLanguages}
-```
+**eoyr.js**
+- `fetchCommits()` - Gets commit data
+- `renderWeekView()` - Displays week grid
+- `renderDayView()` - Displays daily commits
+- User-scoped data handling
 
 ## Security Considerations
 
-### Token Security
-
-- **GitHub tokens encrypted at rest** using Web Crypto API
-- **Encryption key stored in Worker env vars** (not in code)
-- **Tokens never exposed to frontend** (used only in Worker)
-- **Session tokens are cryptographically random** (32+ bytes)
+### Token Encryption
+- GitHub access tokens are encrypted before storing in KV
+- Uses Web Crypto API (SubtleCrypto)
+- Encryption key stored in Worker environment variables
 
 ### Session Security
+- HTTP-only cookies (prevent XSS attacks)
+- Secure flag (HTTPS only)
+- SameSite=Lax (CSRF protection)
+- 30-day expiration with sliding window
 
-- **HTTP-only cookies** prevent XSS attacks
-- **Secure flag** requires HTTPS
-- **SameSite=Strict** prevents CSRF
-- **30-day expiration** with automatic cleanup
-
-### OAuth Security
-
-- **State parameter** prevents CSRF attacks
-- **State tokens stored with TTL** (10 minutes)
-- **Callback URL validated** against registered URL
-- **Code exchange happens server-side** (not in browser)
+### CSRF Protection
+- State parameter in OAuth flow
+- Validated on callback
+- Prevents authorization code interception
 
 ### Data Isolation
+- All KV keys include userId
+- Worker validates session on every request
+- No cross-user data access
 
-- **Every KV key includes userId** preventing cross-user access
-- **Worker validates session on every request**
-- **No shared caches** between users
-- **GitHub API calls use user's token** (not admin token)
-
-### Rate Limiting (Future Enhancement)
-
-- Track requests per user per minute
-- Store counters in KV with TTL
-- Return 429 when limit exceeded
-- Protect both Worker and GitHub API
+### Rate Limiting
+- Respect GitHub API rate limits (5000/hour for authenticated users)
+- Cache responses to reduce API calls
+- Per-user rate limiting (optional implementation)
 
 ## Caching Strategy
 
-### Cache Layers
+### Cache Keys
+All cache keys include userId for isolation:
+```
+cache:{userId}:{endpoint}:{params}
+```
 
-1. **Browser Cache**
-   - Static assets (CSS, JS, images)
-   - Cache-Control headers set by Vercel
-
-2. **Worker Cache (KV)**
-   - User repo lists (1 hour TTL)
-   - Commit data (1 hour TTL)
-   - User profiles (indefinite, invalidated on update)
-
-3. **GitHub API Rate Limiting**
-   - 5,000 requests/hour per user token
-   - Cache reduces API calls significantly
+### Cache TTLs
+- Commit data: 1 hour
+- User profile: 24 hours
+- Repository list: 1 hour
+- Session data: 30 days
 
 ### Cache Invalidation
+- Automatic expiration via TTL
+- Manual invalidation on webhook events (optional)
+- User can refresh via UI
 
-- **On user logout**: Clear all user caches
-- **On repo selection change**: Clear commit caches
-- **On webhook event** (future): Clear specific repo cache
-- **Automatic TTL expiry**: Caches refresh hourly
+## GitHub API Integration
 
-## Scalability
+### Rate Limiting
+- Authenticated requests: 5000/hour per user
+- Uses user's personal token (not shared app token)
+- Check `X-RateLimit-Remaining` header
+- Display warning when low
 
-### Current Limits
+### Pagination
+- GitHub returns max 100 items per page
+- Worker handles pagination automatically
+- Fetches all pages for complete data
 
-- **Cloudflare Workers**: 100,000 requests/day (free tier)
-- **Cloudflare KV**: 100,000 reads/day, 1,000 writes/day (free tier)
-- **GitHub API**: 5,000 requests/hour per user
+### Endpoints Used
+- `GET /user/repos` - List user's repositories
+- `GET /repos/{owner}/{repo}/commits` - Get commits
+- `GET /user` - Get user profile
 
-### Scaling Strategy
+## Scalability Considerations
 
-1. **More users**: Upgrade to Workers Paid plan
-2. **More data**: KV scales automatically
-3. **More requests**: Increase cache TTLs
-4. **Heavy users**: Implement per-user rate limiting
+### Cloudflare Workers
+- Auto-scales globally
+- Edge computing (low latency)
+- No cold starts
 
-### Performance Optimization
+### Cloudflare KV
+- Eventually consistent
+- Global replication
+- Suitable for user preferences and cache
+- Not suitable for real-time transactions
 
-- User-scoped caching reduces redundant API calls
-- KV reads are globally distributed (fast)
-- Worker runs at edge (low latency)
-- Static frontend on CDN (Vercel)
-
-## Monitoring (Recommended)
-
-- **Worker Analytics**: Track request counts, errors, latency
-- **KV Metrics**: Monitor read/write usage
-- **GitHub API Usage**: Track rate limit remaining
-- **Error Logging**: Send errors to external service (Sentry, Datadog)
+### Performance
+- Cached responses reduce API calls
+- Edge caching reduces latency
+- Lazy loading for large datasets
 
 ## Future Enhancements
 
-1. **Webhooks**: Real-time cache updates on push events
-2. **Teams**: Share dashboards across organization
-3. **Custom Metrics**: User-defined commit categories
-4. **Export**: PDF/CSV report generation
-5. **Notifications**: Weekly email summaries
+### Planned Features
+- Team dashboards (multi-user organizations)
+- Webhook integration for real-time updates
+- Advanced analytics and insights
+- Export reports (PDF, CSV)
+- Custom commit categorization
+- Integration with other Git platforms (GitLab, Bitbucket)
 
+### Technical Debt
+- Add comprehensive error handling
+- Implement retry logic for failed API calls
+- Add monitoring and logging
+- Performance optimization for large datasets
+- Add automated tests

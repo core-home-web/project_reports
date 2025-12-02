@@ -1,60 +1,13 @@
 {
-  "comment": "This is an example repository configuration file. In the multi-tenant version, repository selection is managed per-user through the UI and stored in Cloudflare KV. This file is for reference only.",
-  "exampleRepos": [
-    {
-      "fullName": "username/repository-name",
-      "description": "A sample repository",
-      "language": "JavaScript",
-      "private": false,
-      "stars": 42,
-      "selected": true
-    },
-    {
-      "fullName": "organization/another-repo",
-      "description": "Another example repository",
-      "language": "Python",
-      "private": false,
-      "stars": 128,
-      "selected": true
-    },
-    {
-      "fullName": "username/private-project",
-      "description": "A private repository",
-      "language": "TypeScript",
-      "private": true,
-      "stars": 0,
-      "selected": false
-    }
+  "repos": [
+    "owner/repo-name-1",
+    "owner/repo-name-2",
+    "another-owner/another-repo"
   ],
-  "notes": {
-    "fullName": "The repository's full name in 'owner/repo' format",
-    "description": "Repository description from GitHub",
-    "language": "Primary programming language",
-    "private": "Whether the repository is private",
-    "stars": "Number of stars the repository has",
-    "selected": "Whether the user has selected this repo to track (managed in UI)"
-  },
-  "userStorageFormat": {
-    "comment": "In the multi-tenant version, user repo selections are stored in Cloudflare KV with the following structure:",
-    "kvKey": "user:${userId}:repos",
-    "kvValue": [
-      "username/repository-name",
-      "organization/another-repo"
-    ],
-    "notes": "Array of repository full names (owner/repo format)"
-  },
-  "apiResponse": {
-    "comment": "The /api/user/repos/available endpoint returns repos in this format:",
-    "example": [
-      {
-        "fullName": "username/repo",
-        "description": "Repository description",
-        "language": "JavaScript",
-        "private": false,
-        "stars": 42,
-        "url": "https://github.com/username/repo"
-      }
-    ]
-  }
+  "description": "Example repository configuration. In the multi-tenant version, users select their own repos via the UI, and this data is stored per-user in Cloudflare KV.",
+  "notes": [
+    "Each repo should be in the format: owner/repository-name",
+    "Users can select any repos they have access to on GitHub",
+    "The selection is saved to KV with key: user:{userId}:repos"
+  ]
 }
-

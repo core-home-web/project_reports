@@ -1,288 +1,209 @@
 # Customization Guide
 
-This guide shows you how to customize the dashboard to match your brand and requirements.
+This guide explains how to customize the dashboard to match your brand, add new features, and extend functionality.
 
 ## Table of Contents
-
-1. [Branding & Visual Identity](#branding--visual-identity)
+1. [Branding & UI](#branding--ui)
 2. [Color Scheme](#color-scheme)
-3. [Typography](#typography)
-4. [Logo & Favicon](#logo--favicon)
-5. [Layout Modifications](#layout-modifications)
-6. [Custom Filters](#custom-filters)
-7. [Date Range Options](#date-range-options)
-8. [API Extensions](#api-extensions)
-9. [Advanced Customizations](#advanced-customizations)
+3. [Logo & Assets](#logo--assets)
+4. [Layout Modifications](#layout-modifications)
+5. [Adding Custom Filters](#adding-custom-filters)
+6. [Extending API Endpoints](#extending-api-endpoints)
+7. [Custom Commit Categorization](#custom-commit-categorization)
+8. [Email Notifications](#email-notifications)
 
 ---
 
-## Branding & Visual Identity
+## Branding & UI
 
-### Update Page Title
+### Change Site Title and Metadata
 
-**File:** [`index.html`](index.html)
+**File**: [`index.html`](index.html)
+
+Update the `<head>` section:
 
 ```html
-<title>Your Company Name - GitHub Dashboard</title>
+<title>Your Dashboard Name</title>
+<meta name="description" content="Your custom description">
 ```
 
-### Update Header Text
+### Update Favicon
 
-**File:** [`index.html`](index.html)
+Replace these files with your own:
+- `images/favicon.ico` - Browser favicon (32x32 or 64x64)
+- `images/webclip.png` - iOS home screen icon (180x180)
 
-Look for the header section and update:
+**Tip**: Use a tool like https://realfavicongenerator.net/ to generate all sizes.
+
+### Footer & Header Text
+
+**File**: [`index.html`](index.html)
+
+Search for footer/header sections and update:
 
 ```html
-<h1 class="heading">Your Company GitHub Activity</h1>
-<p class="paragraph">Track your team's commits and contributions</p>
-```
-
-### Update Meta Tags
-
-**File:** [`index.html`](index.html)
-
-```html
-<meta name="description" content="Your custom description here">
-<meta property="og:title" content="Your Dashboard Name">
-<meta property="og:description" content="Your description">
-<meta property="og:image" content="/images/your-og-image.png">
+<div class="footer-text">© 2025 Your Company Name</div>
 ```
 
 ---
 
 ## Color Scheme
 
-The dashboard uses CSS custom properties (variables) for easy theme customization.
+### Primary Colors
 
-### Primary Color Palette
+**File**: [`css/eoyr.css`](css/eoyr.css)
 
-**File:** [`css/eoyr.css`](css/eoyr.css)
-
-Add or modify CSS variables:
+Define custom CSS variables:
 
 ```css
 :root {
-  /* Primary brand color */
-  --color-primary: #6366f1;
-  --color-primary-dark: #4f46e5;
-  --color-primary-light: #818cf8;
+  /* Primary brand colors */
+  --primary-color: #6366f1;
+  --primary-hover: #4f46e5;
+  --primary-dark: #4338ca;
   
   /* Background colors */
-  --color-bg: #0f0f23;
-  --color-bg-card: #1a1a2e;
-  --color-bg-hover: #252540;
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-card: #334155;
   
   /* Text colors */
-  --color-text: #e0e0e0;
-  --color-text-muted: #9ca3af;
-  --color-text-bright: #ffffff;
-  
-  /* Border colors */
-  --color-border: #2d2d44;
-  --color-border-light: #3d3d5c;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
   
   /* Accent colors */
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-danger: #ef4444;
-  --color-info: #3b82f6;
+  --accent-success: #10b981;
+  --accent-warning: #f59e0b;
+  --accent-error: #ef4444;
+  
+  /* Border colors */
+  --border-color: #475569;
+  --border-hover: #64748b;
 }
 ```
 
-### Dark/Light Mode Toggle
+### Apply Colors to Components
 
-To add a light mode, create an alternate theme:
+Update existing classes or create new ones:
 
 ```css
-[data-theme="light"] {
-  --color-bg: #ffffff;
-  --color-bg-card: #f9fafb;
-  --color-bg-hover: #f3f4f6;
-  --color-text: #1f2937;
-  --color-text-muted: #6b7280;
-  --color-border: #e5e7eb;
-}
-```
-
-**File:** [`js/eoyr.js`](js/eoyr.js)
-
-Add theme toggle logic:
-
-```javascript
-function toggleTheme() {
-  const currentTheme = document.documentElement.getAttribute('data-theme');
-  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-  document.documentElement.setAttribute('data-theme', newTheme);
-  localStorage.setItem('theme', newTheme);
+/* Buttons */
+.button-primary {
+  background-color: var(--primary-color);
+  color: var(--text-primary);
 }
 
-// Load saved theme on page load
-const savedTheme = localStorage.getItem('theme') || 'dark';
-document.documentElement.setAttribute('data-theme', savedTheme);
-```
-
-### Week Card Colors
-
-**File:** [`css/eoyr.css`](css/eoyr.css)
-
-Customize commit count badges:
-
-```css
-.commit-count {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+.button-primary:hover {
+  background-color: var(--primary-hover);
 }
 
-/* Different colors for different commit counts */
-.commit-count[data-level="low"] {
-  background: var(--color-warning);
+/* Cards */
+.week-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
 }
 
-.commit-count[data-level="medium"] {
-  background: var(--color-info);
-}
-
-.commit-count[data-level="high"] {
-  background: var(--color-success);
-}
-```
-
-**File:** [`js/eoyr.js`](js/eoyr.js)
-
-Add logic to set data-level attribute:
-
-```javascript
-function getCommitLevel(count) {
-  if (count < 5) return 'low';
-  if (count < 20) return 'medium';
-  return 'high';
-}
-
-// When rendering commit count:
-element.setAttribute('data-level', getCommitLevel(commitCount));
-```
-
----
-
-## Typography
-
-### Change Fonts
-
-**File:** [`index.html`](index.html)
-
-Replace Google Fonts in the `<head>`:
-
-```html
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-```
-
-**File:** [`css/eoyr.css`](css/eoyr.css)
-
-Update font families:
-
-```css
-:root {
-  --font-primary: 'Inter', sans-serif;
-  --font-heading: 'Inter', sans-serif;
-  --font-mono: 'Fira Code', 'Courier New', monospace;
-}
-
-body {
-  font-family: var(--font-primary);
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
-}
-
-code, pre {
-  font-family: var(--font-mono);
-}
-```
-
-### Font Sizes
-
-```css
-:root {
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
-  --text-3xl: 1.875rem;
-  --text-4xl: 2.25rem;
-}
-
+/* Text */
 .heading {
-  font-size: var(--text-4xl);
+  color: var(--text-primary);
 }
 
-.paragraph {
-  font-size: var(--text-base);
+.subheading {
+  color: var(--text-secondary);
 }
+```
+
+### Commit Heatmap Colors
+
+**File**: [`css/eoyr.css`](css/eoyr.css)
+
+Customize the commit intensity colors:
+
+```css
+.commit-cell-0 { background-color: #1e293b; } /* No commits */
+.commit-cell-1 { background-color: #22c55e; opacity: 0.3; } /* 1-2 commits */
+.commit-cell-2 { background-color: #22c55e; opacity: 0.5; } /* 3-5 commits */
+.commit-cell-3 { background-color: #22c55e; opacity: 0.7; } /* 6-9 commits */
+.commit-cell-4 { background-color: #22c55e; opacity: 1.0; } /* 10+ commits */
 ```
 
 ---
 
-## Logo & Favicon
+## Logo & Assets
 
-### Replace Logo
+### Replace the Spline 3D Logo
 
-1. **Add your logo image** to `/images/your-logo.png`
+**Current**: The dashboard uses a 3D Spline logo
 
-2. **Update logo in header**
+**Option 1 - Use an Image Logo**:
 
-**File:** [`index.html`](index.html)
+**File**: [`index.html`](index.html)
+
+Replace the Spline canvas with an image:
 
 ```html
+<!-- Find the Spline logo section and replace with: -->
 <div class="logo-container">
-  <img src="/images/your-logo.png" alt="Your Company" class="logo">
+  <img src="/images/your-logo.png" alt="Your Logo" class="logo-image">
 </div>
 ```
 
-3. **Style the logo**
+**File**: [`css/eoyr.css`](css/eoyr.css)
 
-**File:** [`css/eoyr.css`](css/eoyr.css)
+Add styling:
 
 ```css
-.logo {
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.logo-image {
   max-width: 200px;
   height: auto;
 }
 ```
 
-### Replace Favicon
+**Option 2 - Use Your Own Spline Scene**:
 
-1. **Generate favicons** using a tool like [RealFaviconGenerator](https://realfavicongenerator.net/)
+1. Create your scene at https://spline.design
+2. Export and get the embed URL
+3. Update `js/spline-logo.js` with your Spline URL
 
-2. **Add favicon files** to `/images/`
-
-3. **Update favicon links**
-
-**File:** [`index.html`](index.html)
+**Option 3 - Use Text Logo**:
 
 ```html
-<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+<div class="text-logo">
+  <h1 class="logo-text">YourBrand</h1>
+</div>
 ```
 
-### Remove 3D Spline Logo
+### Background Images/Videos
 
-If you want to remove the animated 3D logo:
+**File**: [`index.html`](index.html)
 
-**File:** [`index.html`](index.html)
-
-Remove this script tag:
+Replace the background video:
 
 ```html
-<script src="/js/spline-logo.js"></script>
+<video autoplay muted loop playsinline class="background-video">
+  <source src="/videos/your-background.mp4" type="video/mp4">
+  <source src="/videos/your-background.webm" type="video/webm">
+</video>
 ```
 
-And remove the canvas element where the logo renders.
+Or use a static background:
+
+```css
+body {
+  background-image: url('/images/your-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+```
 
 ---
 
@@ -290,410 +211,456 @@ And remove the canvas element where the logo renders.
 
 ### Change Grid Layout
 
-**File:** [`css/eoyr.css`](css/eoyr.css)
+**File**: [`css/eoyr.css`](css/eoyr.css)
 
-Modify the week cards grid:
+Modify the week grid columns:
 
 ```css
+/* Default: 7 columns (one per day) */
 .week-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
 }
 
-/* For a 2-column layout: */
-.week-grid {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-/* For a 3-column layout: */
-.week-grid {
-  grid-template-columns: repeat(3, 1fr);
+/* Change to 5 columns (weekdays only) */
+.week-grid.weekdays-only {
+  grid-template-columns: repeat(5, 1fr);
 }
 ```
 
-### Sidebar Navigation
+**File**: [`js/eoyr.js`](js/eoyr.js)
 
-To add a persistent sidebar:
+Filter out weekends:
 
-**File:** [`css/eoyr.css`](css/eoyr.css)
+```javascript
+function renderWeekGrid(commits) {
+  const weekdaysOnly = commits.filter(day => {
+    const date = new Date(day.date);
+    const dayOfWeek = date.getDay();
+    return dayOfWeek !== 0 && dayOfWeek !== 6; // Exclude Sunday (0) and Saturday (6)
+  });
+  // ... render weekdaysOnly
+}
+```
+
+### Add Sidebar Navigation
+
+**File**: [`index.html`](index.html)
+
+Add a sidebar structure:
+
+```html
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <nav class="sidebar-nav">
+      <a href="#overview" class="nav-item active">Overview</a>
+      <a href="#analytics" class="nav-item">Analytics</a>
+      <a href="#settings" class="nav-item">Settings</a>
+    </nav>
+  </aside>
+  
+  <main class="main-content">
+    <!-- Existing dashboard content -->
+  </main>
+</div>
+```
+
+**File**: [`css/eoyr.css`](css/eoyr.css)
+
+Style the sidebar:
 
 ```css
 .dashboard-layout {
-  display: grid;
-  grid-template-columns: 250px 1fr;
+  display: flex;
   min-height: 100vh;
 }
 
 .sidebar {
-  background: var(--color-bg-card);
-  padding: 2rem 1rem;
-  border-right: 1px solid var(--color-border);
+  width: 250px;
+  background-color: var(--bg-secondary);
+  padding: 20px;
+  border-right: 1px solid var(--border-color);
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav-item {
+  padding: 12px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background-color: var(--primary-color);
+  color: var(--text-primary);
 }
 
 .main-content {
-  padding: 2rem;
-}
-```
-
-### Card Styles
-
-Customize week cards:
-
-**File:** [`css/eoyr.css`](css/eoyr.css)
-
-```css
-.week-card {
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 1.5rem;
-  transition: all 0.3s ease;
-}
-
-.week-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-  border-color: var(--color-primary);
+  flex: 1;
+  padding: 20px;
 }
 ```
 
 ---
 
-## Custom Filters
+## Adding Custom Filters
 
-### Add New Filter Options
+### Add Author Filter
 
-**File:** [`js/eoyr-filters.js`](js/eoyr-filters.js)
+**File**: [`js/eoyr-filters.js`](js/eoyr-filters.js)
 
-Add a filter by commit message pattern:
+Add filter function:
 
 ```javascript
-function filterByMessage(commits, pattern) {
-  if (!pattern) return commits;
-  
-  const regex = new RegExp(pattern, 'i');
-  return commits.filter(commit => regex.test(commit.message));
-}
-
-// Add to your filter UI
-function applyFilters() {
-  let filteredCommits = allCommits;
-  
-  const messagePattern = document.getElementById('message-filter').value;
-  if (messagePattern) {
-    filteredCommits = filterByMessage(filteredCommits, messagePattern);
+function filterByAuthor(commits, authorName) {
+  if (!authorName || authorName === 'all') {
+    return commits;
   }
   
-  // ... other filters
-  
-  renderCommits(filteredCommits);
+  return commits.filter(commit => 
+    commit.commit.author.name.toLowerCase().includes(authorName.toLowerCase())
+  );
 }
 ```
 
-**File:** [`index.html`](index.html)
+**File**: [`index.html`](index.html)
 
-Add the filter input:
+Add UI element:
 
 ```html
 <div class="filter-group">
-  <label for="message-filter">Filter by message</label>
+  <label for="author-filter">Filter by Author:</label>
   <input 
     type="text" 
-    id="message-filter" 
-    placeholder="e.g., fix, feature, bug"
-    oninput="applyFilters()"
+    id="author-filter" 
+    placeholder="Enter author name"
+    class="filter-input"
   >
 </div>
 ```
 
-### Filter by File Type
+**File**: [`js/eoyr.js`](js/eoyr.js)
+
+Connect to main logic:
+
+```javascript
+document.getElementById('author-filter').addEventListener('input', (e) => {
+  const author = e.target.value;
+  const filtered = filterByAuthor(allCommits, author);
+  renderCommits(filtered);
+});
+```
+
+### Add Commit Message Search
+
+**File**: [`js/eoyr-filters.js`](js/eoyr-filters.js)
+
+```javascript
+function searchCommitMessages(commits, searchTerm) {
+  if (!searchTerm) return commits;
+  
+  const term = searchTerm.toLowerCase();
+  return commits.filter(commit =>
+    commit.commit.message.toLowerCase().includes(term)
+  );
+}
+```
+
+### Add File Type Filter
 
 ```javascript
 function filterByFileType(commits, fileExtension) {
-  return commits.filter(commit => 
-    commit.files && commit.files.some(file => 
-      file.endsWith(fileExtension)
-    )
-  );
-}
-```
-
-### Filter by Author
-
-```javascript
-function filterByAuthor(commits, authorName) {
-  if (!authorName) return commits;
-  
-  return commits.filter(commit => 
-    commit.author.toLowerCase().includes(authorName.toLowerCase())
-  );
-}
-```
-
----
-
-## Date Range Options
-
-### Add Custom Date Ranges
-
-**File:** [`js/eoyr.js`](js/eoyr.js)
-
-```javascript
-const dateRangePresets = {
-  'last-7-days': { days: 7, label: 'Last 7 Days' },
-  'last-30-days': { days: 30, label: 'Last 30 Days' },
-  'last-90-days': { days: 90, label: 'Last 90 Days' },
-  'this-month': { label: 'This Month', custom: true },
-  'last-month': { label: 'Last Month', custom: true },
-  'this-quarter': { label: 'This Quarter', custom: true },
-  'this-year': { label: 'This Year', custom: true },
-  'last-year': { label: 'Last Year', custom: true },
-};
-
-function getDateRange(preset) {
-  const now = new Date();
-  let start, end;
-  
-  switch(preset) {
-    case 'this-month':
-      start = new Date(now.getFullYear(), now.getMonth(), 1);
-      end = now;
-      break;
-    
-    case 'last-month':
-      start = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-      end = new Date(now.getFullYear(), now.getMonth(), 0);
-      break;
-    
-    case 'this-quarter':
-      const quarter = Math.floor(now.getMonth() / 3);
-      start = new Date(now.getFullYear(), quarter * 3, 1);
-      end = now;
-      break;
-    
-    case 'this-year':
-      start = new Date(now.getFullYear(), 0, 1);
-      end = now;
-      break;
-    
-    default:
-      const days = dateRangePresets[preset]?.days || 30;
-      start = new Date(now - days * 24 * 60 * 60 * 1000);
-      end = now;
+  if (!fileExtension || fileExtension === 'all') {
+    return commits;
   }
   
-  return { start, end };
-}
-```
-
----
-
-## API Extensions
-
-### Add New Endpoints
-
-**File:** [`workers/github-commits.js`](workers/github-commits.js)
-
-Example: Add an endpoint for pull requests:
-
-```javascript
-async function handlePullRequests(request, env) {
-  const { userId, repos, startDate, endDate } = await validateAndParse(request);
-  
-  const pullRequests = [];
-  
-  for (const repo of repos) {
-    const response = await fetch(
-      `https://api.github.com/repos/${repo}/pulls?state=all&since=${startDate}`,
-      {
-        headers: {
-          'Authorization': `token ${await getUserToken(env, userId)}`,
-          'Accept': 'application/vnd.github.v3+json',
-        }
-      }
+  return commits.filter(commit => {
+    // Assuming commit has files array
+    return commit.files.some(file => 
+      file.filename.endsWith(`.${fileExtension}`)
     );
-    
-    const prs = await response.json();
-    pullRequests.push(...prs);
+  });
+}
+```
+
+---
+
+## Extending API Endpoints
+
+### Add Custom Endpoint to Worker
+
+**File**: [`workers/github-commits.js`](workers/github-commits.js)
+
+Add a new route:
+
+```javascript
+async function handleRequest(request, env) {
+  const url = new URL(request.url);
+  const path = url.pathname;
+  
+  // ... existing routes ...
+  
+  // New custom endpoint
+  if (path === '/api/custom/statistics') {
+    return handleStatistics(request, env);
   }
   
-  return new Response(JSON.stringify(pullRequests), {
+  return new Response('Not Found', { status: 404 });
+}
+
+async function handleStatistics(request, env) {
+  // Validate session
+  const user = await getUserFromSession(request, env);
+  if (!user) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+  
+  // Fetch user's commit data
+  const commits = await fetchUserCommits(env, user.id);
+  
+  // Calculate statistics
+  const stats = {
+    totalCommits: commits.length,
+    averageCommitsPerDay: calculateAverage(commits),
+    mostActiveDay: findMostActiveDay(commits),
+    longestStreak: calculateStreak(commits)
+  };
+  
+  return new Response(JSON.stringify(stats), {
     headers: { 'Content-Type': 'application/json' }
   });
 }
-
-// Add to router:
-if (url.pathname === '/api/pull-requests') {
-  return handlePullRequests(request, env);
-}
 ```
 
-### Add Webhook Endpoint
+### Call Custom Endpoint from Frontend
+
+**File**: [`js/eoyr.js`](js/eoyr.js)
 
 ```javascript
-async function handleWebhook(request, env) {
-  // Verify GitHub webhook signature
-  const signature = request.headers.get('X-Hub-Signature-256');
-  const payload = await request.text();
-  
-  const isValid = await verifySignature(payload, signature, env.WEBHOOK_SECRET);
-  if (!isValid) {
-    return new Response('Invalid signature', { status: 401 });
+async function fetchStatistics() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/custom/statistics`, {
+      credentials: 'include'
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch statistics');
+    }
+    
+    const stats = await response.json();
+    displayStatistics(stats);
+  } catch (error) {
+    console.error('Error fetching statistics:', error);
   }
-  
-  const event = JSON.parse(payload);
-  
-  // Invalidate cache for affected repo
-  if (event.repository) {
-    await invalidateRepoCache(env, event.repository.full_name);
-  }
-  
-  return new Response('OK', { status: 200 });
+}
+
+function displayStatistics(stats) {
+  const statsContainer = document.getElementById('statistics');
+  statsContainer.innerHTML = `
+    <div class="stat-card">
+      <h3>Total Commits</h3>
+      <p class="stat-value">${stats.totalCommits}</p>
+    </div>
+    <div class="stat-card">
+      <h3>Daily Average</h3>
+      <p class="stat-value">${stats.averageCommitsPerDay.toFixed(1)}</p>
+    </div>
+  `;
 }
 ```
 
 ---
 
-## Advanced Customizations
+## Custom Commit Categorization
 
-### Add Statistics Dashboard
+### Categorize by Commit Message Patterns
 
-Create a new stats section:
-
-**File:** [`index.html`](index.html)
-
-```html
-<div class="stats-grid">
-  <div class="stat-card">
-    <h3 class="stat-value" id="total-commits">0</h3>
-    <p class="stat-label">Total Commits</p>
-  </div>
-  
-  <div class="stat-card">
-    <h3 class="stat-value" id="active-days">0</h3>
-    <p class="stat-label">Active Days</p>
-  </div>
-  
-  <div class="stat-card">
-    <h3 class="stat-value" id="avg-per-day">0</h3>
-    <p class="stat-label">Avg Commits/Day</p>
-  </div>
-</div>
-```
-
-**File:** [`js/eoyr.js`](js/eoyr.js)
+**File**: [`js/eoyr.js`](js/eoyr.js)
 
 ```javascript
-function calculateStats(commits) {
-  const totalCommits = commits.length;
-  const uniqueDays = new Set(commits.map(c => c.date.split('T')[0])).size;
-  const avgPerDay = (totalCommits / uniqueDays).toFixed(1);
+function categorizeCommit(commit) {
+  const message = commit.commit.message.toLowerCase();
   
-  document.getElementById('total-commits').textContent = totalCommits;
-  document.getElementById('active-days').textContent = uniqueDays;
-  document.getElementById('avg-per-day').textContent = avgPerDay;
+  // Define categories
+  if (message.startsWith('fix') || message.includes('bug')) {
+    return { category: 'bugfix', icon: '🐛', color: '#ef4444' };
+  }
+  if (message.startsWith('feat') || message.includes('feature')) {
+    return { category: 'feature', icon: '✨', color: '#10b981' };
+  }
+  if (message.startsWith('docs') || message.includes('documentation')) {
+    return { category: 'docs', icon: '📝', color: '#3b82f6' };
+  }
+  if (message.startsWith('refactor')) {
+    return { category: 'refactor', icon: '♻️', color: '#f59e0b' };
+  }
+  if (message.startsWith('test')) {
+    return { category: 'test', icon: '✅', color: '#8b5cf6' };
+  }
+  
+  return { category: 'other', icon: '📦', color: '#6b7280' };
+}
+
+function renderCommitWithCategory(commit) {
+  const { category, icon, color } = categorizeCommit(commit);
+  
+  return `
+    <div class="commit-item" style="border-left: 4px solid ${color}">
+      <span class="commit-icon">${icon}</span>
+      <span class="commit-category">${category}</span>
+      <span class="commit-message">${commit.commit.message}</span>
+    </div>
+  `;
 }
 ```
 
-### Add Export Functionality
+### Group Commits by Category
 
 ```javascript
-function exportToCSV(commits) {
-  const csv = [
-    ['Date', 'Repository', 'Message', 'Author', 'SHA'],
-    ...commits.map(c => [
-      c.date,
-      c.repo,
-      c.message.replace(/,/g, ';'),
-      c.author,
-      c.sha
-    ])
-  ].map(row => row.join(',')).join('\n');
+function groupByCategory(commits) {
+  const grouped = {};
   
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `commits-${new Date().toISOString().split('T')[0]}.csv`;
-  a.click();
-}
-```
-
-### Add Charts/Visualizations
-
-Using Chart.js:
-
-**File:** [`index.html`](index.html)
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<canvas id="commits-chart"></canvas>
-```
-
-**File:** [`js/eoyr.js`](js/eoyr.js)
-
-```javascript
-function renderCommitChart(commits) {
-  const ctx = document.getElementById('commits-chart').getContext('2d');
-  
-  // Group commits by date
-  const commitsByDate = commits.reduce((acc, commit) => {
-    const date = commit.date.split('T')[0];
-    acc[date] = (acc[date] || 0) + 1;
-    return acc;
-  }, {});
-  
-  const dates = Object.keys(commitsByDate).sort();
-  const counts = dates.map(date => commitsByDate[date]);
-  
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: dates,
-      datasets: [{
-        label: 'Commits',
-        data: counts,
-        borderColor: 'rgb(99, 102, 241)',
-        backgroundColor: 'rgba(99, 102, 241, 0.1)',
-        tension: 0.4
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false }
-      }
+  commits.forEach(commit => {
+    const { category } = categorizeCommit(commit);
+    if (!grouped[category]) {
+      grouped[category] = [];
     }
+    grouped[category].push(commit);
+  });
+  
+  return grouped;
+}
+
+function renderCategoryView(commits) {
+  const grouped = groupByCategory(commits);
+  const container = document.getElementById('category-view');
+  
+  Object.entries(grouped).forEach(([category, commits]) => {
+    const section = document.createElement('div');
+    section.className = 'category-section';
+    section.innerHTML = `
+      <h3>${category} (${commits.length})</h3>
+      <div class="commits-list">
+        ${commits.map(c => renderCommitWithCategory(c)).join('')}
+      </div>
+    `;
+    container.appendChild(section);
   });
 }
 ```
 
 ---
 
-## Testing Your Customizations
+## Email Notifications
 
-1. **Test locally** before deploying:
-```bash
-python3 -m http.server 8080
+### Add Email Notification Endpoint
+
+**File**: [`workers/github-commits.js`](workers/github-commits.js)
+
+```javascript
+async function sendWeeklySummary(env, userId) {
+  const user = await env.EOYR_DASHBOARD.get(`user:${userId}:profile`, 'json');
+  const commits = await fetchUserCommits(env, userId);
+  
+  // Calculate summary
+  const summary = {
+    totalCommits: commits.length,
+    repositories: [...new Set(commits.map(c => c.repository.full_name))],
+    topDay: findMostActiveDay(commits)
+  };
+  
+  // Send email via your email service (e.g., SendGrid, Mailgun)
+  const emailHtml = generateEmailTemplate(summary);
+  
+  await fetch('https://api.sendgrid.com/v3/mail/send', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${env.SENDGRID_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      personalizations: [{
+        to: [{ email: user.email }]
+      }],
+      from: { email: 'notifications@yourdomain.com' },
+      subject: 'Your Weekly GitHub Summary',
+      content: [{ type: 'text/html', value: emailHtml }]
+    })
+  });
+}
 ```
 
-2. **Check responsive design** at different screen sizes
+### Schedule Weekly Emails with Cron Triggers
 
-3. **Verify accessibility** with browser DevTools
+**File**: [`wrangler.toml`](wrangler.toml)
 
-4. **Test in multiple browsers** (Chrome, Firefox, Safari)
+```toml
+[triggers]
+crons = ["0 9 * * MON"] # Every Monday at 9 AM
+```
 
-5. **Check console** for errors
+**File**: [`workers/github-commits.js`](workers/github-commits.js)
+
+```javascript
+export default {
+  async scheduled(event, env, ctx) {
+    // Get all users
+    const userKeys = await env.EOYR_DASHBOARD.list({ prefix: 'user:' });
+    
+    for (const key of userKeys.keys) {
+      if (key.name.endsWith(':profile')) {
+        const userId = key.name.split(':')[1];
+        await sendWeeklySummary(env, userId);
+      }
+    }
+  }
+}
+```
+
+---
+
+## Best Practices
+
+### Keep It Modular
+- Create separate files for major features
+- Use clear naming conventions
+- Document your customizations
+
+### Test Thoroughly
+- Test in multiple browsers
+- Check mobile responsiveness
+- Verify API changes don't break existing features
+
+### Version Control
+- Create a new git branch for customizations
+- Commit frequently with clear messages
+- Tag stable releases
+
+### Performance
+- Minimize API calls where possible
+- Use caching strategically
+- Optimize images and assets
+- Lazy load heavy components
+
+### Security
+- Validate all user inputs
+- Sanitize data before rendering
+- Never expose API keys in frontend
+- Use HTTPS for all endpoints
 
 ---
 
 ## Need Help?
 
-- Review [`ARCHITECTURE.md`](ARCHITECTURE.md) for system design
-- Check [`DEPLOYMENT.md`](DEPLOYMENT.md) for setup help
-- See [`ROADMAP.md`](ROADMAP.md) for planned features
-
-Happy customizing! 🎨
-
+- Check [ARCHITECTURE.md](ARCHITECTURE.md) for system design
+- Review [DEPLOYMENT.md](DEPLOYMENT.md) for setup issues
+- See [ROADMAP.md](ROADMAP.md) for planned features
+- Open an issue on GitHub for questions

@@ -1,39 +1,36 @@
 {
-  "name": "multi-tenant-github-dashboard",
-  "version": "1.0.0",
-  "description": "A serverless multi-tenant GitHub dashboard for tracking commits and contributions across repositories",
-  "type": "module",
+  "name": "github-dashboard-template",
+  "version": "0.1.0",
+  "description": "Multi-tenant GitHub commit tracking dashboard with OAuth authentication",
+  "main": "workers/github-commits.js",
   "scripts": {
-    "dev": "python3 -m http.server 8080",
-    "dev:worker": "cd workers && wrangler dev",
-    "deploy:worker": "cd workers && wrangler deploy",
-    "deploy": "vercel deploy --prod",
-    "preview": "vercel deploy"
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "serve": "python3 -m http.server 8080",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "github",
     "dashboard",
     "commits",
-    "analytics",
     "cloudflare-workers",
+    "oauth",
     "multi-tenant",
-    "saas",
-    "oauth"
+    "saas"
   ],
   "author": "Your Name",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/your-repo.git"
+    "url": "https://github.com/your-username/your-repo.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/your-repo/issues"
+    "url": "https://github.com/your-username/your-repo/issues"
   },
-  "homepage": "https://github.com/yourusername/your-repo#readme",
-  "engines": {
-    "node": ">=18.0.0"
-  },
+  "homepage": "https://github.com/your-username/your-repo#readme",
   "devDependencies": {},
-  "dependencies": {}
+  "dependencies": {},
+  "engines": {
+    "node": ">=16.0.0"
+  }
 }
-

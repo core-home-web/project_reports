@@ -1,424 +1,339 @@
 # Multi-Tenant GitHub Dashboard - Cursor Rules
 
 ## Tech Stack
-- **Frontend**: HTML, CSS, JavaScript (vanilla - no frameworks)
-- **Backend**: Cloudflare Workers (serverless API)
-- **Storage**: Cloudflare KV (key-value store)
-- **Hosting**: Vercel or Cloudflare Pages
-- **Authentication**: GitHub OAuth 2.0
+- **Frontend**: HTML, CSS, JavaScript (vanilla)
+- **Backend**: Cloudflare Workers (Serverless)
+- **Storage**: Cloudflare KV (Key-Value)
+- **Hosting**: Vercel / Cloudflare Pages
 - **Version Control**: GitHub
-
-## Project Context
-
-This is a **multi-tenant SaaS template** for a GitHub commit tracking dashboard. Multiple users can:
-- Authenticate with their GitHub account
-- Select repositories to track
-- View personalized commit reports
-- Have isolated, private data storage
 
 ## Development Principles
 
 ### Critical Rules
-1. **NEVER GUESS**: If uncertain about implementation, requirements, or decisions - ASK before proceeding
-2. **Security First**: This is a multi-tenant application - user data isolation is critical
-3. **User Privacy**: GitHub tokens are encrypted, sessions are secure, data is isolated
-4. **Iterative Development**: Complete and test each feature before moving to the next
-5. **Clean Code**: Modular, well-commented, consistent naming
-6. **Scalable Design**: Consider performance with 100+ users and 1000+ repos
-7. **Error Handling**: Always handle errors gracefully with user-friendly messages
+1. **NEVER GUESS**: If uncertain about implementation details, requirements, or design decisions - ASK before proceeding
+2. **Break up long tasks**: Split tasks taking more than 30 minutes into smaller sub-tasks
+3. **Iterate and verify**: Complete each task fully before moving to the next; verify it works
+4. **Security first**: This is a multi-tenant SaaS application - user data isolation is critical
+5. **Clean code**: Modular, well-commented, consistent naming conventions
+6. **Scalable**: Design for growth (more users, more repos, more data)
+7. **Test before committing**: Run tests and check for console errors before committing
 
-### Multi-Tenant Best Practices
-1. **Data Isolation**: Every KV key MUST include userId to prevent cross-user access
-2. **Token Security**: GitHub tokens MUST be encrypted before storage
-3. **Session Validation**: Every API request MUST validate the session
-4. **User-Scoped APIs**: API endpoints MUST filter data by authenticated user
-5. **Cache Isolation**: Cache keys MUST include userId to prevent data leaks
+### Multi-Tenant Specific Rules
+1. **User data isolation**: Every KV key MUST include userId to prevent cross-user access
+2. **Token security**: Always encrypt GitHub tokens before storing in KV
+3. **Session validation**: Validate user session on EVERY protected API endpoint
+4. **No shared state**: Each user's data is completely isolated
+5. **Audit trail**: Log authentication and data access events
 
 ### UI/UX Design Guidelines
-- **User-centered design**: Keep users at the center of every decision
-- **Clear authentication states**: Always show whether user is logged in
-- **Intuitive navigation**: Make actions discoverable and obvious
-- **Accessible design**: High contrast, keyboard navigation, screen reader support
-- **Mobile-first**: Design for mobile, scale up to desktop
-- **Loading states**: Always show feedback during async operations
-- **Error messages**: Clear, actionable error messages
+- **User-centered design**: Keep end users at the center of every decision
+- **Ease of use**: Organization, consistency, and intuitive navigation
+- **Visual hierarchy**: Guide users through content with clear structure
+- **Accessibility**: Ensure clickable actions are highly noticeable and accessible for color-blind users
+- **Mobile-first**: Design for mobile screens first, then scale up
+- **Loading states**: Always show loading indicators for async operations
+- **Error handling**: Display user-friendly error messages, not technical jargon
+
+## Reference Documentation
+
+### UI/UX Design Resources (Consult Before Designing)
+- Webflow UX Design Process: https://webflow.com/blog/ux-design-process
+- Figma UI Design Principles: https://www.figma.com/resource-library/ui-design-principles/
+- Figma Mobile Website Design: https://www.figma.com/resource-library/mobile-website-design/
+- Figma Mobile-First Design: https://www.figma.com/resource-library/mobile-first-design/
+
+### Technical Documentation (Consult Before Implementing)
+- GitHub REST API: https://docs.github.com/en/rest
+- GitHub OAuth: https://docs.github.com/en/apps/oauth-apps
+- Cloudflare Workers: https://developers.cloudflare.com/workers/
+- Cloudflare KV: https://developers.cloudflare.com/kv/
+- Vercel Deployment: https://vercel.com/docs
+
+### When to Use References
+- **If unsure about GitHub API**: Consult GitHub docs before implementing
+- **If unsure about Cloudflare Workers/KV**: Consult Cloudflare docs before implementing
+- **If unsure about OAuth flow**: Review GitHub OAuth documentation
+- **If unsure about UI/UX decisions**: Review Figma and Webflow resources before designing
 
 ## Code Style
 
 ### Naming Conventions
 - **Files**: kebab-case (e.g., `repo-selector.js`)
-- **Functions**: camelCase (e.g., `validateSession()`)
+- **Functions**: camelCase (e.g., `fetchUserRepos()`)
 - **Constants**: UPPER_SNAKE_CASE (e.g., `SESSION_TTL`)
 - **CSS Classes**: kebab-case (e.g., `.repo-card`)
-- **KV Keys**: colon-separated (e.g., `user:${userId}:token`)
+- **KV Keys**: Structured with colons (e.g., `user:${userId}:repos`)
 
-### File Organization
+### Code Organization
+- Keep functions small and focused (single responsibility)
+- Use meaningful variable names (no single letters except loop counters)
+- Add comments for complex logic and business rules
+- Group related functions together
+- Separate concerns: HTML (structure), CSS (presentation), JS (behavior)
+
+### File Structure
 ```
 template/
 ├── index.html              # Main dashboard
 ├── css/
-│   └── eoyr.css            # Dashboard styles
+│   ├── eoyr.css            # Dashboard-specific styles
+│   └── *.css               # Base styles
 ├── js/
 │   ├── auth.js             # Authentication module
 │   ├── repo-selector.js    # Repository selection
-│   ├── eoyr.js             # Core logic
+│   ├── eoyr.js             # Core dashboard logic
 │   └── eoyr-filters.js     # Filtering/sorting
 └── workers/
-    └── github-commits.js   # API (single file)
+    └── github-commits.js   # Cloudflare Worker API
 ```
 
-### Code Organization
-- Keep functions small and focused (single responsibility)
-- Use meaningful, descriptive variable names
-- Add comments for complex logic
-- Group related functions together
-- Separate concerns: HTML (structure), CSS (style), JS (behavior)
+## Project-Specific Implementation Notes
 
-### Function Documentation
-For Worker functions, include JSDoc comments:
+### Authentication Flow
+- Use GitHub OAuth 2.0 for user authentication
+- Store session tokens in HTTP-only, secure cookies
+- Generate CSRF state tokens for OAuth flow
+- Session TTL: 30 days (configurable)
 
+### Data Storage (Cloudflare KV)
 ```javascript
-/**
- * Validates user session from cookie
- * @param {Request} request - Incoming request
- * @param {Environment} env - Worker environment with KV binding
- * @returns {Promise<{userId: string, username: string} | null>}
- */
-async function validateSession(request, env) {
-  // Implementation
-}
+// Key patterns - ALWAYS include userId
+user:{userId}:token          // Encrypted GitHub access token
+user:{userId}:profile        // User profile data
+user:{userId}:repos          // Selected repositories
+user:{userId}:preferences    // User settings
+session:{sessionToken}       // Session -> userId mapping
+cache:{userId}:{endpoint}    // User-scoped cached data
 ```
 
-## Security Guidelines
-
-### Authentication & Sessions
-- Use **HTTP-only** cookies for session tokens (no localStorage)
-- Set **Secure** flag (HTTPS only)
-- Set **SameSite=Strict** (CSRF protection)
-- Session tokens MUST be cryptographically random (32+ bytes)
-- Validate OAuth **state parameter** (CSRF protection)
-- Store sessions in KV with 30-day TTL
-
-### Token Handling
-- Encrypt GitHub tokens using Web Crypto API before KV storage
-- NEVER send GitHub tokens to frontend
-- NEVER log tokens or sensitive data
-- Use user's token for API calls (not a global admin token)
-- Handle token expiration gracefully
-
-### Data Validation
-- Validate ALL user inputs
-- Sanitize data before displaying in HTML
-- Use parameterized queries (if adding SQL in future)
-- Validate date ranges are reasonable (max 1 year)
-- Limit repo selection (max 100 repos per user)
-
-### KV Key Structure
-Always include userId in keys to prevent access across users:
-
+### API Endpoints Pattern
 ```javascript
-// Good (user-scoped)
-`user:${userId}:token`
-`user:${userId}:repos`
-`cache:${userId}:commits:${params}`
-
-// Bad (global, not isolated)
-`token:${userId}`  // Wrong order
-`repos`            // No user scope
-```
-
-## API Development
-
-### Endpoint Structure
-```javascript
-// Pattern for all protected endpoints:
-async function handleProtectedEndpoint(request, env) {
-  // 1. Validate session
-  const user = await validateSession(request, env);
+// ALWAYS validate session first
+async function protectedEndpoint(request, env) {
+  const user = await getUserFromSession(request, env);
   if (!user) {
     return new Response('Unauthorized', { status: 401 });
   }
   
-  // 2. Parse request
-  const { param1, param2 } = await parseRequest(request);
-  
-  // 3. Validate inputs
-  if (!isValid(param1)) {
-    return new Response('Invalid input', { status: 400 });
-  }
-  
-  // 4. Get user data (user-scoped)
-  const userData = await getUserData(env, user.userId);
-  
-  // 5. Process and return
-  const result = await processData(userData);
-  return jsonResponse(result);
+  // Use user.id for all data operations
+  const data = await env.KV.get(`user:${user.id}:data`);
+  // ... rest of logic
 }
 ```
 
-### Error Handling
+### GitHub API Integration
+- Use user's personal GitHub token (obtained via OAuth)
+- Respect GitHub rate limits (5000 req/hour per authenticated user)
+- Cache responses to minimize API calls (TTL: 1 hour)
+- Handle pagination for large datasets
+- Check `X-RateLimit-Remaining` header
+
+### Caching Strategy
+- Cache user-scoped commit data with 1 hour TTL
+- Include userId in all cache keys for isolation
+- Invalidate cache on user action (e.g., repo selection change)
+- Never cache sensitive data (tokens, passwords)
+
+## Security Best Practices
+
+### Token Management
+- Encrypt GitHub tokens using Web Crypto API before storing
+- Never expose tokens to frontend JavaScript
+- Store encryption key in Worker environment variables
+- Rotate session secrets periodically
+
+### Session Security
+- Use HTTP-only cookies (prevent XSS)
+- Set Secure flag (HTTPS only)
+- Set SameSite=Lax or Strict (CSRF protection)
+- Validate session on every protected endpoint
+- Clear session on logout
+
+### Input Validation
+- Validate all user inputs on backend
+- Sanitize data before rendering in frontend
+- Use parameterized queries (if using SQL in future)
+- Limit request payload sizes
+
+### CORS Configuration
+- Only allow specific origins (not wildcard *)
+- Include credentials only for trusted origins
+- Validate Origin header on requests
+
+## Error Handling
+
+### Frontend
 ```javascript
 try {
-  // API call
+  const response = await fetch(API_URL);
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+  }
+  const data = await response.json();
 } catch (error) {
-  console.error('Error context:', error);
-  
-  if (error.status === 401) {
-    return new Response('GitHub authentication failed', { status: 401 });
-  }
-  
-  if (error.status === 403) {
-    return new Response('Rate limit exceeded', { status: 429 });
-  }
-  
-  return new Response('Internal server error', { status: 500 });
+  console.error('Failed to fetch data:', error);
+  showErrorMessage('Unable to load data. Please try again.');
 }
 ```
 
-### Response Format
-Always return consistent JSON responses:
-
+### Backend (Worker)
 ```javascript
-// Success
-{
-  "success": true,
-  "data": { /* result */ }
-}
-
-// Error
-{
-  "success": false,
-  "error": "User-friendly error message"
-}
-```
-
-## Frontend Development
-
-### API Calls
-Always include error handling:
-
-```javascript
-async function fetchData(endpoint, options = {}) {
-  try {
-    const response = await fetch(endpoint, {
-      ...options,
-      credentials: 'include', // Include session cookie
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-      }
-    });
-    
-    if (response.status === 401) {
-      // Redirect to login
-      window.location.href = '/auth/github';
-      return null;
-    }
-    
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-    
-    return await response.json();
-  } catch (error) {
-    console.error('API Error:', error);
-    showErrorMessage('Failed to load data. Please try again.');
-    return null;
-  }
-}
-```
-
-### Loading States
-Always show loading indicators:
-
-```javascript
-async function loadCommits() {
-  showLoading(true);
-  try {
-    const commits = await fetchData('/api/commits');
-    renderCommits(commits);
-  } finally {
-    showLoading(false);
-  }
-}
-```
-
-### State Management
-Keep state simple and explicit:
-
-```javascript
-// Global state
-let currentUser = null;
-let selectedRepos = [];
-let commitData = null;
-let activeFilters = {};
-
-// Update functions
-function setCurrentUser(user) {
-  currentUser = user;
-  renderUserProfile(user);
-}
-```
-
-## Cloudflare Workers Specifics
-
-### Environment Variables
-Access via `env` parameter:
-
-```javascript
-export default {
-  async fetch(request, env, ctx) {
-    const clientId = env.GITHUB_OAUTH_CLIENT_ID;
-    const kv = env.EOYR_DATA; // KV namespace binding
-  }
-}
-```
-
-### KV Operations
-```javascript
-// Write
-await env.EOYR_DATA.put(key, value, { expirationTtl: 3600 });
-
-// Read
-const value = await env.EOYR_DATA.get(key);
-
-// Delete
-await env.EOYR_DATA.delete(key);
-
-// List (use sparingly - expensive)
-const list = await env.EOYR_DATA.list({ prefix: `user:${userId}:` });
-```
-
-### CORS Headers
-Set for all API responses:
-
-```javascript
-function jsonResponse(data, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': env.FRONTEND_URL,
-      'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type'
-    }
+try {
+  // ... operation
+} catch (error) {
+  console.error('Error:', error);
+  return new Response(JSON.stringify({
+    error: 'Internal server error',
+    message: 'An unexpected error occurred'
+  }), {
+    status: 500,
+    headers: { 'Content-Type': 'application/json' }
   });
 }
 ```
 
-## Testing Guidelines
-
-### Before Committing
-1. Test authentication flow end-to-end
-2. Verify data isolation (create 2 test users)
-3. Check error handling (network errors, invalid tokens)
-4. Test on mobile viewport
-5. Check browser console for errors
-6. Verify no sensitive data in logs
-
-### Manual Testing Checklist
-- [ ] Can login with GitHub OAuth
-- [ ] Session persists after page reload
-- [ ] Can select repositories
-- [ ] Dashboard shows correct user data
-- [ ] Logout clears session
-- [ ] Different users see different data
-- [ ] Error messages are user-friendly
-- [ ] Loading states appear during async operations
-
 ## Performance Optimization
 
-### Caching Strategy
-- Cache user repos list (1 hour TTL)
-- Cache commit data (1 hour TTL)
-- Cache user profile (no expiry, invalidate on update)
-- Include userId in ALL cache keys
+### Frontend
+- Lazy load images and heavy components
+- Debounce search inputs (300ms)
+- Use event delegation for dynamic lists
+- Minimize DOM manipulations
+- Cache DOM queries
 
-### API Rate Limiting
-GitHub API limits:
-- 5,000 requests/hour per user token (OAuth)
-- Use conditional requests (If-Modified-Since) when possible
-- Batch requests where possible
-- Cache aggressively
+### Backend
+- Cache API responses aggressively
+- Use KV for session storage (faster than API calls)
+- Minimize GitHub API calls with smart caching
+- Batch operations where possible
+- Return only necessary data fields
 
-### Frontend Performance
-- Lazy load repository list (paginate if > 100 repos)
-- Debounce search/filter inputs (300ms)
-- Virtualize long commit lists (if > 1000 commits)
-- Minimize DOM updates
+## Testing Strategy
 
-## Reference Documentation
+### Manual Testing Checklist
+- [ ] OAuth flow (login, callback, logout)
+- [ ] Session persistence across page reloads
+- [ ] Repository selection and saving
+- [ ] Data displays correctly after login
+- [ ] Filters work properly
+- [ ] Date range selection
+- [ ] Mobile responsiveness
+- [ ] Error states display correctly
+- [ ] No console errors
+- [ ] CORS headers work correctly
 
-### Must Read Before Implementing
-- **GitHub OAuth**: https://docs.github.com/en/developers/apps/building-oauth-apps
-- **Cloudflare Workers**: https://developers.cloudflare.com/workers/
-- **Cloudflare KV**: https://developers.cloudflare.com/kv/
-- **Web Crypto API**: https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API
+### Browser Compatibility
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
+- Mobile Safari (iOS)
+- Chrome Mobile (Android)
 
-### Internal Documentation
-- **Architecture**: See `ARCHITECTURE.md` for system design
-- **Deployment**: See `DEPLOYMENT.md` for setup instructions
-- **Roadmap**: See `ROADMAP.md` for implementation phases
-- **Customization**: See `CUSTOMIZATION.md` for branding guide
+## Git Workflow
 
-## Common Patterns
+### Commit Messages
+Follow conventional commits:
+```
+feat: Add repository selection UI
+fix: Fix session expiration bug
+docs: Update deployment guide
+refactor: Simplify auth flow
+style: Format CSS files
+test: Add OAuth flow test
+```
 
-### User-Scoped API Endpoint
+### Branch Strategy
+- `main` - Production-ready code
+- `develop` - Development branch
+- `feature/*` - Feature branches
+- `fix/*` - Bug fix branches
+
+### Before Committing
+1. Test locally
+2. Check for console errors
+3. Verify no secrets in code
+4. Run linter if available
+5. Update documentation if needed
+
+## Common Pitfalls to Avoid
+
+### ❌ Don't Do This
 ```javascript
-async function handleUserScopedAPI(request, env) {
-  const user = await validateSession(request, env);
-  if (!user) return unauthorizedResponse();
-  
-  const userRepos = await env.EOYR_DATA.get(`user:${user.userId}:repos`);
-  const repos = userRepos ? JSON.parse(userRepos) : [];
-  
-  // Use repos to fetch data...
-  
-  return jsonResponse({ repos });
+// Shared state - NO!
+let currentUser = null;
+
+// Unencrypted token storage - NO!
+await env.KV.put('token', githubToken);
+
+// Missing user validation - NO!
+async function getCommits(request, env) {
+  return fetch(GITHUB_API);
 }
+
+// Wildcard CORS - NO!
+headers.set('Access-Control-Allow-Origin', '*');
 ```
 
-### Encrypted Token Storage
+### ✅ Do This
 ```javascript
-// Encrypt before storing
-const encrypted = await encryptToken(githubToken, env.ENCRYPTION_KEY);
-await env.EOYR_DATA.put(`user:${userId}:token`, encrypted);
+// Pass user context
+async function processUser(userId, env) {
+  // ...
+}
 
-// Decrypt when retrieving
-const encrypted = await env.EOYR_DATA.get(`user:${userId}:token`);
-const token = await decryptToken(encrypted, env.ENCRYPTION_KEY);
+// Encrypt tokens
+await saveUserToken(env, userId, encryptToken(token));
+
+// Always validate
+async function getCommits(request, env) {
+  const user = await getUserFromSession(request, env);
+  if (!user) return unauthorized();
+  // ...
+}
+
+// Specific CORS origin
+headers.set('Access-Control-Allow-Origin', env.FRONTEND_URL);
 ```
 
-## Deployment Checklist
+## Deployment
 
-Before deploying to production:
-
-- [ ] All secrets set in Cloudflare (no hardcoded values)
+### Pre-Deployment Checklist
+- [ ] All environment variables set
+- [ ] GitHub OAuth app configured
 - [ ] KV namespace created and bound
-- [ ] OAuth callback URL matches deployed Worker URL
-- [ ] FRONTEND_URL points to correct domain
-- [ ] CORS headers allow frontend domain
-- [ ] Session cookies use Secure flag (HTTPS)
-- [ ] Error logging configured
-- [ ] Rate limiting implemented (optional but recommended)
+- [ ] Test OAuth flow works
+- [ ] Verify CORS configuration
+- [ ] Check rate limiting
+- [ ] Review security settings
 
-## Questions to Ask
+### Environment Variables
+**Required:**
+- `GITHUB_OAUTH_CLIENT_ID`
+- `GITHUB_OAUTH_CLIENT_SECRET`
+- `SESSION_SECRET` (min 32 chars)
+- `ENCRYPTION_KEY` (min 32 chars)
 
-When uncertain, ask about:
-- "Should this endpoint be authenticated?"
-- "What happens if the GitHub API rate limit is hit?"
-- "How should we handle users with 500+ repos?"
-- "What's the expected behavior when session expires?"
-- "Should we cache this data? For how long?"
+**Optional:**
+- `SESSION_TTL` (default: 30 days)
+- `CACHE_TTL` (default: 1 hour)
+- `FRONTEND_URL` (for CORS)
 
-## Remember
+## Documentation Standards
 
-- **Security is not optional** - this is a multi-tenant app
-- **Test with multiple users** - verify data isolation
-- **Document complex logic** - help future developers
-- **Fail gracefully** - always handle errors
-- **Think about scale** - 100 users is very different from 10,000
+- Keep README.md up to date
+- Document all API endpoints
+- Add JSDoc comments for complex functions
+- Update CHANGELOG.md for releases
+- Include examples in documentation
 
-This template is a foundation. Adapt these rules as the project evolves!
+## Getting Help
 
+If stuck:
+1. Check existing documentation (ARCHITECTURE.md, DEPLOYMENT.md)
+2. Review Cloudflare Workers docs
+3. Check GitHub API documentation
+4. Ask for clarification - never guess!
+
+---
+
+**Remember**: This is a multi-tenant SaaS application. User data security and isolation are paramount. When in doubt, ask!
