@@ -79,6 +79,13 @@ pointer-events: none;
   height: 100%;
   display: block;
 }
+.project-preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  pointer-events: none;
+}
 </style>
     </div>
   <div class="remove-webflow-interactions w-embed w-script">
@@ -122,9 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
                   </a>
                   <a href="analytics.html" class="nav-link-desktop w-inline-block">
                     <div>ANALYTICS</div>
-                  </a>
-                  <a href="google-analytics.html" class="nav-link-desktop w-inline-block">
-                    <div>ANALYTICS V2</div>
                   </a>
                   <a href="#" onclick="openMenuToWebsites(); return false;" class="nav-link-desktop w-inline-block">
                     <div>WEBSITES</div>
@@ -175,11 +179,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                 </a>
                               </div>
                               <div style="-webkit-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="nav-animate-3">
-                                <a href="google-analytics.html" class="nav-link-item is-main-link w-inline-block">
-                                  <div class="nav-link-text">Analytics V2</div>
-                                </a>
-                                  </div>
-                              <div style="-webkit-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="nav-animate-4">
                                 <a href="#" onclick="event.stopPropagation(); highlightProjectCards(); return false;" class="nav-link-item is-main-link w-inline-block">
                                   <div class="nav-link-text">Websites</div>
                                 </a>
@@ -274,7 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <a href="https://core-render-portal.vercel.app/" target="_blank" class="navbar-right-item project-card w-inline-block">
                                   <div class="project-card-content">
                                     <div class="project-preview-wrapper">
-                                      <iframe src="https://core-render-portal.vercel.app/" class="project-preview" frameborder="0"></iframe>
+                                      <img src="images/core-render-portal-homepage.png" alt="Core Render Portal" class="project-preview-image">
                                     </div>
                                     <div class="navbar-right-text project-title">Core Render Portal</div>
                                     <div class="project-description">3D render request & management system for product visualization</div>
@@ -285,7 +284,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <a href="https://mannahydration.com/" target="_blank" class="navbar-right-item project-card w-inline-block">
                                   <div class="project-card-content">
                                     <div class="project-preview-wrapper">
-                                      <iframe src="https://mannahydration.com/" class="project-preview" frameborder="0"></iframe>
+                                      <img src="images/manna-hydration-homepage.png" alt="Manna Hydration" class="project-preview-image">
                                     </div>
                                     <div class="navbar-right-text project-title">Manna Hydration</div>
                                     <div class="project-description">Premium hydration solutions for your active lifestyle</div>
@@ -296,7 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <a href="https://s5eerhxmam7z8dzh-61741072543.shopifypreview.com" target="_blank" class="navbar-right-item project-card w-inline-block">
                                   <div class="project-card-content">
                                     <div class="project-preview-wrapper">
-                                      <iframe src="https://s5eerhxmam7z8dzh-61741072543.shopifypreview.com" class="project-preview" frameborder="0"></iframe>
+                                      <img src="images/bklyn-steel-co-homepage.png" alt="BKLYN Steel Co" class="project-preview-image">
                                     </div>
                                     <div class="navbar-right-text project-title">BKLYN Steel Co</div>
                                     <div class="project-description">Brooklyn-inspired espresso machines and coffee craftsmanship</div>
@@ -307,7 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <a href="https://talhydration.com/" target="_blank" class="navbar-right-item project-card w-inline-block">
                                   <div class="project-card-content">
                                     <div class="project-preview-wrapper">
-                                      <iframe src="https://talhydration.com/" class="project-preview" frameborder="0"></iframe>
+                                      <img src="images/tal-hydration-homepage.png" alt="TAL Hydration" class="project-preview-image">
                                     </div>
                                     <div class="navbar-right-text project-title">TAL Hydration</div>
                                     <div class="project-description">Durable water bottles and tumblers for every adventure</div>
@@ -318,7 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <a href="https://shopthymeandtable.com/" target="_blank" class="navbar-right-item project-card w-inline-block">
                                   <div class="project-card-content">
                                     <div class="project-preview-wrapper">
-                                      <iframe src="https://shopthymeandtable.com/" class="project-preview" frameborder="0"></iframe>
+                                      <img src="images/thyme-and-table-homepage.png" alt="Thyme & Table" class="project-preview-image">
                                     </div>
                                     <div class="navbar-right-text project-title">Thyme & Table</div>
                                     <div class="project-description">Trend-forward kitchen and home essentials with vibrant style</div>

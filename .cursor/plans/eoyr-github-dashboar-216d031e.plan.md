@@ -1,0 +1,3753 @@
+<!-- 216d031e-9d6a-4f13-8d31-8a3ed776f722 87f910a3-1bf2-4cc3-9231-a6b2f5534a0c -->
+# Add Website Iframe Previews to Sidebar Panels
+
+## Overview
+
+Enhance the existing sidebar project card panels by adding live iframe previews of each website. The iframes will be landscape/rectangular, positioned above the existing title and description, and maintain the current hover effects and navigation behavior.
+
+## Implementation
+
+### 1. Add Iframes to Project Cards
+
+**File**: [`index.html`](index.html)
+
+For each of the 4 website project cards (lines ~199-229):
+
+- **Hydragear Bottle** (line 199): Add iframe for `https://hydragearbottle.com`
+- **Spice St Market** (line 207): Add iframe for `https://spicestmarket.com`
+- **People of Spice** (line 215): Add iframe for `https://peopleofspice.com`
+- **Outlaw Spice** (line 223): Add iframe for `https://outlawspice.com`
+
+Each iframe should be added inside the `.project-card-content` div, BEFORE the title and description.
+
+Structure will be:
+
+```html
+<div class="project-card-content">
+  <iframe src="https://website.com" class="project-preview"></iframe>
+  <div class="navbar-right-text project-title">Title</div>
+  <div class="project-description">Description</div>
+</div>
+```
+
+### 2. Style the Iframes
+
+**File**: [`index.html`](index.html)
+
+Add CSS (in the existing `<style>` section or inline) for `.project-preview`:
+
+- Landscape aspect ratio (16:9 or 16:10)
+- Width: 100% of card
+- Height: proportional (e.g., ~200-250px)
+- Border radius to match card style
+- Pointer-events: none (prevents interaction, clicking card opens site)
+- Border: subtle border matching theme
+- Margin bottom: spacing before title
+
+### 3. Adjust Card Layout
+
+**File**: [`index.html`](index.html)
+
+Ensure `.project-card-content` is set up to display:
+
+- Flex column layout (if not already)
+- Proper spacing between iframe, title, and description
+- May need to adjust card height to accommodate iframe
+
+### 4. Maintain Existing Behavior
+
+No changes needed - cards remain clickable via the `<a>` tag, hover effects continue working via `.scale-on-hover`, and navigation highlighting stays the same.
+
+### 5. Handle CORS/Embedding Restrictions
+
+Some websites may block iframe embedding via X-Frame-Options. If any site doesn't display:
+
+- Add fallback styling (show a placeholder or gradient background)
+- Or use screenshot/static image as alternative
+
+## Technical Notes
+
+- Leave "Core Render Portal" panel unchanged (user only mentioned the 4 main websites)
+- Iframes with `pointer-events: none` allow clicking anywhere on card to open full site
+- Existing `.scale-on-hover` and `.project-card` styles should work with new layout
+- Test responsive behavior on mobile to ensure iframes scale properly
+
+### To-dos
+
+- [ ] Create comprehensive documentation files
+- [ ] Update README.md with complete project overview
+- [ ] Create configuration files
+- [ ] Review and enhance worker code
+- [ ] Commit all changes to template-version branch
+- [ ] Switch back to main branch
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add CSS overrides for nav-link-desktop to use theme color variable
+- [ ] Add Spline viewer script to index.html and stories.html
+- [ ] Replace SVG logo with spline-viewer component in both pages
+- [ ] Add CSS styling for spline-logo sizing
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create js/nav-menu.js with menu toggle and highlight functions
+- [ ] Update WEBSITES and View all reports links in index.html
+- [ ] Update WEBSITES and View all reports links in stories.html
+- [ ] Add CSS for websites panel highlight in eoyr.css
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add CSS overrides for nav-link-desktop to use theme color variable
+- [ ] Add Spline viewer script to index.html and stories.html
+- [ ] Replace SVG logo with spline-viewer component in both pages
+- [ ] Add CSS styling for spline-logo sizing
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create js/spline-logo.js with Runtime API integration
+- [ ] Replace spline-viewer with canvas in index.html and stories.html
+- [ ] Add applySplineColor() call to color-picker.js
+- [ ] Update CSS for canvas element styling
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add CSS overrides for nav-link-desktop to use theme color variable
+- [ ] Add Spline viewer script to index.html and stories.html
+- [ ] Replace SVG logo with spline-viewer component in both pages
+- [ ] Add CSS styling for spline-logo sizing
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create js/nav-menu.js with menu toggle and highlight functions
+- [ ] Update WEBSITES and View all reports links in index.html
+- [ ] Update WEBSITES and View all reports links in stories.html
+- [ ] Add CSS for websites panel highlight in eoyr.css
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add CSS overrides for nav-link-desktop to use theme color variable
+- [ ] Add Spline viewer script to index.html and stories.html
+- [ ] Replace SVG logo with spline-viewer component in both pages
+- [ ] Add CSS styling for spline-logo sizing
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Wrap SORT BY, SORT ORDER, CLEAR FILTERS in .eoyr-sort-row div
+- [ ] Add .eoyr-sort-row CSS with z-index and layout styles
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add CSS overrides for nav-link-desktop to use theme color variable
+- [ ] Add Spline viewer script to index.html and stories.html
+- [ ] Replace SVG logo with spline-viewer component in both pages
+- [ ] Add CSS styling for spline-logo sizing
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create js/nav-menu.js with menu toggle and highlight functions
+- [ ] Update WEBSITES and View all reports links in index.html
+- [ ] Update WEBSITES and View all reports links in stories.html
+- [ ] Add CSS for websites panel highlight in eoyr.css
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add CSS overrides for nav-link-desktop to use theme color variable
+- [ ] Add Spline viewer script to index.html and stories.html
+- [ ] Replace SVG logo with spline-viewer component in both pages
+- [ ] Add CSS styling for spline-logo sizing
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create js/spline-logo.js with Runtime API integration
+- [ ] Replace spline-viewer with canvas in index.html and stories.html
+- [ ] Add applySplineColor() call to color-picker.js
+- [ ] Update CSS for canvas element styling
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add CSS overrides for nav-link-desktop to use theme color variable
+- [ ] Add Spline viewer script to index.html and stories.html
+- [ ] Replace SVG logo with spline-viewer component in both pages
+- [ ] Add CSS styling for spline-logo sizing
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create js/nav-menu.js with menu toggle and highlight functions
+- [ ] Update WEBSITES and View all reports links in index.html
+- [ ] Update WEBSITES and View all reports links in stories.html
+- [ ] Add CSS for websites panel highlight in eoyr.css
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add CSS overrides for nav-link-desktop to use theme color variable
+- [ ] Add Spline viewer script to index.html and stories.html
+- [ ] Replace SVG logo with spline-viewer component in both pages
+- [ ] Add CSS styling for spline-logo sizing
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Ensure toggle button styling matches existing controls
+- [ ] Add Expand All toggle button to index.html in sort row
+- [ ] Add setupToggleAll() function in eoyr.js with default collapsed state
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add CSS overrides for nav-link-desktop to use theme color variable
+- [ ] Add Spline viewer script to index.html and stories.html
+- [ ] Replace SVG logo with spline-viewer component in both pages
+- [ ] Add CSS styling for spline-logo sizing
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create js/nav-menu.js with menu toggle and highlight functions
+- [ ] Update WEBSITES and View all reports links in index.html
+- [ ] Update WEBSITES and View all reports links in stories.html
+- [ ] Add CSS for websites panel highlight in eoyr.css
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add CSS overrides for nav-link-desktop to use theme color variable
+- [ ] Add Spline viewer script to index.html and stories.html
+- [ ] Replace SVG logo with spline-viewer component in both pages
+- [ ] Add CSS styling for spline-logo sizing
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create js/spline-logo.js with Runtime API integration
+- [ ] Replace spline-viewer with canvas in index.html and stories.html
+- [ ] Add applySplineColor() call to color-picker.js
+- [ ] Update CSS for canvas element styling
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add CSS overrides for nav-link-desktop to use theme color variable
+- [ ] Add Spline viewer script to index.html and stories.html
+- [ ] Replace SVG logo with spline-viewer component in both pages
+- [ ] Add CSS styling for spline-logo sizing
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create js/nav-menu.js with menu toggle and highlight functions
+- [ ] Update WEBSITES and View all reports links in index.html
+- [ ] Update WEBSITES and View all reports links in stories.html
+- [ ] Add CSS for websites panel highlight in eoyr.css
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add CSS overrides for nav-link-desktop to use theme color variable
+- [ ] Add Spline viewer script to index.html and stories.html
+- [ ] Replace SVG logo with spline-viewer component in both pages
+- [ ] Add CSS styling for spline-logo sizing
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Wrap SORT BY, SORT ORDER, CLEAR FILTERS in .eoyr-sort-row div
+- [ ] Add .eoyr-sort-row CSS with z-index and layout styles
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add CSS overrides for nav-link-desktop to use theme color variable
+- [ ] Add Spline viewer script to index.html and stories.html
+- [ ] Replace SVG logo with spline-viewer component in both pages
+- [ ] Add CSS styling for spline-logo sizing
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create js/nav-menu.js with menu toggle and highlight functions
+- [ ] Update WEBSITES and View all reports links in index.html
+- [ ] Update WEBSITES and View all reports links in stories.html
+- [ ] Add CSS for websites panel highlight in eoyr.css
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add CSS overrides for nav-link-desktop to use theme color variable
+- [ ] Add Spline viewer script to index.html and stories.html
+- [ ] Replace SVG logo with spline-viewer component in both pages
+- [ ] Add CSS styling for spline-logo sizing
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create js/spline-logo.js with Runtime API integration
+- [ ] Replace spline-viewer with canvas in index.html and stories.html
+- [ ] Add applySplineColor() call to color-picker.js
+- [ ] Update CSS for canvas element styling
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add CSS overrides for nav-link-desktop to use theme color variable
+- [ ] Add Spline viewer script to index.html and stories.html
+- [ ] Replace SVG logo with spline-viewer component in both pages
+- [ ] Add CSS styling for spline-logo sizing
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create js/nav-menu.js with menu toggle and highlight functions
+- [ ] Update WEBSITES and View all reports links in index.html
+- [ ] Update WEBSITES and View all reports links in stories.html
+- [ ] Add CSS for websites panel highlight in eoyr.css
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add CSS overrides for nav-link-desktop to use theme color variable
+- [ ] Add Spline viewer script to index.html and stories.html
+- [ ] Replace SVG logo with spline-viewer component in both pages
+- [ ] Add CSS styling for spline-logo sizing
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Add hover state overrides for block-content and interactive elements
+- [ ] Override nav-toggle colors to use theme variable
+- [ ] Update commit-repo and sha-badge to use theme colors
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Replace social media icons with single email icon in index.html
+- [ ] Add CSS overrides for static blue borders in eoyr.css
+- [ ] Replace Cyber Blue with Clean White in color-picker.js
+- [ ] Update styleguide.html with all 6 theme color swatches
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update ABOUT/RADIO/LOST N' FOUND to REPORTS/ANALYTICS/WEBSITES in all pages
+- [ ] Create analytics.html with Google Analytics links for 4 websites
+- [ ] Style Color Picker nav link as an obvious button
+- [ ] Add toggle between grid and Mobiscroll-style wheel picker
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Update navigation text (SERVICE→REPORTS, PORTFOLIO→ANALYTICS, etc)
+- [ ] Create styleguide.html with component showcase
+- [ ] Build interactive color picker that changes theme live
+- [ ] Create how-it-works.html user guide page
+- [ ] Update right sidebar with project links (Hydragear, Spice St, etc)
+- [ ] Ensure all glows/borders use green (fix any remaining blue)
+- [ ] Add pagination to Worker to fetch all commits (>100 per repo)
+- [ ] Add grouping functions for day/week/month/year
+- [ ] Create new /api/commits endpoint with groupBy parameter
+- [ ] Update frontend to fetch from /api/commits endpoint
+- [ ] Update rendering to show grouped commits with messages
+- [ ] Add groupBy, search, and improved sorting controls
+- [ ] Fix default date range and ensure all commits are fetched
+- [ ] Improve project filter UI with checkboxes and tags
+- [ ] Create weeks/week-template.html for individual week detail pages
+- [ ] Create weeks/week-template.html for individual week detail pages
