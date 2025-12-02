@@ -17,6 +17,7 @@
   <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
   <link href="images/webclip.png" rel="apple-touch-icon">
   <!-- Spline 3D Logo - Runtime API loaded via spline-logo.js -->
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.5/build/spline-viewer.js"></script>
 </head>
 <body>
   <div class="font-smoothing w-embed">
@@ -72,6 +73,11 @@ pointer-events: none;
 .project-card-content {
   display: flex;
   flex-direction: column;
+}
+.menu-spline-logo-container spline-viewer {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 </style>
     </div>
@@ -194,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             </div>
                             <!-- Spline Logo in Menu -->
                             <div class="menu-spline-logo-container">
-                              <canvas id="spline-menu-logo" class="spline-logo-menu"></canvas>
+                              <spline-viewer url="https://prod.spline.design/9yMJUr26hCivv0YV/scene.splinecode"></spline-viewer>
                             </div>
                             <div class="nav-links-column">
                               <div style="-webkit-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="nav-animate-1">
@@ -265,10 +271,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                 </a>
                               </div>
                               <div class="scale-on-hover">
-                                <a href="https://core-render-portal.vercel.app/dashboard" target="_blank" class="navbar-right-item project-card w-inline-block">
+                                <a href="https://core-render-portal.vercel.app/" target="_blank" class="navbar-right-item project-card w-inline-block">
                                   <div class="project-card-content">
                                     <div class="project-preview-wrapper">
-                                      <iframe src="https://core-render-portal.vercel.app/dashboard" class="project-preview" frameborder="0"></iframe>
+                                      <iframe src="https://core-render-portal.vercel.app/" class="project-preview" frameborder="0"></iframe>
                                     </div>
                                     <div class="navbar-right-text project-title">Core Render Portal</div>
                                     <div class="project-description">3D render request & management system for product visualization</div>
@@ -430,8 +436,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (typeof initSplineLogo === 'function') {
         // Main navbar logo
         initSplineLogo('spline-logo-canvas', 'https://prod.spline.design/TiU9lObPNAba4cNs/scene.splinecode');
-        // Fullscreen menu logo
-        initSplineLogo('spline-menu-logo', 'https://prod.spline.design/TiU9lObPNAba4cNs/scene.splinecode');
+        // Menu logo now uses spline-viewer web component instead
       }
     });
   </script>
