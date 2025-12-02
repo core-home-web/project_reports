@@ -27,6 +27,12 @@ async function initSplineLogo(canvasId, sceneUrl) {
     // Store the app instance by canvas ID
     splineApps[canvasId] = app;
     
+    // Adjust camera zoom for menu logo (33% zoom out)
+    if (canvasId === 'spline-menu-logo' && app._camera) {
+      app._camera.zoom = 0.33;
+      app._camera.updateProjectionMatrix();
+    }
+    
     console.log('Spline logo loaded successfully:', canvasId);
     
     // Apply current theme color on load
