@@ -157,6 +157,15 @@ pointer-events: none;
   object-position: top center;
   pointer-events: none;
 }
+/* Disable iframes on mobile to prevent crashes */
+@media screen and (max-width: 767px) {
+  .project-preview {
+    display: none;
+  }
+  .project-preview-wrapper {
+    background: linear-gradient(135deg, var(--eoyr-dark-green, #001a00) 0%, var(--eoyr-black, #0a0a0a) 100%);
+  }
+}
 </style>
     </div>
   <div class="remove-webflow-interactions w-embed w-script">
@@ -269,10 +278,11 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <div class="social-links-component">
                                   <div class="social-media-links-list is-large">
                                     <div class="scale-on-hover">
-                                      <a href="mailto:contact@corehomeweb.com" class="social-icon-wrapper w-inline-block">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="100%" height="100%">
+                                      <a href="mailto:elombe.kisala@corehome.com" class="social-icon-wrapper w-inline-block" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border: 2px solid var(--eoyr-neon-green); border-radius: 6px; text-decoration: none;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
                                           <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                                         </svg>
+                                        <span style="font-family: 'Exo 2', sans-serif; font-size: 0.9rem; color: var(--eoyr-neon-green); font-weight: 600;">Email Me</span>
                                       </a>
                                     </div>
                                   </div>

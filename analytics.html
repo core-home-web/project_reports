@@ -286,34 +286,176 @@
   
   <script src="js/color-picker.js"></script>
   
+  <style>
+    .request-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+    
+    .request-form-container {
+      background: var(--eoyr-dark-green, #001a00);
+      border: 2px solid var(--eoyr-neon-green, #00ff41);
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 0 40px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
+    }
+    
+    .request-form-title {
+      font-family: "Audiowide", sans-serif;
+      font-size: 1.5rem;
+      color: var(--eoyr-neon-green, #00ff41);
+      margin: 0 0 1rem 0;
+      text-shadow: 0 0 10px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
+    }
+    
+    .request-form-label {
+      font-family: "Exo 2", sans-serif;
+      font-size: 1rem;
+      color: var(--eoyr-neon-green, #00ff41);
+      display: block;
+      margin: 1rem 0 0.5rem;
+    }
+    
+    .request-form-input {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--eoyr-black, #0a0a0a);
+      border: 2px solid var(--eoyr-neon-green-dim, #00cc33);
+      border-radius: 6px;
+      color: var(--eoyr-neon-green, #00ff41);
+      font-family: "Exo 2", sans-serif;
+      font-size: 1rem;
+    }
+    
+    .request-form-input:focus {
+      outline: none;
+      border-color: var(--eoyr-neon-green, #00ff41);
+      box-shadow: 0 0 10px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
+    }
+    
+    .request-form-input:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .request-form-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .request-form-button {
+      flex: 1;
+      padding: 0.75rem 1.5rem;
+      font-family: "Exo 2", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+    }
+    
+    .request-form-button.submit {
+      background: var(--eoyr-neon-green, #00ff41);
+      color: var(--eoyr-black, #0a0a0a);
+      border: 2px solid var(--eoyr-neon-green, #00ff41);
+    }
+    
+    .request-form-button.submit:hover {
+      box-shadow: 0 0 20px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
+    }
+    
+    .request-form-button.cancel {
+      background: transparent;
+      color: var(--eoyr-neon-green, #00ff41);
+      border: 2px solid var(--eoyr-neon-green, #00ff41);
+    }
+    
+    .request-form-button.cancel:hover {
+      background: rgba(0, 255, 65, 0.1);
+    }
+  </style>
+  
   <script>
     function requestAnalyticsReport(websiteName) {
-      // Prompt user for their email address
-      const userEmail = prompt(`Request Analytics Report for ${websiteName}\n\nPlease enter your email address to receive the report:`);
+      // Create modal
+      const modal = document.createElement('div');
+      modal.className = 'request-modal';
+      modal.innerHTML = `
+        <div class="request-form-container">
+          <h2 class="request-form-title">Request Analytics Report</h2>
+          <form id="analytics-request-form">
+            <label class="request-form-label">Website:</label>
+            <input type="text" class="request-form-input" value="${websiteName}" disabled>
+            
+            <label class="request-form-label">Your Email Address:</label>
+            <input type="email" id="user-email" class="request-form-input" placeholder="your.email@example.com" required>
+            
+            <div class="request-form-buttons">
+              <button type="button" class="request-form-button cancel" onclick="closeRequestModal()">Cancel</button>
+              <button type="submit" class="request-form-button submit">Send Request</button>
+            </div>
+          </form>
+        </div>
+      `;
       
-      if (!userEmail) {
-        return; // User cancelled
-      }
+      document.body.appendChild(modal);
       
-      // Basic email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(userEmail)) {
-        alert('Please enter a valid email address.');
-        return;
-      }
-      
-      // Send email notification using mailto link
-      const subject = `Analytics Report Request for ${websiteName}`;
-      const body = `Analytics Report Request for ${websiteName}\n\nSend report to: ${userEmail}`;
-      const mailtoLink = `mailto:corehomeweb2@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      
-      // Open mail client
-      window.location.href = mailtoLink;
-      
-      // Show confirmation
+      // Focus on email input
       setTimeout(() => {
-        alert(`Request submitted! An email notification has been sent to corehomeweb2@gmail.com with your request for ${websiteName} analytics.`);
-      }, 500);
+        document.getElementById('user-email').focus();
+      }, 100);
+      
+      // Handle form submission
+      document.getElementById('analytics-request-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const userEmail = document.getElementById('user-email').value;
+        
+        // Basic email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(userEmail)) {
+          alert('Please enter a valid email address.');
+          return;
+        }
+        
+        // Send email using mailto
+        const subject = `Analytics Report Request for ${websiteName}`;
+        const body = `Analytics Report Request for ${websiteName}\n\nSend report to: ${userEmail}`;
+        const mailtoLink = `mailto:elombe.kisala@corehome.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        
+        window.location.href = mailtoLink;
+        
+        // Close modal and show confirmation
+        closeRequestModal();
+        setTimeout(() => {
+          alert(`Request submitted! An email has been sent to elombe.kisala@corehome.com with your request for ${websiteName} analytics.`);
+        }, 500);
+      });
+      
+      // Close modal when clicking outside
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          closeRequestModal();
+        }
+      });
+    }
+    
+    function closeRequestModal() {
+      const modal = document.querySelector('.request-modal');
+      if (modal) {
+        modal.remove();
+      }
     }
   </script>
 </body>
