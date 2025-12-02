@@ -75,10 +75,16 @@ pointer-events: none;
   flex-direction: column;
 }
 .menu-spline-logo-container {
+  position: absolute;
   width: 100%;
+  max-width: 400px;
   height: 300px;
-  margin: 1.2em 0;
+  top: 180px;
+  left: 50%;
+  transform: translateX(-50%);
   overflow: visible;
+  z-index: 1;
+  pointer-events: none;
 }
 .menu-spline-logo-container canvas {
   width: 100%;
@@ -90,6 +96,7 @@ pointer-events: none;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 .navbar-left-inner {
   max-height: 100svh;
@@ -100,13 +107,9 @@ pointer-events: none;
 }
 .nav-links-column:not(.is-main) {
   flex-shrink: 0;
-  margin-top: -40px;
+  margin-top: auto;
   position: relative;
   z-index: 10;
-}
-.menu-spline-logo-container {
-  position: relative;
-  z-index: 1;
 }
 .project-preview-image {
   width: 100%;
