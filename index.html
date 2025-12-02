@@ -436,7 +436,29 @@ document.addEventListener("DOMContentLoaded", () => {
       if (typeof initSplineLogo === 'function') {
         // Main navbar logo
         initSplineLogo('spline-logo-canvas', 'https://prod.spline.design/TiU9lObPNAba4cNs/scene.splinecode');
-        // Menu logo now uses spline-viewer web component instead
+      }
+      
+      // Handle spline-viewer reinitialization when menu opens
+      const navbarMenu = document.querySelector('.navbar-fullscreen-component');
+      const splineViewer = document.querySelector('.menu-spline-logo-container spline-viewer');
+      
+      if (navbarMenu && splineViewer) {
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.attributeName === 'style') {
+              const isVisible = navbarMenu.style.display !== 'none';
+              if (isVisible) {
+                // Force spline-viewer to refresh by removing and re-adding
+                const parent = splineViewer.parentElement;
+                const newViewer = document.createElement('spline-viewer');
+                newViewer.setAttribute('url', 'https://prod.spline.design/9yMJUr26hCivv0YV/scene.splinecode');
+                parent.innerHTML = '';
+                parent.appendChild(newViewer);
+              }
+            }
+          });
+        });
+        observer.observe(navbarMenu, { attributes: true, attributeFilter: ['style'] });
       }
     });
   </script>
