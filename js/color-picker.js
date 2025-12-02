@@ -35,11 +35,11 @@ const COLOR_THEMES = {
     dark: '#001a1a'
   },
   orange: {
-    name: 'Fusion Orange',
-    primary: '#ff6600',
-    dim: '#cc5200',
-    glow: 'rgba(255, 102, 0, 0.3)',
-    dark: '#1a0d00'
+    name: 'Retro Amber',
+    primary: '#ffb700',
+    dim: '#cc9200',
+    glow: 'rgba(255, 183, 0, 0.3)',
+    dark: '#1a1300'
   },
   pink: {
     name: 'Hot Pink',
