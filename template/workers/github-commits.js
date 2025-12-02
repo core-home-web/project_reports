@@ -1,23 +1,63 @@
 /**
- * Cloudflare Worker for GitHub Commits Dashboard (Multi-Tenant Template)
- * Fetches commits from multiple repos, groups by week, and caches responses
- * Supports GitHub OAuth for user authentication
+ * ============================================================================
+ * Cloudflare Worker for Multi-Tenant GitHub Dashboard
+ * ============================================================================
+ * 
+ * This Worker provides a serverless backend API for tracking GitHub commits
+ * across multiple repositories with user authentication and data isolation.
+ * 
+ * Features:
+ * - GitHub OAuth 2.0 authentication
+ * - User session management with HTTP-only cookies
+ * - User-scoped repository selection and tracking
+ * - Commit fetching and caching per user
+ * - Weekly commit grouping (ISO weeks: Monday-Sunday)
+ * 
+ * Architecture:
+ * - Authentication: GitHub OAuth with state parameter for CSRF protection
+ * - Storage: Cloudflare KV for sessions, user data, and caching
+ * - Security: Encrypted token storage, HTTP-only cookies, user data isolation
+ * 
+ * Required Environment Variables:
+ * - GITHUB_OAUTH_CLIENT_ID: GitHub OAuth app client ID
+ * - GITHUB_OAUTH_CLIENT_SECRET: GitHub OAuth app client secret
+ * - SESSION_SECRET: Random string for session encryption (32+ chars)
+ * - ENCRYPTION_KEY: Random string for token encryption (32+ chars)
+ * - FRONTEND_URL: Frontend URL for CORS and redirects
+ * 
+ * KV Bindings:
+ * - EOYR_DATA: KV namespace for all data storage
+ * 
+ * Implementation Status:
+ * ⚠️  This is a TEMPLATE with OAuth skeleton code. Key features need implementation:
+ *     - Phase 1: Complete OAuth endpoints (handleOAuthCallback, etc.)
+ *     - Phase 2: Implement token encryption/decryption
+ *     - Phase 3: Build user-scoped API endpoints
+ *     - Phase 4: Add repository selection APIs
+ * 
+ * See ROADMAP.md for detailed implementation phases.
+ * ============================================================================
  */
 
-// Configuration - loaded from environment or defaults
+// ============================================================================
+// Configuration Constants
+// ============================================================================
+
 const GITHUB_API_BASE = 'https://api.github.com';
 const GITHUB_OAUTH_BASE = 'https://github.com/login/oauth';
 const CACHE_TTL = 3600; // 1 hour in seconds
 const SESSION_TTL = 30 * 24 * 60 * 60; // 30 days in seconds
 
-/**
- * Part 0: OAuth and Session Management
- */
+// ============================================================================
+// OAuth & Session Management Helpers
+// ============================================================================
 
 /**
- * Generates a secure random token
- * @param {number} length - Token length
- * @returns {string} Random token
+ * Generates a cryptographically secure random token
+ * Used for session tokens and OAuth state parameters
+ * 
+ * @param {number} length - Token length (default: 32)
+ * @returns {string} Random alphanumeric token
  */
 function generateToken(length = 32) {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -31,10 +71,12 @@ function generateToken(length = 32) {
 }
 
 /**
- * Gets user ID from session cookie
- * @param {Request} request - Request object
- * @param {Object} env - Worker environment
- * @returns {Promise<string|null>} User ID or null
+ * Validates session cookie and returns user ID
+ * Extracts session token from HTTP-only cookie and validates against KV storage
+ * 
+ * @param {Request} request - Incoming HTTP request
+ * @param {Object} env - Worker environment with KV binding
+ * @returns {Promise<string|null>} User ID if valid session, null otherwise
  */
 async function getUserFromSession(request, env) {
   const cookieHeader = request.headers.get('Cookie');
@@ -63,10 +105,12 @@ async function getUserFromSession(request, env) {
 }
 
 /**
- * Creates a new session for a user
- * @param {Object} env - Worker environment
- * @param {string} userId - User ID
- * @returns {Promise<string>} Session token
+ * Creates a new authenticated session for a user
+ * Generates a session token and stores session data in KV with expiration
+ * 
+ * @param {Object} env - Worker environment with KV binding
+ * @param {string} userId - GitHub user ID
+ * @returns {Promise<string>} Session token for setting in cookie
  */
 async function createSession(env, userId) {
   const sessionToken = generateToken(32);
@@ -85,17 +129,26 @@ async function createSession(env, userId) {
 }
 
 /**
- * Gets user's GitHub token
- * @param {Object} env - Worker environment
- * @param {string} userId - User ID
- * @returns {Promise<string|null>} GitHub token or null
+ * Retrieves and decrypts user's GitHub access token from KV
+ * 
+ * ⚠️  TODO: Implement token decryption using Web Crypto API
+ * Currently returns token as-is. In production, this MUST decrypt
+ * the token using env.ENCRYPTION_KEY before returning.
+ * 
+ * @param {Object} env - Worker environment with KV binding
+ * @param {string} userId - GitHub user ID
+ * @returns {Promise<string|null>} Decrypted GitHub token or null
  */
 async function getUserToken(env, userId) {
   try {
     const tokenData = await env.EOYR_CACHE.get(`user:${userId}:token`, 'json');
     if (!tokenData) return null;
-    // In production, decrypt the token here
-    return tokenData.token;
+    
+    // TODO Phase 2: Implement decryption
+    // const decrypted = await decryptToken(tokenData.encrypted, env.ENCRYPTION_KEY);
+    // return decrypted;
+    
+    return tokenData.token; // TEMPORARY: Not encrypted yet
   } catch (error) {
     console.error('Error reading user token:', error);
     return null;

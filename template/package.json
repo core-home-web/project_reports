@@ -1,0 +1,39 @@
+{
+  "name": "multi-tenant-github-dashboard",
+  "version": "1.0.0",
+  "description": "A serverless multi-tenant GitHub dashboard for tracking commits and contributions across repositories",
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 8080",
+    "dev:worker": "cd workers && wrangler dev",
+    "deploy:worker": "cd workers && wrangler deploy",
+    "deploy": "vercel deploy --prod",
+    "preview": "vercel deploy"
+  },
+  "keywords": [
+    "github",
+    "dashboard",
+    "commits",
+    "analytics",
+    "cloudflare-workers",
+    "multi-tenant",
+    "saas",
+    "oauth"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/your-repo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/your-repo/issues"
+  },
+  "homepage": "https://github.com/yourusername/your-repo#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
+

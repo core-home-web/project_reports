@@ -1,0 +1,424 @@
+# Multi-Tenant GitHub Dashboard - Cursor Rules
+
+## Tech Stack
+- **Frontend**: HTML, CSS, JavaScript (vanilla - no frameworks)
+- **Backend**: Cloudflare Workers (serverless API)
+- **Storage**: Cloudflare KV (key-value store)
+- **Hosting**: Vercel or Cloudflare Pages
+- **Authentication**: GitHub OAuth 2.0
+- **Version Control**: GitHub
+
+## Project Context
+
+This is a **multi-tenant SaaS template** for a GitHub commit tracking dashboard. Multiple users can:
+- Authenticate with their GitHub account
+- Select repositories to track
+- View personalized commit reports
+- Have isolated, private data storage
+
+## Development Principles
+
+### Critical Rules
+1. **NEVER GUESS**: If uncertain about implementation, requirements, or decisions - ASK before proceeding
+2. **Security First**: This is a multi-tenant application - user data isolation is critical
+3. **User Privacy**: GitHub tokens are encrypted, sessions are secure, data is isolated
+4. **Iterative Development**: Complete and test each feature before moving to the next
+5. **Clean Code**: Modular, well-commented, consistent naming
+6. **Scalable Design**: Consider performance with 100+ users and 1000+ repos
+7. **Error Handling**: Always handle errors gracefully with user-friendly messages
+
+### Multi-Tenant Best Practices
+1. **Data Isolation**: Every KV key MUST include userId to prevent cross-user access
+2. **Token Security**: GitHub tokens MUST be encrypted before storage
+3. **Session Validation**: Every API request MUST validate the session
+4. **User-Scoped APIs**: API endpoints MUST filter data by authenticated user
+5. **Cache Isolation**: Cache keys MUST include userId to prevent data leaks
+
+### UI/UX Design Guidelines
+- **User-centered design**: Keep users at the center of every decision
+- **Clear authentication states**: Always show whether user is logged in
+- **Intuitive navigation**: Make actions discoverable and obvious
+- **Accessible design**: High contrast, keyboard navigation, screen reader support
+- **Mobile-first**: Design for mobile, scale up to desktop
+- **Loading states**: Always show feedback during async operations
+- **Error messages**: Clear, actionable error messages
+
+## Code Style
+
+### Naming Conventions
+- **Files**: kebab-case (e.g., `repo-selector.js`)
+- **Functions**: camelCase (e.g., `validateSession()`)
+- **Constants**: UPPER_SNAKE_CASE (e.g., `SESSION_TTL`)
+- **CSS Classes**: kebab-case (e.g., `.repo-card`)
+- **KV Keys**: colon-separated (e.g., `user:${userId}:token`)
+
+### File Organization
+```
+template/
+├── index.html              # Main dashboard
+├── css/
+│   └── eoyr.css            # Dashboard styles
+├── js/
+│   ├── auth.js             # Authentication module
+│   ├── repo-selector.js    # Repository selection
+│   ├── eoyr.js             # Core logic
+│   └── eoyr-filters.js     # Filtering/sorting
+└── workers/
+    └── github-commits.js   # API (single file)
+```
+
+### Code Organization
+- Keep functions small and focused (single responsibility)
+- Use meaningful, descriptive variable names
+- Add comments for complex logic
+- Group related functions together
+- Separate concerns: HTML (structure), CSS (style), JS (behavior)
+
+### Function Documentation
+For Worker functions, include JSDoc comments:
+
+```javascript
+/**
+ * Validates user session from cookie
+ * @param {Request} request - Incoming request
+ * @param {Environment} env - Worker environment with KV binding
+ * @returns {Promise<{userId: string, username: string} | null>}
+ */
+async function validateSession(request, env) {
+  // Implementation
+}
+```
+
+## Security Guidelines
+
+### Authentication & Sessions
+- Use **HTTP-only** cookies for session tokens (no localStorage)
+- Set **Secure** flag (HTTPS only)
+- Set **SameSite=Strict** (CSRF protection)
+- Session tokens MUST be cryptographically random (32+ bytes)
+- Validate OAuth **state parameter** (CSRF protection)
+- Store sessions in KV with 30-day TTL
+
+### Token Handling
+- Encrypt GitHub tokens using Web Crypto API before KV storage
+- NEVER send GitHub tokens to frontend
+- NEVER log tokens or sensitive data
+- Use user's token for API calls (not a global admin token)
+- Handle token expiration gracefully
+
+### Data Validation
+- Validate ALL user inputs
+- Sanitize data before displaying in HTML
+- Use parameterized queries (if adding SQL in future)
+- Validate date ranges are reasonable (max 1 year)
+- Limit repo selection (max 100 repos per user)
+
+### KV Key Structure
+Always include userId in keys to prevent access across users:
+
+```javascript
+// Good (user-scoped)
+`user:${userId}:token`
+`user:${userId}:repos`
+`cache:${userId}:commits:${params}`
+
+// Bad (global, not isolated)
+`token:${userId}`  // Wrong order
+`repos`            // No user scope
+```
+
+## API Development
+
+### Endpoint Structure
+```javascript
+// Pattern for all protected endpoints:
+async function handleProtectedEndpoint(request, env) {
+  // 1. Validate session
+  const user = await validateSession(request, env);
+  if (!user) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+  
+  // 2. Parse request
+  const { param1, param2 } = await parseRequest(request);
+  
+  // 3. Validate inputs
+  if (!isValid(param1)) {
+    return new Response('Invalid input', { status: 400 });
+  }
+  
+  // 4. Get user data (user-scoped)
+  const userData = await getUserData(env, user.userId);
+  
+  // 5. Process and return
+  const result = await processData(userData);
+  return jsonResponse(result);
+}
+```
+
+### Error Handling
+```javascript
+try {
+  // API call
+} catch (error) {
+  console.error('Error context:', error);
+  
+  if (error.status === 401) {
+    return new Response('GitHub authentication failed', { status: 401 });
+  }
+  
+  if (error.status === 403) {
+    return new Response('Rate limit exceeded', { status: 429 });
+  }
+  
+  return new Response('Internal server error', { status: 500 });
+}
+```
+
+### Response Format
+Always return consistent JSON responses:
+
+```javascript
+// Success
+{
+  "success": true,
+  "data": { /* result */ }
+}
+
+// Error
+{
+  "success": false,
+  "error": "User-friendly error message"
+}
+```
+
+## Frontend Development
+
+### API Calls
+Always include error handling:
+
+```javascript
+async function fetchData(endpoint, options = {}) {
+  try {
+    const response = await fetch(endpoint, {
+      ...options,
+      credentials: 'include', // Include session cookie
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+      }
+    });
+    
+    if (response.status === 401) {
+      // Redirect to login
+      window.location.href = '/auth/github';
+      return null;
+    }
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('API Error:', error);
+    showErrorMessage('Failed to load data. Please try again.');
+    return null;
+  }
+}
+```
+
+### Loading States
+Always show loading indicators:
+
+```javascript
+async function loadCommits() {
+  showLoading(true);
+  try {
+    const commits = await fetchData('/api/commits');
+    renderCommits(commits);
+  } finally {
+    showLoading(false);
+  }
+}
+```
+
+### State Management
+Keep state simple and explicit:
+
+```javascript
+// Global state
+let currentUser = null;
+let selectedRepos = [];
+let commitData = null;
+let activeFilters = {};
+
+// Update functions
+function setCurrentUser(user) {
+  currentUser = user;
+  renderUserProfile(user);
+}
+```
+
+## Cloudflare Workers Specifics
+
+### Environment Variables
+Access via `env` parameter:
+
+```javascript
+export default {
+  async fetch(request, env, ctx) {
+    const clientId = env.GITHUB_OAUTH_CLIENT_ID;
+    const kv = env.EOYR_DATA; // KV namespace binding
+  }
+}
+```
+
+### KV Operations
+```javascript
+// Write
+await env.EOYR_DATA.put(key, value, { expirationTtl: 3600 });
+
+// Read
+const value = await env.EOYR_DATA.get(key);
+
+// Delete
+await env.EOYR_DATA.delete(key);
+
+// List (use sparingly - expensive)
+const list = await env.EOYR_DATA.list({ prefix: `user:${userId}:` });
+```
+
+### CORS Headers
+Set for all API responses:
+
+```javascript
+function jsonResponse(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': env.FRONTEND_URL,
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    }
+  });
+}
+```
+
+## Testing Guidelines
+
+### Before Committing
+1. Test authentication flow end-to-end
+2. Verify data isolation (create 2 test users)
+3. Check error handling (network errors, invalid tokens)
+4. Test on mobile viewport
+5. Check browser console for errors
+6. Verify no sensitive data in logs
+
+### Manual Testing Checklist
+- [ ] Can login with GitHub OAuth
+- [ ] Session persists after page reload
+- [ ] Can select repositories
+- [ ] Dashboard shows correct user data
+- [ ] Logout clears session
+- [ ] Different users see different data
+- [ ] Error messages are user-friendly
+- [ ] Loading states appear during async operations
+
+## Performance Optimization
+
+### Caching Strategy
+- Cache user repos list (1 hour TTL)
+- Cache commit data (1 hour TTL)
+- Cache user profile (no expiry, invalidate on update)
+- Include userId in ALL cache keys
+
+### API Rate Limiting
+GitHub API limits:
+- 5,000 requests/hour per user token (OAuth)
+- Use conditional requests (If-Modified-Since) when possible
+- Batch requests where possible
+- Cache aggressively
+
+### Frontend Performance
+- Lazy load repository list (paginate if > 100 repos)
+- Debounce search/filter inputs (300ms)
+- Virtualize long commit lists (if > 1000 commits)
+- Minimize DOM updates
+
+## Reference Documentation
+
+### Must Read Before Implementing
+- **GitHub OAuth**: https://docs.github.com/en/developers/apps/building-oauth-apps
+- **Cloudflare Workers**: https://developers.cloudflare.com/workers/
+- **Cloudflare KV**: https://developers.cloudflare.com/kv/
+- **Web Crypto API**: https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API
+
+### Internal Documentation
+- **Architecture**: See `ARCHITECTURE.md` for system design
+- **Deployment**: See `DEPLOYMENT.md` for setup instructions
+- **Roadmap**: See `ROADMAP.md` for implementation phases
+- **Customization**: See `CUSTOMIZATION.md` for branding guide
+
+## Common Patterns
+
+### User-Scoped API Endpoint
+```javascript
+async function handleUserScopedAPI(request, env) {
+  const user = await validateSession(request, env);
+  if (!user) return unauthorizedResponse();
+  
+  const userRepos = await env.EOYR_DATA.get(`user:${user.userId}:repos`);
+  const repos = userRepos ? JSON.parse(userRepos) : [];
+  
+  // Use repos to fetch data...
+  
+  return jsonResponse({ repos });
+}
+```
+
+### Encrypted Token Storage
+```javascript
+// Encrypt before storing
+const encrypted = await encryptToken(githubToken, env.ENCRYPTION_KEY);
+await env.EOYR_DATA.put(`user:${userId}:token`, encrypted);
+
+// Decrypt when retrieving
+const encrypted = await env.EOYR_DATA.get(`user:${userId}:token`);
+const token = await decryptToken(encrypted, env.ENCRYPTION_KEY);
+```
+
+## Deployment Checklist
+
+Before deploying to production:
+
+- [ ] All secrets set in Cloudflare (no hardcoded values)
+- [ ] KV namespace created and bound
+- [ ] OAuth callback URL matches deployed Worker URL
+- [ ] FRONTEND_URL points to correct domain
+- [ ] CORS headers allow frontend domain
+- [ ] Session cookies use Secure flag (HTTPS)
+- [ ] Error logging configured
+- [ ] Rate limiting implemented (optional but recommended)
+
+## Questions to Ask
+
+When uncertain, ask about:
+- "Should this endpoint be authenticated?"
+- "What happens if the GitHub API rate limit is hit?"
+- "How should we handle users with 500+ repos?"
+- "What's the expected behavior when session expires?"
+- "Should we cache this data? For how long?"
+
+## Remember
+
+- **Security is not optional** - this is a multi-tenant app
+- **Test with multiple users** - verify data isolation
+- **Document complex logic** - help future developers
+- **Fail gracefully** - always handle errors
+- **Think about scale** - 100 users is very different from 10,000
+
+This template is a foundation. Adapt these rules as the project evolves!
+

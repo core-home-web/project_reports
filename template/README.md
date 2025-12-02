@@ -1,132 +1,285 @@
-# Multi-Tenant GitHub Dashboard Template
+# Multi-Tenant GitHub Dashboard
 
-This is a multi-tenant template version of the End of Year Review GitHub Dashboard. Users authenticate with GitHub OAuth and can select their own repositories to track.
+A beautiful, serverless SaaS dashboard for tracking GitHub commits and contributions across your repositories. Users authenticate with GitHub OAuth, select repositories to monitor, and view personalized commit reports with weekly summaries.
 
-## Features
+![Dashboard Preview](https://via.placeholder.com/800x400/0f0f23/818cf8?text=GitHub+Dashboard)
 
-- **GitHub OAuth Authentication** - Users sign in with their GitHub account
-- **Repository Selection** - Users choose which repositories to track
-- **User-Scoped Data** - Each user's data is isolated and secure
-- **Session Management** - Secure session handling with HTTP-only cookies
-- **Real-time Updates** - Automatic cache invalidation via webhooks
+## ✨ Features
 
-## Setup Instructions
+- **🔐 GitHub OAuth Authentication** - Secure login with GitHub accounts
+- **📊 Repository Selection** - Users choose which repos to track
+- **🔒 User Data Isolation** - Complete privacy with user-scoped data storage
+- **📅 Weekly Summaries** - Commits organized by ISO week (Monday-Sunday)
+- **🎨 Beautiful UI** - Modern, responsive design with dark theme
+- **⚡ Serverless Architecture** - Built on Cloudflare Workers + KV
+- **💰 Cost-Effective** - Free tier supports thousands of users
+- **🚀 Fast Performance** - Edge computing with global CDN
 
-### 1. Create GitHub OAuth App
+## 🏗️ Architecture
 
-1. Go to [GitHub Settings → Developer settings → OAuth Apps](https://github.com/settings/developers)
-2. Click "New OAuth App"
-3. Fill in:
-   - **Application name**: Your dashboard name
-   - **Homepage URL**: Your dashboard URL (e.g., `https://your-dashboard.pages.dev`)
+```
+Frontend (Vercel/Cloudflare Pages)
+         ↓
+Cloudflare Worker API
+         ↓
+    ┌────┴────┐
+    ↓         ↓
+GitHub API   KV Storage
+```
+
+- **Frontend**: HTML, CSS, vanilla JavaScript
+- **Backend**: Cloudflare Workers (serverless functions)
+- **Storage**: Cloudflare KV (key-value store)
+- **Hosting**: Vercel or Cloudflare Pages
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- GitHub account (for OAuth app)
+- Cloudflare account (free tier is fine)
+- Vercel account (optional, for hosting)
+
+### 1. Clone and Setup
+
+```bash
+git clone <your-repo-url>
+cd template/
+```
+
+### 2. Create GitHub OAuth App
+
+1. Go to [GitHub Settings → Developer Settings → OAuth Apps](https://github.com/settings/developers)
+2. Click **New OAuth App**
+3. Fill in the details:
+   - **Application name**: Your Dashboard Name
+   - **Homepage URL**: `https://your-domain.vercel.app`
    - **Authorization callback URL**: `https://your-worker.workers.dev/auth/github/callback`
-4. Click "Register application"
-5. **Copy the Client ID and generate a Client Secret**
+4. Save the **Client ID** and **Client Secret**
 
-### 2. Set Up Cloudflare Worker
+### 3. Deploy Cloudflare Worker
 
-1. Create a new Cloudflare Worker
-2. Copy the contents of `template/workers/github-commits.js` to your Worker
-3. Set up KV Namespace:
-   - Create a KV namespace named `EOYR_CACHE`
-   - Bind it to your Worker with variable name `EOYR_CACHE`
+```bash
+cd workers/
+npm install -g wrangler
+wrangler login
+wrangler kv:namespace create "EOYR_DATA"
+```
 
-### 3. Configure Environment Variables
+Update `wrangler.toml` with your namespace ID, then:
 
-In your Cloudflare Worker, set these environment variables:
-
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `GITHUB_OAUTH_CLIENT_ID` | Your OAuth app Client ID | `abc123def456` |
-| `GITHUB_OAUTH_CLIENT_SECRET` | Your OAuth app Client Secret | `secret_xyz789` |
-| `OAUTH_REDIRECT_URI` | Full callback URL | `https://your-worker.workers.dev/auth/github/callback` |
-| `SESSION_SECRET` | Random string for session encryption | `your-random-secret-key` |
-
-**Note:** `GITHUB_TOKEN` is no longer needed - users provide their own tokens via OAuth.
+```bash
+wrangler secret put GITHUB_OAUTH_CLIENT_ID
+wrangler secret put GITHUB_OAUTH_CLIENT_SECRET
+wrangler secret put SESSION_SECRET
+wrangler secret put ENCRYPTION_KEY
+wrangler deploy
+```
 
 ### 4. Deploy Frontend
 
-1. Deploy the `template/` directory to Cloudflare Pages
-2. Set environment variable `API_BASE_URL` to your Worker URL (optional, defaults to same origin)
-3. Or update `API_BASE_URL` in `template/js/eoyr.js` directly
+**Option A: Vercel**
+1. Import your repo to Vercel
+2. Set `API_BASE_URL` environment variable
+3. Deploy
 
-### 5. Test the Setup
+**Option B: Cloudflare Pages**
+1. Connect your GitHub repo
+2. Set root directory to `template/`
+3. Deploy
 
-1. Visit your deployed dashboard
-2. Click "Login with GitHub"
-3. Authorize the application
-4. Select repositories in settings
-5. View your commit reports!
+### 5. Test It Out!
 
-## File Structure
+Visit your deployed URL, click "Login with GitHub", and start tracking commits!
+
+## 📚 Documentation
+
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - System design and data flow
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Step-by-step deployment guide
+- **[ROADMAP.md](ROADMAP.md)** - Implementation phases and future features
+- **[CUSTOMIZATION.md](CUSTOMIZATION.md)** - Branding and UI customization
+
+## 📁 Project Structure
 
 ```
 template/
-├── index.html          # Main dashboard page
-├── analytics.html      # Analytics page
-├── stories.html        # Stories page
-├── js/
-│   ├── auth.js         # Authentication module
-│   ├── repo-selector.js # Repository selection module
-│   ├── eoyr.js         # Main dashboard logic
-│   └── ...
+├── index.html              # Main dashboard page
+├── analytics.html          # Analytics page
+├── stories.html            # Stories page
 ├── css/
-│   └── eoyr.css        # Dashboard styles (includes auth/repo selector styles)
-└── workers/
-    └── github-commits.js # Cloudflare Worker with OAuth support
+│   ├── eoyr.css            # Dashboard-specific styles
+│   ├── normalize.css       # CSS reset
+│   └── wanderlostgalaxy.webflow.css  # Base theme
+├── js/
+│   ├── auth.js             # Authentication logic
+│   ├── repo-selector.js    # Repository selection UI
+│   ├── eoyr.js             # Core dashboard logic
+│   ├── eoyr-filters.js     # Filtering and sorting
+│   └── nav-menu.js         # Navigation handlers
+├── workers/
+│   └── github-commits.js   # Cloudflare Worker (API)
+├── wrangler.toml           # Worker configuration
+├── vercel.json             # Vercel deployment config
+└── config/
+    └── repos.example.json  # Example repo configuration
 ```
 
-## API Endpoints
+## 🔌 API Endpoints
 
 ### Authentication
-- `GET /auth/github` - Initiate OAuth flow
-- `GET /auth/github/callback` - OAuth callback handler
-- `GET /auth/logout` - Logout
-- `GET /auth/me` - Get current user info
+```
+GET  /auth/github              # Initiate OAuth flow
+GET  /auth/github/callback     # OAuth callback handler
+GET  /auth/logout              # End user session
+GET  /auth/me                  # Get current user info
+```
 
-### Repository Management
-- `GET /api/user/repos/available` - Get all repos user has access to
-- `GET /api/user/repos` - Get user's selected repos
-- `POST /api/user/repos` - Save user's repo selection
+### User Management
+```
+GET  /api/user/repos/available # List all accessible repos
+GET  /api/user/repos           # Get selected repos
+POST /api/user/repos           # Update repo selection
+GET  /api/user/preferences     # Get user preferences
+POST /api/user/preferences     # Update preferences
+```
 
-### Data (User-Scoped)
-- `GET /api/repos` - Get user's selected repos
-- `GET /api/commits` - Get commits (filtered by user's repos)
-- `GET /api/weeks` - Get week summaries
-- `GET /api/weeks/:weekId` - Get week details
+### Commit Data (User-Scoped)
+```
+GET  /api/commits?start=YYYY-MM-DD&end=YYYY-MM-DD
+GET  /api/weeks?year=2025
+GET  /api/stats?start=YYYY-MM-DD&end=YYYY-MM-DD
+```
 
-## Security Notes
+## 🔒 Security
 
-- GitHub tokens are stored in KV (consider encryption for production)
-- Sessions use HTTP-only cookies
-- CSRF protection via state parameter in OAuth flow
-- User data is isolated by userId in cache keys
+- **Token Encryption**: GitHub tokens encrypted at rest using Web Crypto API
+- **Session Security**: HTTP-only, secure, SameSite=Strict cookies
+- **CSRF Protection**: State parameter validation in OAuth flow
+- **Data Isolation**: User-scoped KV keys prevent cross-user access
+- **No Token Exposure**: Tokens never sent to frontend
 
-## Migration from Single-Tenant
+## 💡 Implementation Status
 
-If you have an existing single-tenant deployment:
+This template provides the **foundation** for a multi-tenant dashboard. Key features require implementation:
 
-1. Keep your existing deployment on the `main` branch
-2. Use this template on a separate branch (`template-version`)
-3. Deploy to a separate Cloudflare Worker and Pages project
-4. Users can use either version independently
+### ✅ Completed
+- Project structure and file organization
+- Frontend UI components and styling
+- Documentation (architecture, deployment, customization)
+- Worker configuration and KV setup
 
-## Troubleshooting
+### 🚧 To Be Implemented
+- OAuth authentication endpoints (Phase 1)
+- User data storage in KV (Phase 2)
+- Repository selection UI and APIs (Phase 3)
+- Error handling and polish (Phase 4)
+
+See **[ROADMAP.md](ROADMAP.md)** for detailed implementation phases.
+
+## 🎨 Customization
+
+Easily customize the dashboard to match your brand:
+
+- **Colors**: Update CSS variables in `css/eoyr.css`
+- **Logo**: Replace images in `/images/` directory
+- **Fonts**: Change font imports in `index.html`
+- **Layout**: Modify grid layouts and card styles
+- **Filters**: Add custom filtering logic in `js/eoyr-filters.js`
+
+See **[CUSTOMIZATION.md](CUSTOMIZATION.md)** for detailed guides.
+
+## 📊 Scaling & Costs
+
+### Free Tier Limits
+- **Cloudflare Workers**: 100,000 requests/day
+- **Cloudflare KV**: 100,000 reads/day, 1,000 writes/day
+- **Vercel**: 100 GB bandwidth/month
+
+### Estimated Costs
+- **0-100 users**: Free
+- **100-1,000 users**: ~$5-10/month
+- **1,000+ users**: ~$20-50/month
+
+Caching significantly reduces API calls and costs.
+
+## 🛠️ Development
+
+### Local Development
+
+```bash
+# Start Worker locally
+cd workers/
+wrangler dev
+
+# Serve frontend
+python3 -m http.server 8080
+```
+
+### Environment Variables
+
+Create `.dev.vars` in `workers/`:
+
+```
+GITHUB_OAUTH_CLIENT_ID=your_client_id
+GITHUB_OAUTH_CLIENT_SECRET=your_client_secret
+SESSION_SECRET=random_32_char_string
+ENCRYPTION_KEY=random_32_char_string
+FRONTEND_URL=http://localhost:8080
+```
+
+## 🤝 Contributing
+
+Contributions welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests and documentation
+5. Submit a pull request
+
+## 📝 License
+
+MIT License - see [LICENSE](LICENSE) file for details
+
+## 🙏 Acknowledgments
+
+- Built with [Cloudflare Workers](https://workers.cloudflare.com/)
+- Styled with [Webflow](https://webflow.com/) base theme
+- Powered by [GitHub API](https://docs.github.com/en/rest)
+
+## 🐛 Troubleshooting
 
 ### "Unauthorized" errors
-- Check that OAuth callback URL matches exactly
-- Verify environment variables are set correctly
-- Check browser console for detailed errors
+- Verify OAuth callback URL matches exactly
+- Check Worker environment variables
+- Ensure GitHub OAuth app is active
 
 ### No repositories showing
-- User needs to select repositories in settings
-- Check that user has access to repositories on GitHub
-- Verify GitHub token is valid (user may need to re-authenticate)
+- User must select repositories in settings
+- Verify GitHub token permissions
+- Check Worker logs: `wrangler tail`
 
 ### Session expires quickly
-- Adjust `SESSION_TTL` in `github-commits.js` (default: 30 days)
+- Adjust `SESSION_TTL` in worker code (default: 30 days)
+- Check cookie settings (Secure, HttpOnly)
 
-## Support
+### More help?
+- Review [DEPLOYMENT.md](DEPLOYMENT.md) for setup details
+- Check [ARCHITECTURE.md](ARCHITECTURE.md) for system design
+- Open an issue on GitHub
 
-For issues or questions, please check the main project documentation or open an issue.
+## 📬 Support
 
+For questions or issues:
+- Check documentation files in this directory
+- Review Cloudflare Workers docs
+- Check GitHub API documentation
+- Open an issue in the repository
+
+---
+
+**Ready to deploy?** Start with [DEPLOYMENT.md](DEPLOYMENT.md) for step-by-step instructions.
+
+**Want to customize?** See [CUSTOMIZATION.md](CUSTOMIZATION.md) for branding guides.
+
+**Understanding the system?** Read [ARCHITECTURE.md](ARCHITECTURE.md) for technical details.

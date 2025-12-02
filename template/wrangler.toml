@@ -1,20 +1,216 @@
+# ============================================================================
+# Cloudflare Worker Configuration for Multi-Tenant GitHub Dashboard
+# ============================================================================
+#
+# This Worker provides the backend API for the GitHub dashboard, including:
+# - GitHub OAuth authentication
+# - User session management
+# - Repository selection and tracking
+# - Commit data fetching and caching
+#
+# Documentation: https://developers.cloudflare.com/workers/
+
+# ============================================================================
+# Basic Configuration
+# ============================================================================
+
+# Worker name - this will be part of your worker URL
+# Format: https://{name}.{subdomain}.workers.dev
+# Change this to something unique for your deployment
 name = "eoyr-dashboard-template"
+
+# Entry point - the main JavaScript file for your Worker
 main = "workers/github-commits.js"
+
+# Compatibility date - ensures consistent behavior across deployments
+# Update to the date you last tested your Worker
 compatibility_date = "2025-11-30"
+
+# Enable workers.dev subdomain (useful for testing)
+# Set to false if you only want custom domains
 workers_dev = true
+
+# Enable preview URLs for testing branches
 preview_urls = true
 
-# KV Namespace binding for caching API responses and user data
-[[kv_namespaces]]
-binding = "EOYR_CACHE"
-id = "da03e8cf85c9420b9db2831526f8aa8f"  # Update with your KV namespace ID
-
-# Environment Variables (set in Cloudflare Dashboard)
-# Required:
-# - GITHUB_OAUTH_CLIENT_ID: Your GitHub OAuth app Client ID
-# - GITHUB_OAUTH_CLIENT_SECRET: Your GitHub OAuth app Client Secret
-# - OAUTH_REDIRECT_URI: Full callback URL (e.g., https://your-worker.workers.dev/auth/github/callback)
-# - SESSION_SECRET: Random string for session encryption
+# ============================================================================
+# Cloudflare KV Storage (Key-Value Store)
+# ============================================================================
 #
-# Note: GITHUB_TOKEN is no longer needed - users provide their own tokens via OAuth
+# KV is used to store:
+# - User profiles and GitHub tokens (encrypted)
+# - User repository selections
+# - User preferences
+# - Session data
+# - Cached API responses
+#
+# Setup Instructions:
+# 1. Create a KV namespace:
+#    wrangler kv:namespace create "EOYR_DATA"
+#
+# 2. Create a preview namespace for testing:
+#    wrangler kv:namespace create "EOYR_DATA" --preview
+#
+# 3. Replace the IDs below with your namespace IDs from the output
 
+[[kv_namespaces]]
+binding = "EOYR_DATA"                            # Variable name used in code
+id = "your_production_namespace_id_here"         # Production KV namespace ID
+preview_id = "your_preview_namespace_id_here"    # Preview/dev KV namespace ID
+
+# Note: The binding name "EOYR_DATA" is used in the Worker code.
+# If you change it here, update references in github-commits.js
+
+# ============================================================================
+# Environment Variables & Secrets
+# ============================================================================
+#
+# Secrets are sensitive values that should NOT be committed to git.
+# Set them using the Wrangler CLI:
+#
+# Required Secrets:
+# ----------------
+# wrangler secret put GITHUB_OAUTH_CLIENT_ID
+#   Description: GitHub OAuth App Client ID
+#   Get from: https://github.com/settings/developers
+#   Example: abc123def456
+#
+# wrangler secret put GITHUB_OAUTH_CLIENT_SECRET
+#   Description: GitHub OAuth App Client Secret
+#   Get from: https://github.com/settings/developers
+#   Example: secret_xyz789abcdef
+#
+# wrangler secret put SESSION_SECRET
+#   Description: Random string for encrypting session tokens
+#   Generate: openssl rand -hex 32
+#   Example: a1b2c3d4e5f6...64-character-hex-string
+#
+# wrangler secret put ENCRYPTION_KEY
+#   Description: Random string for encrypting GitHub tokens in KV
+#   Generate: openssl rand -hex 32
+#   Example: z9y8x7w6v5u4...64-character-hex-string
+#
+# wrangler secret put FRONTEND_URL
+#   Description: URL where your frontend is hosted (for CORS and redirects)
+#   Local dev: http://localhost:8080
+#   Production: https://your-domain.vercel.app
+#
+# Optional Secrets:
+# ----------------
+# wrangler secret put GITHUB_WEBHOOK_SECRET (for future webhook support)
+#   Description: Secret for validating GitHub webhook signatures
+#   Set when configuring webhooks in GitHub repo settings
+#
+# List current secrets:
+# --------------------
+# wrangler secret list
+#
+# Delete a secret:
+# ---------------
+# wrangler secret delete SECRET_NAME
+
+# ============================================================================
+# Routes & Custom Domains (Optional)
+# ============================================================================
+#
+# To use a custom domain instead of workers.dev:
+#
+# [[routes]]
+# pattern = "api.yourdomain.com/*"
+# zone_name = "yourdomain.com"
+#
+# Then configure DNS in Cloudflare dashboard:
+# - Add a DNS record: api.yourdomain.com → your-worker (Worker route)
+
+# ============================================================================
+# Development Configuration
+# ============================================================================
+#
+# Local development with wrangler dev:
+#
+# 1. Create a .dev.vars file (NOT committed to git):
+#    cp .env.example .dev.vars
+#
+# 2. Fill in your development credentials in .dev.vars
+#
+# 3. Run: wrangler dev
+#
+# 4. Access at: http://localhost:8787
+#
+# Note: .dev.vars is for local testing only. Production uses secrets.
+
+# ============================================================================
+# Account Configuration
+# ============================================================================
+#
+# Uncomment and set your Cloudflare Account ID:
+# Get from: https://dash.cloudflare.com → Workers & Pages → Account ID
+#
+# account_id = "your_account_id_here"
+#
+# Setting account_id is optional but recommended for team deployments
+
+# ============================================================================
+# Deployment
+# ============================================================================
+#
+# Deploy to production:
+#   wrangler deploy
+#
+# Deploy with a specific version tag:
+#   wrangler deploy --name eoyr-dashboard-v2
+#
+# View deployment logs:
+#   wrangler tail
+#
+# Rollback to previous version:
+#   Use Cloudflare Dashboard → Workers & Pages → Deployments → Rollback
+
+# ============================================================================
+# Limits & Scaling (Free Tier)
+# ============================================================================
+#
+# Cloudflare Workers Free Tier:
+# - 100,000 requests/day
+# - 10ms CPU time per request
+# - 128MB memory per request
+#
+# KV Free Tier:
+# - 100,000 read operations/day
+# - 1,000 write operations/day
+# - 1 GB stored data
+#
+# Paid Plan ($5/month):
+# - 10 million requests/month
+# - 50ms CPU time per request
+# - Unlimited KV reads (beyond free tier)
+#
+# Monitor usage: https://dash.cloudflare.com/workers
+
+# ============================================================================
+# Troubleshooting
+# ============================================================================
+#
+# Error: "KV namespace not found"
+# Solution: Create KV namespace and update IDs in this file
+#
+# Error: "GITHUB_OAUTH_CLIENT_ID is not defined"
+# Solution: Set secrets using wrangler secret put
+#
+# Error: "Cannot read property of undefined (reading EOYR_DATA)"
+# Solution: Verify KV binding name matches in code
+#
+# View logs:
+#   wrangler tail
+#
+# Test locally:
+#   wrangler dev
+
+# ============================================================================
+# Additional Resources
+# ============================================================================
+#
+# Cloudflare Workers Docs: https://developers.cloudflare.com/workers/
+# Cloudflare KV Docs: https://developers.cloudflare.com/kv/
+# Wrangler CLI Docs: https://developers.cloudflare.com/workers/wrangler/
+# GitHub OAuth Docs: https://docs.github.com/en/developers/apps/building-oauth-apps
