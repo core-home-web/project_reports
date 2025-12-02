@@ -116,6 +116,10 @@ pointer-events: none;
   .page-padding.is-navbar {
     max-height: 80svh;
     justify-content: space-between;
+    overflow: visible;
+  }
+  .navbar-left-inner {
+    overflow: visible;
   }
   .menu-spline-logo-container {
     position: relative;
@@ -123,7 +127,8 @@ pointer-events: none;
     left: auto;
     transform: none;
     margin: 2em auto;
-    height: 280px;
+    height: 310px;
+    overflow: visible;
   }
   .nav-links-column:not(.is-main) {
     margin-top: 0;
@@ -131,10 +136,18 @@ pointer-events: none;
 }
 /* Tablet responsive (768px - 992px) */
 @media screen and (min-width: 768px) and (max-width: 992px) {
+  .page-padding.is-navbar {
+    max-height: 70svh;
+    overflow: visible;
+  }
+  .navbar-left-inner {
+    overflow: visible;
+  }
   .menu-spline-logo-container {
-    top: 200px;
+    top: 80px;
     left: 60%;
-    height: 300px;
+    height: 320px;
+    overflow: visible;
   }
 }
 .project-preview-image {
