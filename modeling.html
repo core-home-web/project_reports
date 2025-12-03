@@ -70,8 +70,8 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-auto-flow: row dense;
-      grid-auto-rows: minmax(250px, auto);
-      gap: 1rem;
+      grid-auto-rows: 400px;
+      gap: 0;
     }
     
     .work_item {
@@ -128,7 +128,6 @@
       height: 100%;
       padding: 0.8rem;
       position: relative;
-      aspect-ratio: inherit;
     }
     
     .work_date-wrap {
@@ -207,6 +206,24 @@
       }
     }
     
+    @media screen and (max-width: 991px) {
+      .work_list {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 350px;
+      }
+      
+      /* All items span 1 column on tablet */
+      .work_item {
+        grid-column: span 1 !important;
+      }
+      
+      /* Portrait items still span 2 rows on tablet */
+      #work-item-4,
+      #work-item-5 {
+        grid-row: span 2 !important;
+      }
+    }
+    
     @media screen and (max-width: 767px) {
       .modeling-wrapper {
         padding: 2rem 1rem;
@@ -216,14 +233,17 @@
         font-size: 6rem;
       }
       
+      /* Single column on mobile */
       .work_list {
         grid-template-columns: 1fr;
-        grid-auto-rows: minmax(300px, auto);
+        grid-auto-rows: 400px;
+        gap: 0;
       }
       
-      /* Reset aspect ratios for mobile - make all items same aspect */
+      /* All items span 1 column, 1 row on mobile */
       .work_item {
-        aspect-ratio: 4 / 5 !important;
+        grid-column: span 1 !important;
+        grid-row: span 1 !important;
       }
     }
     
@@ -233,42 +253,28 @@
       }
     }
     
-    /* Grid item specific sizes - creates varied masonry layout */
-    #work-item-1 { 
-      grid-area: span 1 / span 2; 
-      aspect-ratio: 16 / 9;
-    }
-    #work-item-2 { 
-      grid-area: span 1 / span 2; 
-      aspect-ratio: 16 / 9;
-    }
-    #work-item-3 { 
-      grid-area: span 1 / span 2; 
-      aspect-ratio: 16 / 9;
-    }
-    #work-item-4 { 
-      grid-area: span 2 / span 1; 
-      aspect-ratio: 3 / 4;
-    }
-    #work-item-5 { 
-      grid-area: span 2 / span 1; 
-      aspect-ratio: 3 / 4;
-    }
-    #work-item-6 { 
-      grid-area: span 1 / span 1; 
-      aspect-ratio: 4 / 3;
-    }
-    #work-item-7 { 
-      grid-area: span 1 / span 2; 
-      aspect-ratio: 16 / 9;
-    }
+    /* Grid item categories: landscape, portrait, square */
+    
+    /* Landscape images - span 2 columns */
+    #work-item-1,
+    #work-item-2, 
+    #work-item-3,
+    #work-item-7,
     #work-item-8 { 
-      grid-area: span 1 / span 2; 
-      aspect-ratio: 16 / 9;
+      grid-column: span 2;
     }
+    
+    /* Portrait images - span 2 rows */
+    #work-item-4,
+    #work-item-5 { 
+      grid-row: span 2;
+    }
+    
+    /* Square images - span 1 column, 1 row */
+    #work-item-6,
     #work-item-9 { 
-      grid-area: span 1 / span 1; 
-      aspect-ratio: 4 / 3;
+      grid-column: span 1;
+      grid-row: span 1;
     }
     
     /* Lightbox Styles */
