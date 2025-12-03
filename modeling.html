@@ -2,7 +2,7 @@
 <html data-wf-page="modeling" data-wf-site="6635cff5b151554d559fb0ae">
 <head>
   <meta charset="utf-8">
-  <title>Modeling - Branding & Product Visualization</title>
+  <title>Modeling - Brand Marketing & Campaigns</title>
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <link href="css/normalize.css" rel="stylesheet" type="text/css">
   <link href="css/webflow.css" rel="stylesheet" type="text/css">
@@ -14,6 +14,18 @@
   <script type="text/javascript">WebFont.load({  google: {    families: ["Audiowide:regular","Exo 2:100,200,300,regular,500,600,700,800,900"]  }});</script>
   <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
   <style>
+    /* Masonry grid support */
+    @media screen and (min-width: 768px) {
+      [item-style=wide] {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+      [item-style=tall] {
+        grid-column: span 1;
+        grid-row: span 2;
+      }
+    }
+    
     .modeling-wrapper {
       min-height: 100vh;
       background-color: var(--eoyr-black, #0a0a0a);
@@ -21,24 +33,24 @@
     }
     
     .modeling-container {
-      max-width: 1400px;
+      max-width: 80rem;
       margin: 0 auto;
     }
     
     .modeling-header {
-      text-align: center;
-      margin-bottom: 4rem;
+      text-align: left;
+      margin-bottom: 3rem;
       padding-bottom: 2rem;
       border-bottom: 2px solid var(--eoyr-neon-green, #00ff41);
     }
     
     .modeling-title {
       font-family: "Audiowide", sans-serif;
-      font-size: 3rem;
+      font-size: 8rem;
       color: var(--eoyr-neon-green, #00ff41);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin: 0 0 1rem 0;
+      letter-spacing: -0.03em;
+      margin: 0 0 0.5rem 0;
+      line-height: 0.9;
       text-shadow: 0 0 20px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
     }
     
@@ -47,65 +59,98 @@
       font-size: 1.2rem;
       color: var(--eoyr-neon-green-dim, #00cc33);
       margin: 0;
+      line-height: 1.6;
     }
     
-    .modeling-grid {
+    .work_wrapper {
+      padding-top: 2rem;
+    }
+    
+    .work_list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-flow: row dense;
+      gap: 1rem;
     }
     
-    .modeling-card {
-      background: var(--eoyr-dark-green, #001a00);
+    .work_item {
+      border-radius: 0.9rem;
+      transition: all 0.4s;
+      position: relative;
+      overflow: hidden;
       border: 2px solid var(--eoyr-neon-green-dim, #00cc33);
-      border-radius: 12px;
-      overflow: hidden;
-      transition: all 0.3s ease;
     }
     
-    .modeling-card:hover {
-      border-color: var(--eoyr-neon-green, #00ff41);
+    .work_item:hover {
+      transform: translate(-2px, -3px) scale(1.02);
       box-shadow: 0 0 30px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
-      transform: translateY(-5px);
+      border-color: var(--eoyr-neon-green, #00ff41);
     }
     
-    .modeling-image-wrapper {
-      width: 100%;
-      height: 300px;
-      overflow: hidden;
-      background: #000;
-    }
-    
-    .modeling-image {
+    .work_image {
+      opacity: 0.7;
+      object-fit: cover;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
+      position: absolute;
+      inset: 0;
     }
     
-    .modeling-card:hover .modeling-image {
-      transform: scale(1.05);
+    .work_content-wrap {
+      z-index: 2;
+      transform-style: preserve-3d;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: stretch;
+      height: 100%;
+      min-height: 25rem;
+      padding: 0.8rem;
+      position: relative;
     }
     
-    .modeling-card-content {
-      padding: 1.5rem;
+    .work_date-wrap {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      align-items: center;
     }
     
-    .modeling-card-title {
-      font-family: "Audiowide", sans-serif;
-      font-size: 1.4rem;
+    .work_date-dot {
+      border: 2px solid var(--eoyr-neon-green, #00ff41);
+      border-radius: 100vw;
+      width: 0.7rem;
+      height: 0.7rem;
+      flex: none;
+    }
+    
+    .work_date-text {
+      font-family: "Exo 2", sans-serif;
+      font-size: 0.8rem;
+      line-height: 1;
       color: var(--eoyr-neon-green, #00ff41);
-      margin: 0 0 0.75rem 0;
+    }
+    
+    .work_title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding-top: 2rem;
+    }
+    
+    .work_title {
+      font-family: "Audiowide", sans-serif;
+      font-size: 1.2rem;
+      line-height: 1.3;
+      color: var(--eoyr-neon-green, #00ff41);
       text-shadow: 0 0 10px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
     }
     
-    .modeling-card-description {
+    .work_description {
       font-family: "Exo 2", sans-serif;
-      font-size: 1rem;
-      color: var(--eoyr-neon-green-dim, #00cc33);
-      margin: 0;
+      font-size: 0.8rem;
       line-height: 1.5;
+      color: var(--eoyr-neon-green-dim, #00cc33);
     }
     
     .back-link {
@@ -129,19 +174,47 @@
       height: 20px;
     }
     
-    @media (max-width: 768px) {
+    @media screen and (max-width: 991px) {
+      .modeling-title {
+        font-size: 7rem;
+      }
+      
+      .modeling-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+    }
+    
+    @media screen and (max-width: 767px) {
       .modeling-wrapper {
         padding: 2rem 1rem;
       }
       
       .modeling-title {
-        font-size: 2rem;
+        font-size: 6rem;
       }
       
-      .modeling-grid {
+      .work_list {
         grid-template-columns: 1fr;
       }
     }
+    
+    @media screen and (max-width: 479px) {
+      .modeling-title {
+        font-size: 4.6rem;
+      }
+    }
+    
+    /* Grid item specific sizes - creates varied masonry layout */
+    #work-item-1 { grid-area: span 1 / span 1; }
+    #work-item-2 { grid-area: span 1 / span 2; }
+    #work-item-3 { grid-area: span 1 / span 2; }
+    #work-item-4 { grid-area: span 2 / span 1; }
+    #work-item-5 { grid-area: span 2 / span 1; }
+    #work-item-6 { grid-area: span 1 / span 1; }
+    #work-item-7 { grid-area: span 1 / span 2; }
+    #work-item-8 { grid-area: span 1 / span 2; }
+    #work-item-9 { grid-area: span 1 / span 1; }
   </style>
 </head>
 <body class="body">
@@ -156,38 +229,144 @@
       
       <header class="modeling-header">
         <h1 class="modeling-title">Modeling</h1>
-        <p class="modeling-subtitle">3D Product Renders & Branding Showcase</p>
+        <p class="modeling-subtitle">Marketing campaigns, brand shoots, promos, sales ads, and website banners</p>
       </header>
       
-      <div class="modeling-grid">
-        <!-- Placeholder cards - images to be added -->
-        <div class="modeling-card">
-          <div class="modeling-image-wrapper">
-            <img src="images/placeholder-modeling.jpg" alt="Product Render 1" class="modeling-image">
+      <div class="work_wrapper">
+        <div class="work_list">
+          <!-- Regular item -->
+          <div id="work-item-1" class="work_item">
+            <img src="images/pexels-aidan-roof-2449594.jpg" loading="lazy" alt="Brand Campaign" class="work_image">
+            <div class="work_content-wrap">
+              <div class="work_date-wrap">
+                <div class="work_date-dot"></div>
+                <div class="work_date-text">2025</div>
+              </div>
+              <div class="work_title-wrap">
+                <div class="work_title">Brand Campaign</div>
+                <div class="work_description">Marketing campaign showcase</div>
+              </div>
+            </div>
           </div>
-          <div class="modeling-card-content">
-            <h3 class="modeling-card-title">Product Visualization</h3>
-            <p class="modeling-card-description">High-quality 3D renders for e-commerce and marketing materials</p>
+          
+          <!-- Wide item -->
+          <div id="work-item-2" class="work_item" item-style="wide">
+            <img src="images/AdobeStock_409344866.jpeg" loading="lazy" alt="Website Banner" class="work_image">
+            <div class="work_content-wrap">
+              <div class="work_date-wrap">
+                <div class="work_date-dot"></div>
+                <div class="work_date-text">2025</div>
+              </div>
+              <div class="work_title-wrap">
+                <div class="work_title">Website Banners</div>
+                <div class="work_description">E-commerce hero sections and promotional banners</div>
+              </div>
+            </div>
           </div>
-        </div>
-        
-        <div class="modeling-card">
-          <div class="modeling-image-wrapper">
-            <img src="images/placeholder-modeling.jpg" alt="Brand Identity 1" class="modeling-image">
+          
+          <!-- Wide item -->
+          <div id="work-item-3" class="work_item" item-style="wide">
+            <img src="images/pexels-g-cortez-6419779.jpg" loading="lazy" alt="Product Promo" class="work_image">
+            <div class="work_content-wrap">
+              <div class="work_date-wrap">
+                <div class="work_date-dot"></div>
+                <div class="work_date-text">2025</div>
+              </div>
+              <div class="work_title-wrap">
+                <div class="work_title">Product Promo</div>
+                <div class="work_description">Promotional content for product launches</div>
+              </div>
+            </div>
           </div>
-          <div class="modeling-card-content">
-            <h3 class="modeling-card-title">Brand Identity</h3>
-            <p class="modeling-card-description">Cohesive branding systems that elevate your visual presence</p>
+          
+          <!-- Tall item -->
+          <div id="work-item-4" class="work_item" item-style="tall">
+            <img src="images/pexels-francesco-ungaro-1326999.jpg" loading="lazy" alt="Brand Shoot" class="work_image">
+            <div class="work_content-wrap">
+              <div class="work_date-wrap">
+                <div class="work_date-dot"></div>
+                <div class="work_date-text">2025</div>
+              </div>
+              <div class="work_title-wrap">
+                <div class="work_title">Brand Shoot</div>
+                <div class="work_description">Professional modeling for brand identity campaigns</div>
+              </div>
+            </div>
           </div>
-        </div>
-        
-        <div class="modeling-card">
-          <div class="modeling-image-wrapper">
-            <img src="images/placeholder-modeling.jpg" alt="3D Modeling 1" class="modeling-image">
+          
+          <!-- Tall item -->
+          <div id="work-item-5" class="work_item" item-style="tall">
+            <img src="images/pexels-paritosh-soren-1393996.jpg" loading="lazy" alt="Sales Campaign" class="work_image">
+            <div class="work_content-wrap">
+              <div class="work_date-wrap">
+                <div class="work_date-dot"></div>
+                <div class="work_date-text">2025</div>
+              </div>
+              <div class="work_title-wrap">
+                <div class="work_title">Sales Campaign</div>
+                <div class="work_description">Seasonal promotions and sales advertisements</div>
+              </div>
+            </div>
           </div>
-          <div class="modeling-card-content">
-            <h3 class="modeling-card-title">3D Modeling</h3>
-            <p class="modeling-card-description">Custom 3D models for product packaging and marketing assets</p>
+          
+          <!-- Regular item -->
+          <div id="work-item-6" class="work_item">
+            <img src="images/pexels-ivy-son-3490887.jpg" loading="lazy" alt="Social Media" class="work_image">
+            <div class="work_content-wrap">
+              <div class="work_date-wrap">
+                <div class="work_date-dot"></div>
+                <div class="work_date-text">2025</div>
+              </div>
+              <div class="work_title-wrap">
+                <div class="work_title">Social Media</div>
+                <div class="work_description">Instagram and social campaign content</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Wide item -->
+          <div id="work-item-7" class="work_item" item-style="wide">
+            <img src="images/pexels-artem-saranin-1853542.jpg" loading="lazy" alt="Email Marketing" class="work_image">
+            <div class="work_content-wrap">
+              <div class="work_date-wrap">
+                <div class="work_date-dot"></div>
+                <div class="work_date-text">2025</div>
+              </div>
+              <div class="work_title-wrap">
+                <div class="work_title">Email Marketing</div>
+                <div class="work_description">Newsletter and email campaign photography</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Wide item -->
+          <div id="work-item-8" class="work_item" item-style="wide">
+            <img src="images/pexels-viviana-camacho-2432189.jpg" loading="lazy" alt="Lifestyle Content" class="work_image">
+            <div class="work_content-wrap">
+              <div class="work_date-wrap">
+                <div class="work_date-dot"></div>
+                <div class="work_date-text">2025</div>
+              </div>
+              <div class="work_title-wrap">
+                <div class="work_title">Lifestyle Content</div>
+                <div class="work_description">Brand lifestyle and storytelling imagery</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Regular item -->
+          <div id="work-item-9" class="work_item">
+            <img src="images/pexels-spencer-selover-590141.jpg" loading="lazy" alt="Ad Creative" class="work_image">
+            <div class="work_content-wrap">
+              <div class="work_date-wrap">
+                <div class="work_date-dot"></div>
+                <div class="work_date-text">2025</div>
+              </div>
+              <div class="work_title-wrap">
+                <div class="work_title">Ad Creative</div>
+                <div class="work_description">Paid advertising and promotional assets</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
