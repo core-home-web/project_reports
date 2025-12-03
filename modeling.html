@@ -70,6 +70,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-auto-flow: row dense;
+      grid-auto-rows: minmax(250px, auto);
       gap: 1rem;
     }
     
@@ -79,6 +80,8 @@
       position: relative;
       overflow: hidden;
       border: 2px solid var(--eoyr-neon-green-dim, #00cc33);
+      display: flex;
+      flex-direction: column;
     }
     
     .work_item:hover {
@@ -95,6 +98,7 @@
       position: absolute;
       inset: 0;
       filter: saturate(0.6);
+      z-index: 0;
     }
     
     /* Vintage color overlay matching theme */
@@ -122,9 +126,9 @@
       justify-content: space-between;
       align-items: stretch;
       height: 100%;
-      min-height: 30rem;
       padding: 0.8rem;
       position: relative;
+      aspect-ratio: inherit;
     }
     
     .work_date-wrap {
@@ -214,10 +218,12 @@
       
       .work_list {
         grid-template-columns: 1fr;
+        grid-auto-rows: minmax(300px, auto);
       }
       
-      .work_content-wrap {
-        min-height: 35rem;
+      /* Reset aspect ratios for mobile - make all items same aspect */
+      .work_item {
+        aspect-ratio: 4 / 5 !important;
       }
     }
     
@@ -228,15 +234,42 @@
     }
     
     /* Grid item specific sizes - creates varied masonry layout */
-    #work-item-1 { grid-area: span 1 / span 2; }
-    #work-item-2 { grid-area: span 1 / span 2; }
-    #work-item-3 { grid-area: span 1 / span 2; }
-    #work-item-4 { grid-area: span 2 / span 1; }
-    #work-item-5 { grid-area: span 2 / span 1; }
-    #work-item-6 { grid-area: span 1 / span 1; }
-    #work-item-7 { grid-area: span 1 / span 2; }
-    #work-item-8 { grid-area: span 1 / span 2; }
-    #work-item-9 { grid-area: span 1 / span 1; }
+    #work-item-1 { 
+      grid-area: span 1 / span 2; 
+      aspect-ratio: 16 / 9;
+    }
+    #work-item-2 { 
+      grid-area: span 1 / span 2; 
+      aspect-ratio: 16 / 9;
+    }
+    #work-item-3 { 
+      grid-area: span 1 / span 2; 
+      aspect-ratio: 16 / 9;
+    }
+    #work-item-4 { 
+      grid-area: span 2 / span 1; 
+      aspect-ratio: 3 / 4;
+    }
+    #work-item-5 { 
+      grid-area: span 2 / span 1; 
+      aspect-ratio: 3 / 4;
+    }
+    #work-item-6 { 
+      grid-area: span 1 / span 1; 
+      aspect-ratio: 4 / 3;
+    }
+    #work-item-7 { 
+      grid-area: span 1 / span 2; 
+      aspect-ratio: 16 / 9;
+    }
+    #work-item-8 { 
+      grid-area: span 1 / span 2; 
+      aspect-ratio: 16 / 9;
+    }
+    #work-item-9 { 
+      grid-area: span 1 / span 1; 
+      aspect-ratio: 4 / 3;
+    }
     
     /* Lightbox Styles */
     .lightbox-overlay {
