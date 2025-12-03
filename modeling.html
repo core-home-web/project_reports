@@ -94,6 +94,19 @@
       height: 100%;
       position: absolute;
       inset: 0;
+      filter: saturate(0.6);
+    }
+    
+    /* Vintage color overlay matching theme */
+    .work_item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: var(--eoyr-neon-green, #00ff41);
+      opacity: 0.3;
+      mix-blend-mode: multiply;
+      z-index: 1;
+      pointer-events: none;
     }
     
     .work_content-wrap {
