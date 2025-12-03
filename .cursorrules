@@ -28,6 +28,35 @@
 - **Mobile-first**: Design for mobile screens first, then scale up
 - **Empathy**: Understand user motivations and provide what they need in the simplest way
 
+### Responsive Design Requirements
+**CRITICAL**: Always ensure designs are responsive, buttons are accessible, and pictures display correctly at ALL screen sizes
+
+#### Common Screen Resolutions to Test:
+
+**Desktop:**
+- 1920×1080 (Primary)
+- 1536×864
+- 1366×768
+
+**Mobile:**
+- 360×800 (Android standard)
+- 390×844 (iPhone standard)
+- 393×873 (iPhone Pro)
+
+**Tablet:**
+- 768×1024 (iPad standard)
+- 810×1080 (iPad Air)
+- 820×1180 (iPad Pro)
+
+#### Responsive Testing Checklist:
+1. ✅ Test at minimum 3 breakpoints: Mobile (390px), Tablet (768px), Desktop (1920px)
+2. ✅ Verify all buttons are clickable and accessible at each size
+3. ✅ Ensure images maintain aspect ratio and display as intended
+4. ✅ Check text readability and hierarchy at all sizes
+5. ✅ Validate interactive elements don't overlap or become unusable
+6. ✅ Test navigation menus on mobile devices
+7. ✅ Ensure no horizontal scrolling on mobile
+
 ## Reference Documentation
 
 ### UI/UX Design Resources (Consult Before Designing)
