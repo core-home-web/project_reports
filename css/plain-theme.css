@@ -1,6 +1,11 @@
 /* Plain Black & White Theme */
 /* Activated when data-theme="plain" on body element */
 
+/* Smooth Transitions for Theme Switching */
+* {
+  transition: all 0.3s ease;
+}
+
 /* Global Overrides */
 body[data-theme="plain"] {
   font-family: Helvetica, Arial, sans-serif !important;
