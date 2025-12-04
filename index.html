@@ -178,12 +178,14 @@ pointer-events: none;
     max-height: 60px;
   }
   
-  /* Pin menu button to top right */
-  .nav-toggle-wrapper {
-    position: fixed !important;
-    top: 1rem !important;
-    right: 1rem !important;
-    z-index: 9999 !important;
+  /* Pin menu button to top right on mobile only */
+  @media screen and (max-width: 767px) {
+    .nav-toggle-wrapper {
+      position: fixed !important;
+      top: 1rem !important;
+      right: 1rem !important;
+      z-index: 9999 !important;
+    }
   }
 }
 /* Tablet responsive (768px - 992px) */
