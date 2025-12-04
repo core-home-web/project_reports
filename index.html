@@ -133,6 +133,22 @@ pointer-events: none;
   .nav-links-column:not(.is-main) {
     margin-top: 0;
   }
+  
+  /* Fix navbar logo sizing to prevent menu button overflow */
+  .spline-logo {
+    width: 60px !important;
+    height: 60px !important;
+    max-width: 60px;
+    max-height: 60px;
+  }
+  
+  /* Pin menu button to top right */
+  .nav-toggle-wrapper {
+    position: fixed !important;
+    top: 1rem !important;
+    right: 1rem !important;
+    z-index: 9999 !important;
+  }
 }
 /* Tablet responsive (768px - 992px) */
 @media screen and (min-width: 768px) and (max-width: 992px) {
