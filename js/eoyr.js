@@ -226,6 +226,9 @@ function renderCommitGroups(data, sortOptions = {}) {
         <div class="group-header-stats">
           <span class="group-stat">${group.commitCount} ${group.commitCount === 1 ? 'commit' : 'commits'}</span>
           <span class="group-stat">${group.repoCount} ${group.repoCount === 1 ? 'project' : 'projects'}</span>
+          <button class="summary-button" onclick="toggleSummary('${group.id}', event)" title="View AI Summary">
+            📊 Summary
+          </button>
         </div>
       </div>
       <div class="block-actions-wrapper">
@@ -239,6 +242,16 @@ function renderCommitGroups(data, sortOptions = {}) {
     `;
     
     headerBlock.appendChild(headerContent);
+    
+    // Add summary section (initially hidden)
+    const summarySection = document.createElement('div');
+    summarySection.className = 'commit-summary-section';
+    summarySection.id = `summary-${group.id}`;
+    summarySection.style.display = 'none';
+    summarySection.setAttribute('data-group-id', group.id);
+    summarySection.setAttribute('data-commits', JSON.stringify(group.commits));
+    headerBlock.appendChild(summarySection);
+    
     headerWrapper.appendChild(headerBlock);
     staticCube.appendChild(headerWrapper);
     
@@ -748,6 +761,155 @@ async function loadWeeks(filters = {}) {
   // Use the new loadCommits function
   return loadCommits(filters);
 }
+
+/**
+ * Categorizes commits by type based on commit message keywords
+ * @param {Array} commits - Array of commit objects
+ * @returns {Object} Categorized commits
+ */
+function categorizeCommits(commits) {
+  const categories = {
+    features: [],
+    fixes: [],
+    docs: [],
+    cleanup: [],
+    other: []
+  };
+  
+  commits.forEach(commit => {
+    const msg = commit.message.toLowerCase();
+    
+    if (msg.includes('feat') || msg.includes('add') || msg.includes('implement') || msg.includes('create') || msg.includes('milestone')) {
+      categories.features.push(commit);
+    } else if (msg.includes('fix') || msg.includes('bug') || msg.includes('patch') || msg.includes('resolve')) {
+      categories.fixes.push(commit);
+    } else if (msg.includes('doc') || msg.includes('readme') || msg.includes('comment') || msg.includes('guide')) {
+      categories.docs.push(commit);
+    } else if (msg.includes('remove') || msg.includes('delete') || msg.includes('clean') || msg.includes('refactor')) {
+      categories.cleanup.push(commit);
+    } else {
+      categories.other.push(commit);
+    }
+  });
+  
+  return categories;
+}
+
+/**
+ * Generates a simple categorized summary of commits
+ * @param {Array} commits - Array of commit objects
+ * @returns {string} HTML string of the summary
+ */
+function generateSimpleSummary(commits) {
+  const categories = categorizeCommits(commits);
+  
+  let html = '<div class="commit-summary">';
+  html += '<h4 class="summary-title">📝 Commit Summary</h4>';
+  html += '<div class="summary-divider"></div>';
+  
+  // Count by category
+  const stats = {
+    features: categories.features.length,
+    fixes: categories.fixes.length,
+    docs: categories.docs.length,
+    cleanup: categories.cleanup.length,
+    other: categories.other.length
+  };
+  
+  // Features
+  if (stats.features > 0) {
+    html += `<div class="summary-category">`;
+    html += `<h5 class="summary-category-title">🚀 Features & Improvements (${stats.features})</h5>`;
+    html += `<ul class="summary-list">`;
+    categories.features.forEach(commit => {
+      const messageFirstLine = commit.message.split('\n')[0];
+      html += `<li>${escapeHtml(messageFirstLine)}</li>`;
+    });
+    html += `</ul></div>`;
+  }
+  
+  // Fixes
+  if (stats.fixes > 0) {
+    html += `<div class="summary-category">`;
+    html += `<h5 class="summary-category-title">🔧 Bug Fixes (${stats.fixes})</h5>`;
+    html += `<ul class="summary-list">`;
+    categories.fixes.forEach(commit => {
+      const messageFirstLine = commit.message.split('\n')[0];
+      html += `<li>${escapeHtml(messageFirstLine)}</li>`;
+    });
+    html += `</ul></div>`;
+  }
+  
+  // Documentation
+  if (stats.docs > 0) {
+    html += `<div class="summary-category">`;
+    html += `<h5 class="summary-category-title">📚 Documentation (${stats.docs})</h5>`;
+    html += `<ul class="summary-list">`;
+    categories.docs.forEach(commit => {
+      const messageFirstLine = commit.message.split('\n')[0];
+      html += `<li>${escapeHtml(messageFirstLine)}</li>`;
+    });
+    html += `</ul></div>`;
+  }
+  
+  // Cleanup
+  if (stats.cleanup > 0) {
+    html += `<div class="summary-category">`;
+    html += `<h5 class="summary-category-title">🗑️ Cleanup & Refactoring (${stats.cleanup})</h5>`;
+    html += `<ul class="summary-list">`;
+    categories.cleanup.forEach(commit => {
+      const messageFirstLine = commit.message.split('\n')[0];
+      html += `<li>${escapeHtml(messageFirstLine)}</li>`;
+    });
+    html += `</ul></div>`;
+  }
+  
+  // Other
+  if (stats.other > 0) {
+    html += `<div class="summary-category">`;
+    html += `<h5 class="summary-category-title">📌 Other Changes (${stats.other})</h5>`;
+    html += `<ul class="summary-list">`;
+    categories.other.forEach(commit => {
+      const messageFirstLine = commit.message.split('\n')[0];
+      html += `<li>${escapeHtml(messageFirstLine)}</li>`;
+    });
+    html += `</ul></div>`;
+  }
+  
+  html += '</div>';
+  return html;
+}
+
+/**
+ * Toggles the commit summary for a group
+ * @param {string} groupId - The group ID
+ * @param {Event} event - Click event
+ */
+function toggleSummary(groupId, event) {
+  event.stopPropagation(); // Prevent group expand/collapse
+  
+  const summarySection = document.getElementById(`summary-${groupId}`);
+  if (!summarySection) return;
+  
+  const isVisible = summarySection.style.display !== 'none';
+  
+  if (isVisible) {
+    // Hide summary
+    summarySection.style.display = 'none';
+  } else {
+    // Generate and show summary
+    const commitsData = summarySection.getAttribute('data-commits');
+    if (commitsData) {
+      const commits = JSON.parse(commitsData);
+      const summaryHTML = generateSimpleSummary(commits);
+      summarySection.innerHTML = summaryHTML;
+      summarySection.style.display = 'block';
+    }
+  }
+}
+
+// Make toggleSummary globally available
+window.toggleSummary = toggleSummary;
 
 /**
  * Initializes the dashboard

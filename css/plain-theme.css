@@ -536,3 +536,81 @@ body[data-theme="plain"] .lightbox-counter {
   background: rgba(255, 255, 255, 0.9) !important;
   border: 1px solid #000 !important;
 }
+
+/* ========================================
+   COMMIT SUMMARY SECTION - MINIMAL STYLE
+   ======================================== */
+body[data-theme="plain"] .summary-button {
+  background: transparent !important;
+  color: #000 !important;
+  border: 1px solid #000 !important;
+  font-family: Helvetica, Arial, sans-serif !important;
+  font-size: 0.85rem !important;
+  padding: 0.35rem 0.75rem !important;
+  cursor: pointer !important;
+}
+
+body[data-theme="plain"] .summary-button:hover {
+  background: #000 !important;
+  color: #FFF !important;
+}
+
+body[data-theme="plain"] .commit-summary-section {
+  background: #F5F5F5 !important;
+  border: 1px solid #CCC !important;
+  border-radius: 0 !important;
+  padding: 1.5rem !important;
+  margin-top: 1rem !important;
+}
+
+body[data-theme="plain"] .commit-summary {
+  color: #000 !important;
+}
+
+body[data-theme="plain"] .summary-title {
+  font-family: Helvetica, Arial, sans-serif !important;
+  font-size: 1.1rem !important;
+  font-weight: bold !important;
+  color: #000 !important;
+  text-transform: none !important;
+  margin-bottom: 0.75rem !important;
+}
+
+body[data-theme="plain"] .summary-divider {
+  background: #CCC !important;
+  background-image: none !important;
+  height: 1px !important;
+  margin-bottom: 1rem !important;
+}
+
+body[data-theme="plain"] .summary-category {
+  margin-bottom: 1.5rem !important;
+}
+
+body[data-theme="plain"] .summary-category-title {
+  font-family: Helvetica, Arial, sans-serif !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  color: #000 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+body[data-theme="plain"] .summary-list {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin-left: 1rem !important;
+}
+
+body[data-theme="plain"] .summary-list li {
+  font-family: Helvetica, Arial, sans-serif !important;
+  font-size: 0.9rem !important;
+  color: #333 !important;
+  margin-bottom: 0.4rem !important;
+  padding-left: 1.2rem !important;
+  line-height: 1.5 !important;
+}
+
+body[data-theme="plain"] .summary-list li::before {
+  content: "•" !important;
+  color: #000 !important;
+}
