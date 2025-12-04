@@ -1,0 +1,203 @@
+/* Plain Black & White Theme */
+/* Activated when data-theme="plain" on body element */
+
+/* Global Overrides */
+body[data-theme="plain"] {
+  font-family: Helvetica, Arial, sans-serif !important;
+  background-color: #000 !important;
+  color: #FFF !important;
+}
+
+body[data-theme="plain"] * {
+  font-family: Helvetica, Arial, sans-serif !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+
+/* Hide All Spline Logos */
+body[data-theme="plain"] .spline-logo,
+body[data-theme="plain"] .menu-spline-logo-container,
+body[data-theme="plain"] #spline-logo-canvas,
+body[data-theme="plain"] #spline-menu-logo {
+  display: none !important;
+}
+
+/* Replace Logo with Text */
+body[data-theme="plain"] .brand-wrapper {
+  font-family: Helvetica, Arial, sans-serif !important;
+  font-size: 1.5rem !important;
+  font-weight: bold !important;
+  color: #FFF !important;
+  text-decoration: none !important;
+}
+
+body[data-theme="plain"] .brand-wrapper::before {
+  content: "CORE HOME";
+}
+
+body[data-theme="plain"] .brand-wrapper canvas {
+  display: none !important;
+}
+
+/* Text Colors */
+body[data-theme="plain"] h1,
+body[data-theme="plain"] h2,
+body[data-theme="plain"] h3,
+body[data-theme="plain"] h4,
+body[data-theme="plain"] h5,
+body[data-theme="plain"] h6 {
+  color: #FFF !important;
+}
+
+body[data-theme="plain"] p,
+body[data-theme="plain"] span,
+body[data-theme="plain"] div,
+body[data-theme="plain"] li,
+body[data-theme="plain"] a {
+  color: #FFF !important;
+}
+
+/* Borders */
+body[data-theme="plain"] {
+  --border-color: #FFF;
+}
+
+body[data-theme="plain"] [class*="border"],
+body[data-theme="plain"] .analytics-card,
+body[data-theme="plain"] .work_item,
+body[data-theme="plain"] .airtable-card,
+body[data-theme="plain"] .project-card {
+  border-color: #FFF !important;
+}
+
+/* Buttons */
+body[data-theme="plain"] button,
+body[data-theme="plain"] .nav-link-desktop,
+body[data-theme="plain"] .nav-link-item {
+  background: transparent !important;
+  color: #FFF !important;
+  border: 1px solid #FFF !important;
+  border-radius: 0 !important;
+}
+
+body[data-theme="plain"] button:hover,
+body[data-theme="plain"] .nav-link-desktop:hover,
+body[data-theme="plain"] .nav-link-item:hover {
+  background: #FFF !important;
+  color: #000 !important;
+}
+
+/* Remove Backgrounds */
+body[data-theme="plain"] .navbar,
+body[data-theme="plain"] .main-wrapper-2,
+body[data-theme="plain"] .page-wrapper,
+body[data-theme="plain"] .modeling-wrapper,
+body[data-theme="plain"] .analytics-wrapper,
+body[data-theme="plain"] .ideas-wrapper {
+  background: #000 !important;
+}
+
+/* Simplify Titles */
+body[data-theme="plain"] .block-title,
+body[data-theme="plain"] .modeling-title,
+body[data-theme="plain"] .analytics-title,
+body[data-theme="plain"] .ideas-title,
+body[data-theme="plain"] .section-title {
+  font-family: Helvetica, Arial, sans-serif !important;
+  font-weight: bold !important;
+  color: #FFF !important;
+  text-transform: uppercase !important;
+}
+
+/* Remove Special Effects */
+body[data-theme="plain"] .scale-on-hover:hover {
+  transform: none !important;
+}
+
+body[data-theme="plain"] .work_item:hover,
+body[data-theme="plain"] .analytics-card:hover,
+body[data-theme="plain"] .airtable-card:hover {
+  transform: none !important;
+}
+
+/* Input Fields */
+body[data-theme="plain"] input,
+body[data-theme="plain"] select,
+body[data-theme="plain"] textarea {
+  background: #000 !important;
+  color: #FFF !important;
+  border: 1px solid #FFF !important;
+  border-radius: 0 !important;
+}
+
+body[data-theme="plain"] input::placeholder {
+  color: #999 !important;
+}
+
+/* Remove Gradients and Overlays */
+body[data-theme="plain"] .work_item::before {
+  display: none !important;
+}
+
+body[data-theme="plain"] .project-preview-wrapper {
+  background: #000 !important;
+  border: 1px solid #FFF !important;
+}
+
+/* Simplify Navigation */
+body[data-theme="plain"] .navbar-menu {
+  background: #000 !important;
+}
+
+body[data-theme="plain"] .navbar-left,
+body[data-theme="plain"] .navbar-right {
+  background: #000 !important;
+}
+
+/* Remove Color Picker in Plain Mode */
+body[data-theme="plain"] .nav-color-picker-button {
+  display: none !important;
+}
+
+/* Disclaimer and Highlight Boxes */
+body[data-theme="plain"] .block-disclaimer,
+body[data-theme="plain"] .highlight-box {
+  background: transparent !important;
+  border-left: 2px solid #FFF !important;
+  color: #FFF !important;
+}
+
+/* Links */
+body[data-theme="plain"] a {
+  color: #FFF !important;
+  text-decoration: underline !important;
+}
+
+body[data-theme="plain"] a:hover {
+  background: #FFF !important;
+  color: #000 !important;
+  text-decoration: none !important;
+}
+
+/* Images - Keep Visible */
+body[data-theme="plain"] img {
+  filter: grayscale(100%) !important;
+  opacity: 0.9 !important;
+}
+
+/* Feature Lists */
+body[data-theme="plain"] .feature-list li:before {
+  content: "•" !important;
+  color: #FFF !important;
+}
+
+/* Remove Emojis */
+body[data-theme="plain"] *:has-text("🎨")::before {
+  content: "" !important;
+}
+
+/* Simplify All Borders */
+body[data-theme="plain"] * {
+  border-radius: 0 !important;
+}
+

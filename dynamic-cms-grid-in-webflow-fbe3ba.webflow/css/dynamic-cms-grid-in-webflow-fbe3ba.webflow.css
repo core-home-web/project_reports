@@ -1,0 +1,242 @@
+@font-face {
+  font-family: Agrandir;
+  src: url('../fonts/PPAgrandir-Regular.otf') format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Agrandir;
+  src: url('../fonts/PPAgrandir-Bold.otf') format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --black: black;
+  --white: white;
+}
+
+body {
+  background-color: var(--black);
+  color: var(--white);
+  letter-spacing: 0;
+  font-family: Agrandir, sans-serif;
+  font-size: 1em;
+  line-height: 1.6;
+}
+
+h1 {
+  letter-spacing: -.03em;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 8em;
+  font-weight: 400;
+  line-height: .9;
+}
+
+h2, h3, h4, h5, h6, p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+a {
+  font-size: 1em;
+  text-decoration: none;
+}
+
+label {
+  margin-bottom: .3em;
+  font-size: 1.25em;
+  font-weight: 700;
+  display: block;
+}
+
+blockquote {
+  border-left: .3em solid #e2e2e2;
+  margin-bottom: 1em;
+  padding: 1em 2em 1em 1.7em;
+  font-size: 1.2em;
+  line-height: 1.6;
+}
+
+.container {
+  width: 100%;
+  max-width: 80em;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2em;
+}
+
+.container.is-work {
+  padding-top: 6em;
+  padding-bottom: 6em;
+}
+
+.masonry-grid-styles {
+  position: fixed;
+  inset: 0% 0% auto;
+}
+
+.work_wrapper {
+  padding-top: 2em;
+}
+
+.work_list {
+  grid-column-gap: 1em;
+  grid-row-gap: 1em;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: row dense;
+  display: grid;
+}
+
+.work_item {
+  border-radius: .9em;
+  transition: all .4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.work_item:hover {
+  transform: translate(-2px, -3px)scale(1.02);
+  box-shadow: 0 2px 5px #0003;
+}
+
+.work_image {
+  opacity: .7;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0%;
+}
+
+.work_content-wrap {
+  z-index: 2;
+  transform-style: preserve-3d;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  height: 100%;
+  min-height: 25em;
+  padding: .8em;
+  display: flex;
+  position: relative;
+}
+
+.work_content-wrap:hover {
+  transform: scale3d(1none, 1none, 1none);
+}
+
+.work_date-wrap {
+  grid-column-gap: .5em;
+  grid-row-gap: .5em;
+  justify-content: flex-end;
+  align-items: center;
+  display: flex;
+}
+
+.work_date-dot {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 100vw;
+  flex: none;
+  width: .7em;
+  height: .7em;
+}
+
+.work_date-text {
+  font-size: .8em;
+  line-height: 1;
+}
+
+.work_title-wrap {
+  grid-column-gap: .25em;
+  grid-row-gap: .25em;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: 2em;
+  display: flex;
+}
+
+.work_title {
+  font-size: 1.2em;
+  line-height: 1.3;
+}
+
+.work_description {
+  font-size: .8em;
+  line-height: 1.5;
+}
+
+@media screen and (max-width: 991px) {
+  h1 {
+    font-size: 7em;
+  }
+
+  .container {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  h1 {
+    font-size: 6em;
+  }
+
+  .work_list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  h1 {
+    font-size: 4.6em;
+  }
+}
+
+#w-node-_4db5ada0-7210-b1a1-8c9e-9b1359ba9991-ab81adcd {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-_4db5ada0-7210-b1a1-8c9e-9b1359ba999d-ab81adcd, #w-node-_4db5ada0-7210-b1a1-8c9e-9b1359ba99a9-ab81adcd {
+  grid-area: span 1 / span 2 / span 1 / span 2;
+}
+
+#w-node-_4db5ada0-7210-b1a1-8c9e-9b1359ba99b5-ab81adcd, #w-node-_4db5ada0-7210-b1a1-8c9e-9b1359ba99c1-ab81adcd {
+  grid-area: span 2 / span 1 / span 2 / span 1;
+}
+
+#w-node-a60d174d-e0c2-241b-7697-2d4f717b2b7a-ab81adcd {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-_4a2b74d7-58f5-06c6-4075-7e8cd268b006-ab81adcd, #w-node-_2135b4a7-93f9-77a1-bfdd-cc678d1f21ad-ab81adcd {
+  grid-area: span 1 / span 2 / span 1 / span 2;
+}
+
+#w-node-_34622a1b-b683-0524-4a4c-d1d4ccab3d0a-ab81adcd {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+
+@font-face {
+  font-family: 'Agrandir';
+  src: url('../fonts/PPAgrandir-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Agrandir';
+  src: url('../fonts/PPAgrandir-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
