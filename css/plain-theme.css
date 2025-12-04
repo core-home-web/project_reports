@@ -373,6 +373,53 @@ body[data-theme="matrix"] #theme-toggle .toggle-slider {
 }
 
 /* ========================================
+   PROJECT FILTERS & TAGS
+   ======================================== */
+
+/* Project Checkboxes - Default State */
+body[data-theme="plain"] .eoyr-project-checkbox,
+body[data-theme="plain"] .project-name {
+  background: #FFF !important;
+  color: #000 !important;
+  border: 1px solid #000 !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Project Checkboxes - Hover State */
+body[data-theme="plain"] .eoyr-project-checkbox:hover,
+body[data-theme="plain"] .project-name:hover {
+  background: #000 !important;
+  background-color: #000 !important;
+  color: #FFF !important;
+  border: 1px solid #000 !important;
+}
+
+/* Project Checkboxes - Active/Selected State */
+body[data-theme="plain"] .eoyr-project-checkbox.active,
+body[data-theme="plain"] .project-name.active {
+  background: #000 !important;
+  background-color: #000 !important;
+  color: #FFF !important;
+  border: 1px solid #000 !important;
+}
+
+/* Project Tags - Default State */
+body[data-theme="plain"] .eoyr-project-tag {
+  background: #FFF !important;
+  color: #000 !important;
+  border: 1px solid #000 !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Project Tags - Hover State */
+body[data-theme="plain"] .eoyr-project-tag:hover {
+  background: #000 !important;
+  background-color: #000 !important;
+  color: #FFF !important;
+  border: 1px solid #000 !important;
+}
+
+/* ========================================
    CARDS & CONTAINERS
    ======================================== */
 body[data-theme="plain"] .airtable-card,
