@@ -1,84 +1,166 @@
 /* Plain Black & White Theme */
 /* Activated when data-theme="plain" on body element */
+/* Uses high specificity selectors to override Matrix theme */
 
 /* Smooth Transitions for Theme Switching */
 * {
   transition: all 0.3s ease;
 }
 
-/* Global Overrides */
+/* ========================================
+   GLOBAL OVERRIDES - CSS VARIABLES
+   ======================================== */
 body[data-theme="plain"] {
-  font-family: Helvetica, Arial, sans-serif !important;
+  --eoyr-neon-green: #FFF !important;
+  --eoyr-neon-green-dim: #FFF !important;
+  --eoyr-neon-green-glow: transparent !important;
+  --eoyr-neon-green-bg: transparent !important;
+  --eoyr-black: #000 !important;
+  --eoyr-dark-green: #000 !important;
+}
+
+/* ========================================
+   BACKGROUNDS - Force Black
+   ======================================== */
+body[data-theme="plain"],
+body[data-theme="plain"] .page-wrapper,
+body[data-theme="plain"] .main-wrapper-2,
+body[data-theme="plain"] .modeling-wrapper,
+body[data-theme="plain"] .analytics-wrapper,
+body[data-theme="plain"] .ideas-wrapper,
+body[data-theme="plain"] .navbar,
+body[data-theme="plain"] .navbar-menu,
+body[data-theme="plain"] .navbar-left,
+body[data-theme="plain"] .navbar-right,
+body[data-theme="plain"] .navbar-open,
+body[data-theme="plain"] .navbar-content-wrapper,
+body[data-theme="plain"] .page-padding,
+body[data-theme="plain"] .opening-block,
+body[data-theme="plain"] .block {
+  background: #000 !important;
   background-color: #000 !important;
+  background-image: none !important;
+}
+
+/* ========================================
+   FONTS - Force Helvetica
+   ======================================== */
+body[data-theme="plain"],
+body[data-theme="plain"] * {
+  font-family: Helvetica, Arial, sans-serif !important;
+}
+
+/* ========================================
+   TEXT COLORS - Force White
+   ======================================== */
+body[data-theme="plain"],
+body[data-theme="plain"] h1,
+body[data-theme="plain"] h2,
+body[data-theme="plain"] h3,
+body[data-theme="plain"] h4,
+body[data-theme="plain"] h5,
+body[data-theme="plain"] h6,
+body[data-theme="plain"] p,
+body[data-theme="plain"] span,
+body[data-theme="plain"] div,
+body[data-theme="plain"] li,
+body[data-theme="plain"] a,
+body[data-theme="plain"] label,
+body[data-theme="plain"] .block-title,
+body[data-theme="plain"] .modeling-title,
+body[data-theme="plain"] .analytics-title,
+body[data-theme="plain"] .ideas-title,
+body[data-theme="plain"] .section-title,
+body[data-theme="plain"] .nav-link-text,
+body[data-theme="plain"] .navbar-right-text,
+body[data-theme="plain"] .week-row-title,
+body[data-theme="plain"] .work_title,
+body[data-theme="plain"] .airtable-card-title {
   color: #FFF !important;
 }
 
-body[data-theme="plain"] * {
-  font-family: Helvetica, Arial, sans-serif !important;
-  text-shadow: none !important;
-  box-shadow: none !important;
-}
-
-/* Hide All Spline Logos */
+/* ========================================
+   HIDE SPLINE LOGOS - Multiple Methods
+   ======================================== */
+body[data-theme="plain"] canvas,
 body[data-theme="plain"] .spline-logo,
-body[data-theme="plain"] .menu-spline-logo-container,
 body[data-theme="plain"] #spline-logo-canvas,
-body[data-theme="plain"] #spline-menu-logo {
+body[data-theme="plain"] #spline-menu-logo,
+body[data-theme="plain"] .menu-spline-logo-container,
+body[data-theme="plain"] .spline-logo-menu,
+body[data-theme="plain"] spline-viewer {
   display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  pointer-events: none !important;
 }
 
-/* Replace Logo with Text */
+/* Show "CORE HOME" Text Logo */
 body[data-theme="plain"] .brand-wrapper {
   font-family: Helvetica, Arial, sans-serif !important;
   font-size: 1.5rem !important;
   font-weight: bold !important;
   color: #FFF !important;
   text-decoration: none !important;
+  display: inline-block !important;
 }
 
 body[data-theme="plain"] .brand-wrapper::before {
-  content: "CORE HOME";
+  content: "CORE HOME" !important;
+  display: inline-block !important;
 }
 
-body[data-theme="plain"] .brand-wrapper canvas {
-  display: none !important;
+/* ========================================
+   REMOVE ALL EFFECTS
+   ======================================== */
+body[data-theme="plain"] * {
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-filter: none !important;
 }
 
-/* Text Colors */
-body[data-theme="plain"] h1,
-body[data-theme="plain"] h2,
-body[data-theme="plain"] h3,
-body[data-theme="plain"] h4,
-body[data-theme="plain"] h5,
-body[data-theme="plain"] h6 {
-  color: #FFF !important;
+/* Grayscale Images Only */
+body[data-theme="plain"] img {
+  filter: grayscale(100%) !important;
+  -webkit-filter: grayscale(100%) !important;
+  opacity: 0.9 !important;
 }
 
-body[data-theme="plain"] p,
-body[data-theme="plain"] span,
-body[data-theme="plain"] div,
-body[data-theme="plain"] li,
-body[data-theme="plain"] a {
-  color: #FFF !important;
-}
-
-/* Borders */
-body[data-theme="plain"] {
-  --border-color: #FFF;
-}
-
-body[data-theme="plain"] [class*="border"],
+/* ========================================
+   BORDERS - Simple White 1px
+   ======================================== */
+body[data-theme="plain"] *[class*="border"],
 body[data-theme="plain"] .analytics-card,
 body[data-theme="plain"] .work_item,
 body[data-theme="plain"] .airtable-card,
-body[data-theme="plain"] .project-card {
+body[data-theme="plain"] .project-card,
+body[data-theme="plain"] .week-row,
+body[data-theme="plain"] .navbar-right-item,
+body[data-theme="plain"] .project-preview-wrapper {
   border-color: #FFF !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-radius: 0 !important;
 }
 
-/* Buttons */
+/* Remove Border Radius Globally */
+body[data-theme="plain"] * {
+  border-radius: 0 !important;
+}
+
+/* ========================================
+   BUTTONS & LINKS
+   ======================================== */
 body[data-theme="plain"] button,
 body[data-theme="plain"] .nav-link-desktop,
-body[data-theme="plain"] .nav-link-item {
+body[data-theme="plain"] .nav-link-item,
+body[data-theme="plain"] .analytics-card,
+body[data-theme="plain"] input[type="submit"] {
   background: transparent !important;
   color: #FFF !important;
   border: 1px solid #FFF !important;
@@ -87,45 +169,26 @@ body[data-theme="plain"] .nav-link-item {
 
 body[data-theme="plain"] button:hover,
 body[data-theme="plain"] .nav-link-desktop:hover,
-body[data-theme="plain"] .nav-link-item:hover {
+body[data-theme="plain"] .nav-link-item:hover,
+body[data-theme="plain"] .analytics-card:hover {
   background: #FFF !important;
   color: #000 !important;
 }
 
-/* Remove Backgrounds */
-body[data-theme="plain"] .navbar,
-body[data-theme="plain"] .main-wrapper-2,
-body[data-theme="plain"] .page-wrapper,
-body[data-theme="plain"] .modeling-wrapper,
-body[data-theme="plain"] .analytics-wrapper,
-body[data-theme="plain"] .ideas-wrapper {
-  background: #000 !important;
-}
-
-/* Simplify Titles */
-body[data-theme="plain"] .block-title,
-body[data-theme="plain"] .modeling-title,
-body[data-theme="plain"] .analytics-title,
-body[data-theme="plain"] .ideas-title,
-body[data-theme="plain"] .section-title {
-  font-family: Helvetica, Arial, sans-serif !important;
-  font-weight: bold !important;
+body[data-theme="plain"] a {
   color: #FFF !important;
-  text-transform: uppercase !important;
+  text-decoration: underline !important;
 }
 
-/* Remove Special Effects */
-body[data-theme="plain"] .scale-on-hover:hover {
-  transform: none !important;
+body[data-theme="plain"] a:hover {
+  background: #FFF !important;
+  color: #000 !important;
+  text-decoration: none !important;
 }
 
-body[data-theme="plain"] .work_item:hover,
-body[data-theme="plain"] .analytics-card:hover,
-body[data-theme="plain"] .airtable-card:hover {
-  transform: none !important;
-}
-
-/* Input Fields */
+/* ========================================
+   INPUT FIELDS
+   ======================================== */
 body[data-theme="plain"] input,
 body[data-theme="plain"] select,
 body[data-theme="plain"] textarea {
@@ -139,85 +202,105 @@ body[data-theme="plain"] input::placeholder {
   color: #999 !important;
 }
 
-/* Remove Gradients and Overlays */
-body[data-theme="plain"] .work_item::before {
+/* ========================================
+   REMOVE HOVER EFFECTS
+   ======================================== */
+body[data-theme="plain"] .scale-on-hover:hover,
+body[data-theme="plain"] .work_item:hover,
+body[data-theme="plain"] .analytics-card:hover,
+body[data-theme="plain"] .airtable-card:hover {
+  transform: none !important;
+}
+
+/* ========================================
+   REMOVE GRADIENTS & OVERLAYS
+   ======================================== */
+body[data-theme="plain"] .work_item::before,
+body[data-theme="plain"] .work_item::after {
   display: none !important;
+  opacity: 0 !important;
 }
 
 body[data-theme="plain"] .project-preview-wrapper {
   background: #000 !important;
+  background-image: none !important;
   border: 1px solid #FFF !important;
 }
 
-/* Simplify Navigation */
-body[data-theme="plain"] .navbar-menu {
-  background: #000 !important;
+/* ========================================
+   HIGHLIGHT BOXES & SPECIAL ELEMENTS
+   ======================================== */
+body[data-theme="plain"] .block-disclaimer,
+body[data-theme="plain"] .highlight-box {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-left: 2px solid #FFF !important;
+  border-top: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+  color: #FFF !important;
 }
 
-body[data-theme="plain"] .navbar-left,
-body[data-theme="plain"] .navbar-right {
-  background: #000 !important;
+body[data-theme="plain"] .highlight-box p,
+body[data-theme="plain"] .block-disclaimer {
+  color: #FFF !important;
 }
 
-/* Remove Color Picker in Plain Mode */
+/* ========================================
+   NAVIGATION MENU
+   ======================================== */
 body[data-theme="plain"] .nav-color-picker-button {
   display: none !important;
 }
 
-/* Disclaimer and Highlight Boxes */
-body[data-theme="plain"] .block-disclaimer,
-body[data-theme="plain"] .highlight-box {
-  background: transparent !important;
-  border-left: 2px solid #FFF !important;
-  color: #FFF !important;
-}
-
-/* Links */
-body[data-theme="plain"] a {
-  color: #FFF !important;
-  text-decoration: underline !important;
-}
-
-body[data-theme="plain"] a:hover {
-  background: #FFF !important;
-  color: #000 !important;
-  text-decoration: none !important;
-}
-
-/* Images - Keep Visible */
-body[data-theme="plain"] img {
-  filter: grayscale(100%) !important;
-  opacity: 0.9 !important;
-}
-
-/* Feature Lists */
+/* ========================================
+   FEATURE LISTS
+   ======================================== */
 body[data-theme="plain"] .feature-list li:before {
   content: "•" !important;
   color: #FFF !important;
 }
 
-/* Remove Emojis */
-body[data-theme="plain"] *:has-text("🎨")::before {
-  content: "" !important;
-}
-
-/* Simplify All Borders */
-body[data-theme="plain"] * {
-  border-radius: 0 !important;
-}
-
-/* Theme Toggle Switch Animation */
-#theme-toggle[data-theme="plain"] .toggle-slider {
-  left: 22px !important; /* Move slider to right */
+/* ========================================
+   TOGGLE SWITCH ANIMATION
+   ======================================== */
+body[data-theme="plain"] #theme-toggle .toggle-slider {
+  left: 22px !important;
   background: #FFF !important;
 }
 
-#theme-toggle[data-theme="plain"] .toggle-switch {
+body[data-theme="plain"] #theme-toggle .toggle-switch {
   background: rgba(255, 255, 255, 0.2) !important;
   border-color: #FFF !important;
 }
 
-#theme-toggle[data-theme="matrix"] .toggle-slider {
-  left: 2px !important; /* Keep slider on left */
+body[data-theme="matrix"] #theme-toggle .toggle-slider {
+  left: 2px !important;
 }
 
+/* ========================================
+   CARDS & CONTAINERS
+   ======================================== */
+body[data-theme="plain"] .airtable-card,
+body[data-theme="plain"] .analytics-card,
+body[data-theme="plain"] .work_item {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* ========================================
+   IFRAMES & EMBEDS - Keep Visible
+   ======================================== */
+body[data-theme="plain"] iframe {
+  border: 1px solid #FFF !important;
+}
+
+/* ========================================
+   OVERRIDE INLINE STYLES
+   ======================================== */
+/* For elements with inline styles, !important is required */
+body[data-theme="plain"] div[style],
+body[data-theme="plain"] span[style],
+body[data-theme="plain"] a[style] {
+  background: none !important;
+}
