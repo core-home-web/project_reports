@@ -171,7 +171,8 @@ body[data-theme="plain"] input[type="submit"] {
 
 /* Navigation links - NO borders */
 body[data-theme="plain"] .nav-link-desktop,
-body[data-theme="plain"] .nav-link-item {
+body[data-theme="plain"] .nav-link-item,
+body[data-theme="plain"] .nav-link-text {
   background: transparent !important;
   color: #000 !important;
   border: none !important;
@@ -187,9 +188,18 @@ body[data-theme="plain"] input[type="submit"]:hover {
 }
 
 body[data-theme="plain"] .nav-link-desktop:hover,
-body[data-theme="plain"] .nav-link-item:hover {
+body[data-theme="plain"] .nav-link-item:hover,
+body[data-theme="plain"] .nav-link-desktop:hover .nav-link-text,
+body[data-theme="plain"] .nav-link-item:hover .nav-link-text {
   background: #000 !important;
   color: #FFF !important;
+}
+
+/* Menu button - WHITE text on BLACK bg */
+body[data-theme="plain"] .nav-toggle-inner {
+  background: #000 !important;
+  color: #FFF !important;
+  border: 1px solid #000 !important;
 }
 
 body[data-theme="plain"] a {
@@ -346,11 +356,55 @@ body[data-theme="plain"] .navbar-right-item:hover p {
   color: #FFF !important;
 }
 
+/* Flash animation for website cards */
+@keyframes flashBorder {
+  0%, 100% { border: 2px solid transparent; }
+  50% { border: 2px solid #000; }
+}
+
+body[data-theme="plain"] .navbar-right-item.flash-highlight {
+  animation: flashBorder 0.3s ease 4 !important;
+}
+
 /* ========================================
    IFRAMES & EMBEDS - Keep Visible
    ======================================== */
 body[data-theme="plain"] iframe {
   border: 1px solid #000 !important;
+}
+
+/* ========================================
+   REPORTS/LOGS BLOCKS (Commit Blocks)
+   ======================================== */
+body[data-theme="plain"] .static-block,
+body[data-theme="plain"] .block-content,
+body[data-theme="plain"] .commit-content,
+body[data-theme="plain"] .commits-container,
+body[data-theme="plain"] .week-row {
+  background: #FFF !important;
+  background-color: #FFF !important;
+  color: #000 !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+}
+
+body[data-theme="plain"] .static-block:hover,
+body[data-theme="plain"] .block-content:hover,
+body[data-theme="plain"] .commit-content:hover,
+body[data-theme="plain"] .commits-container:hover,
+body[data-theme="plain"] .week-row:hover {
+  background: #000 !important;
+  background-color: #000 !important;
+  color: #FFF !important;
+  border: 1px solid #000 !important;
+}
+
+body[data-theme="plain"] .static-block:hover *,
+body[data-theme="plain"] .block-content:hover *,
+body[data-theme="plain"] .commit-content:hover *,
+body[data-theme="plain"] .commits-container:hover *,
+body[data-theme="plain"] .week-row:hover * {
+  color: #FFF !important;
 }
 
 /* ========================================
