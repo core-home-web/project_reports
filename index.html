@@ -124,27 +124,45 @@ pointer-events: none;
 @media screen and (max-width: 767px) {
   .page-padding.is-navbar {
     max-height: 100svh;
-    justify-content: flex-start;
-    overflow-y: auto;
+    justify-content: space-between;
+    overflow-y: visible;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
   .navbar-left-inner {
     overflow: visible;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
   .menu-spline-logo-container {
     position: relative;
     top: auto;
     left: auto;
-    transform: scale(0.65);
+    transform: scale(0.5);
     transform-origin: center;
-    margin: 0 auto;
-    height: 280px;
+    margin: -20px auto -30px;
+    height: 200px;
+    max-height: 200px;
     overflow: visible;
   }
-  .nav-links-column:not(.is-main) {
-    margin-top: 0;
-    margin-bottom: 1em;
+  .nav-links-column.is-main {
+    margin-bottom: 0;
   }
+  .nav-links-column:not(.is-main) {
+    margin-top: auto;
+    margin-bottom: 0;
+    padding-bottom: 0.5rem;
+  }
+  /* Ensure navbar right content (websites) is scrollable */
+  .navbar-right-content {
+    max-height: 60svh;
+    overflow-y: auto;
+  }
+}
   
   /* Fix navbar logo sizing to prevent menu button overflow */
   .spline-logo {
