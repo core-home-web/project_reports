@@ -75,6 +75,9 @@ body[data-theme="plain"] .nav-link-text,
 body[data-theme="plain"] .navbar-right-text,
 body[data-theme="plain"] .week-row-title,
 body[data-theme="plain"] .work_title,
+body[data-theme="plain"] .work_description,
+body[data-theme="plain"] .work_date-text,
+body[data-theme="plain"] .work_date-wrap,
 body[data-theme="plain"] .airtable-card-title {
   color: #000 !important;
 }
@@ -208,8 +211,15 @@ body[data-theme="plain"] .nav-link-item:hover .nav-link-text {
 /* Menu button - WHITE text on BLACK bg */
 body[data-theme="plain"] .nav-toggle-inner {
   background: #000 !important;
+  background-color: #000 !important;
   color: #FFF !important;
   border: 1px solid #000 !important;
+  font-weight: bold !important;
+}
+
+/* Force white color on all children */
+body[data-theme="plain"] .nav-toggle-inner * {
+  color: #FFF !important;
 }
 
 body[data-theme="plain"] a {
@@ -450,7 +460,28 @@ body[data-theme="plain"] .analytics-card {
   padding: 1rem !important;
   margin-bottom: 1rem !important;
   background: #FFF !important;
-  border: 1px solid #000 !important;
+  color: #000 !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+}
+
+body[data-theme="plain"] .analytics-card:hover {
+  background: #000 !important;
+  color: #FFF !important;
+}
+
+body[data-theme="plain"] .analytics-card-title,
+body[data-theme="plain"] .analytics-card-description,
+body[data-theme="plain"] .analytics-card-url,
+body[data-theme="plain"] .analytics-button {
+  color: #000 !important;
+}
+
+body[data-theme="plain"] .analytics-card:hover .analytics-card-title,
+body[data-theme="plain"] .analytics-card:hover .analytics-card-description,
+body[data-theme="plain"] .analytics-card:hover .analytics-card-url,
+body[data-theme="plain"] .analytics-card:hover .analytics-button {
+  color: #FFF !important;
 }
 
 body[data-theme="plain"] .analytics-card h3 {
