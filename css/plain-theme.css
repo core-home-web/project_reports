@@ -482,6 +482,29 @@ body[data-theme="plain"] .block-content * {
   pointer-events: auto !important;
 }
 
+/* Hover for title wrapper and floating block */
+body[data-theme="plain"] .block-title-wrapper,
+body[data-theme="plain"] .floating-block {
+  background: #FFF !important;
+  color: #000 !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+body[data-theme="plain"] .block-title-wrapper:hover,
+body[data-theme="plain"] .floating-block:hover {
+  background: #000 !important;
+  background-color: #000 !important;
+  color: #FFF !important;
+}
+
+body[data-theme="plain"] .block-title-wrapper:hover *,
+body[data-theme="plain"] .floating-block:hover * {
+  color: #FFF !important;
+  background: transparent !important;
+}
+
 /* ========================================
    OVERRIDE INLINE STYLES
    ======================================== */
