@@ -115,6 +115,12 @@ body[data-theme="plain"] .brand-wrapper {
   color: #000 !important;
   text-decoration: none !important;
   display: inline-block !important;
+  cursor: pointer !important;
+  transition: color 0.3s ease !important;
+}
+
+body[data-theme="plain"] .brand-wrapper:hover {
+  color: #333 !important;
 }
 
 body[data-theme="plain"] .brand-wrapper::before {

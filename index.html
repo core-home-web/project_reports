@@ -93,12 +93,14 @@ pointer-events: none;
   transform: translateX(-50%);
   overflow: visible;
   z-index: 1;
-  pointer-events: none;
+  pointer-events: auto;
 }
 .menu-spline-logo-container canvas {
   width: 100%;
   height: 100%;
   display: block;
+  pointer-events: auto;
+  cursor: pointer;
 }
 .page-padding.is-navbar {
   max-height: 100svh;
@@ -245,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="nav-main-column-item">
               <div class="nav-main-column-content">
                 <div class="scale-on-hover">
-                  <a href="#" class="brand-wrapper w-inline-block"><canvas id="spline-logo-canvas" class="spline-logo"></canvas></a>
+                  <a href="index.html" class="brand-wrapper w-inline-block"><canvas id="spline-logo-canvas" class="spline-logo"></canvas></a>
                 </div>
               </div>
             </div>
@@ -346,7 +348,9 @@ document.addEventListener("DOMContentLoaded", () => {
                             </div>
                             <!-- Spline Logo in Menu -->
                             <div class="menu-spline-logo-container">
-                              <canvas id="spline-menu-logo" class="spline-logo-menu"></canvas>
+                              <a href="index.html" style="display: block; width: 100%; height: 100%; cursor: pointer;">
+                                <canvas id="spline-menu-logo" class="spline-logo-menu"></canvas>
+                              </a>
                             </div>
                             <div class="nav-links-column">
                               <div style="display: none; -webkit-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(-2em, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="nav-animate-1">
