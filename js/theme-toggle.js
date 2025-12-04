@@ -13,8 +13,11 @@
   
   // Apply theme to page
   function applyTheme(theme) {
+    console.log('🎨 Applying theme:', theme);
     document.body.setAttribute('data-theme', theme);
     localStorage.setItem(THEME_KEY, theme);
+    console.log('✅ Body data-theme set to:', document.body.getAttribute('data-theme'));
+    console.log('✅ LocalStorage updated:', localStorage.getItem(THEME_KEY));
     
     // Update toggle button if it exists
     updateToggleButton(theme);
@@ -23,21 +26,31 @@
   // Toggle between themes
   function toggleTheme() {
     const currentTheme = getCurrentTheme();
+    console.log('🔄 Toggle clicked! Current theme:', currentTheme);
     const newTheme = currentTheme === MATRIX_THEME ? PLAIN_THEME : MATRIX_THEME;
+    console.log('🔄 Switching to:', newTheme);
     applyTheme(newTheme);
   }
   
   // Update toggle button appearance
   function updateToggleButton(theme) {
     const toggleButton = document.getElementById('theme-toggle');
-    if (!toggleButton) return;
+    console.log('🔘 Updating toggle button, found element:', !!toggleButton);
+    if (!toggleButton) {
+      console.warn('⚠️ Toggle button not found!');
+      return;
+    }
     
     const statusText = toggleButton.querySelector('.toggle-status');
+    console.log('🔘 Status text element found:', !!statusText);
     if (statusText) {
-      statusText.textContent = theme === MATRIX_THEME ? 'Matrix Mode' : 'Minimal Mode';
+      const newText = theme === MATRIX_THEME ? 'Matrix Mode' : 'Minimal Mode';
+      statusText.textContent = newText;
+      console.log('✅ Status text updated to:', newText);
     }
     
     toggleButton.setAttribute('data-theme', theme);
+    console.log('✅ Toggle button data-theme set to:', theme);
   }
   
   // Initialize theme on page load (before DOM ready to avoid flash)

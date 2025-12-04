@@ -206,3 +206,18 @@ body[data-theme="plain"] * {
   border-radius: 0 !important;
 }
 
+/* Theme Toggle Switch Animation */
+#theme-toggle[data-theme="plain"] .toggle-slider {
+  left: 22px !important; /* Move slider to right */
+  background: #FFF !important;
+}
+
+#theme-toggle[data-theme="plain"] .toggle-switch {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: #FFF !important;
+}
+
+#theme-toggle[data-theme="matrix"] .toggle-slider {
+  left: 2px !important; /* Keep slider on left */
+}
+
