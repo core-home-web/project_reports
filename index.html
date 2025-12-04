@@ -123,43 +123,47 @@ pointer-events: none;
 /* Mobile (phone) responsive */
 @media screen and (max-width: 767px) {
   .page-padding.is-navbar {
-    max-height: 100svh;
-    justify-content: space-between;
+    max-height: 80svh;
+    justify-content: flex-start;
     overflow-y: visible;
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    gap: 0.25rem;
   }
   .navbar-left-inner {
     overflow: visible;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0;
+  }
+  .nav-links-column.is-main {
+    margin-bottom: 1em;
   }
   .menu-spline-logo-container {
     position: relative;
     top: auto;
     left: auto;
-    transform: scale(0.5);
+    transform: scale(0.45);
     transform-origin: center;
-    margin: -20px auto -30px;
-    height: 200px;
-    max-height: 200px;
+    margin: -30px auto -40px;
+    height: 180px;
+    max-height: 180px;
     overflow: visible;
   }
-  .nav-links-column.is-main {
-    margin-bottom: 0;
-  }
   .nav-links-column:not(.is-main) {
-    margin-top: auto;
+    margin-top: 0;
     margin-bottom: 0;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0;
+  }
+  .nav-links-column:not(.is-main) .nav-link-item {
+    padding: 0.5rem 0;
   }
   /* Ensure navbar right content (websites) is scrollable */
   .navbar-right-content {
-    max-height: 60svh;
+    max-height: 55svh;
     overflow-y: auto;
   }
 }
