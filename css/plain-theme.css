@@ -214,9 +214,16 @@ body[data-theme="plain"] input[type="submit"]:hover {
 
 body[data-theme="plain"] .nav-link-desktop:hover,
 body[data-theme="plain"] .nav-link-item:hover,
-body[data-theme="plain"] .nav-link-desktop:hover .nav-link-text,
-body[data-theme="plain"] .nav-link-item:hover .nav-link-text {
+body[data-theme="plain"] .nav-link-desktop:hover *,
+body[data-theme="plain"] .nav-link-item:hover * {
   background: #000 !important;
+  background-color: #000 !important;
+  color: #FFF !important;
+  text-shadow: none !important;
+}
+
+body[data-theme="plain"] .nav-link-desktop:hover div,
+body[data-theme="plain"] .nav-link-desktop:hover .nav-link-text {
   color: #FFF !important;
 }
 
