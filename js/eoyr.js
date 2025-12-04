@@ -347,6 +347,11 @@ function escapeHtml(text) {
 function setupGroupToggle() {
   document.querySelectorAll('.group-header').forEach(header => {
     header.addEventListener('click', (e) => {
+      // Ignore clicks on the summary button
+      if (e.target.closest('.summary-button')) {
+        return;
+      }
+      
       e.preventDefault();
       const groupId = header.getAttribute('data-group-id');
       const commitsContainer = document.querySelector(`[data-group-commits="${groupId}"]`);
