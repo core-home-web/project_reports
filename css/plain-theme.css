@@ -122,6 +122,16 @@ body[data-theme="plain"] * {
   filter: none !important;
   backdrop-filter: none !important;
   -webkit-filter: none !important;
+  background-image: none !important;
+  background-blend-mode: normal !important;
+}
+
+/* Force no gradients on all elements */
+body[data-theme="plain"] *[style*="background"],
+body[data-theme="plain"] *[style*="gradient"],
+body[data-theme="plain"] *[class*="gradient"] {
+  background-image: none !important;
+  background: #FFF !important;
 }
 
 /* Grayscale Images Only */
