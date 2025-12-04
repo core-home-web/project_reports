@@ -316,14 +316,34 @@ body[data-theme="plain"] .feature-list li:before {
 /* ========================================
    TOGGLE SWITCH ANIMATION
    ======================================== */
+body[data-theme="plain"] #theme-toggle {
+  background: transparent !important;
+  color: #000 !important;
+}
+
+body[data-theme="plain"] #theme-toggle:hover {
+  background: transparent !important;
+  color: #000 !important;
+}
+
+body[data-theme="plain"] #theme-toggle .toggle-status {
+  color: #000 !important;
+}
+
+body[data-theme="plain"] #theme-toggle:hover .toggle-status {
+  color: #000 !important;
+}
+
 body[data-theme="plain"] #theme-toggle .toggle-slider {
   left: 22px !important;
   background: #000 !important;
+  transition: all 0.3s ease !important;
 }
 
 body[data-theme="plain"] #theme-toggle .toggle-switch {
   background: rgba(0, 0, 0, 0.1) !important;
   border-color: #000 !important;
+  transition: all 0.3s ease !important;
 }
 
 body[data-theme="matrix"] #theme-toggle .toggle-slider {
