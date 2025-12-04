@@ -719,6 +719,14 @@
   pointer-events: none;
 }
 
+/* Re-enable pointer events for Summary button */
+.summary-button {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  position: relative;
+  z-index: 10;
+}
+
 /* Re-enable for specific interactive elements if needed */
 .group-header {
   pointer-events: auto !important;
