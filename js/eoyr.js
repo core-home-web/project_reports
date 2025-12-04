@@ -803,9 +803,10 @@ function categorizeCommits(commits) {
 /**
  * Generates a simple categorized summary of commits
  * @param {Array} commits - Array of commit objects
+ * @param {string} groupId - The group ID for the commits
  * @returns {string} HTML string of the summary
  */
-function generateSimpleSummary(commits) {
+function generateSimpleSummary(commits, groupId) {
   const categories = categorizeCommits(commits);
   
   let html = '<div class="commit-summary">';
@@ -960,7 +961,7 @@ function toggleSummary(groupId, event) {
     const commitsData = summarySection.getAttribute('data-commits');
     if (commitsData) {
       const commits = JSON.parse(commitsData);
-      const summaryHTML = generateSimpleSummary(commits);
+      const summaryHTML = generateSimpleSummary(commits, groupId);
       summarySection.innerHTML = summaryHTML;
       summarySection.style.display = 'block';
     }
