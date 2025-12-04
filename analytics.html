@@ -423,7 +423,12 @@
       
       // Focus on email input
       setTimeout(() => {
-        document.getElementById('user-email').focus();
+        const emailInput = document.getElementById('user-email');
+        if (emailInput) {
+          emailInput.focus();
+        } else {
+          console.warn('Email input element not found in DOM');
+        }
       }, 100);
       
       // FormSubmit handles submission natively - no custom handler needed
