@@ -881,9 +881,63 @@ function generateSimpleSummary(commits) {
     html += `</ul></div>`;
   }
   
+  // Add "View Detailed Commits" button at the bottom
+  html += `
+    <div class="summary-actions" style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--eoyr-neon-green-dim);">
+      <button class="view-logs-button" onclick="viewDetailedCommits('${groupId}', event)" style="
+        font-family: 'Exo 2', sans-serif;
+        font-size: 0.9rem;
+        color: var(--eoyr-neon-green);
+        background: transparent;
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--eoyr-neon-green);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      ">
+        📋 View Detailed Commits
+      </button>
+    </div>
+  `;
+  
   html += '</div>';
   return html;
 }
+
+/**
+ * Views detailed commits for a group (expands the commits list)
+ * @param {string} groupId - The group ID
+ * @param {Event} event - Click event
+ */
+function viewDetailedCommits(groupId, event) {
+  event.stopPropagation();
+  
+  // Find and expand the commits container
+  const commitsContainer = document.querySelector(`[data-group-commits="${groupId}"]`);
+  const groupHeader = document.querySelector(`[data-group-id="${groupId}"]`);
+  const toggleIcon = groupHeader?.querySelector('.group-toggle');
+  
+  if (commitsContainer) {
+    // Remove collapsed class to show commits
+    commitsContainer.classList.remove('collapsed');
+    
+    // Update toggle icon
+    if (toggleIcon) {
+      toggleIcon.classList.remove('rotated');
+    }
+    
+    // Scroll to commits container
+    setTimeout(() => {
+      commitsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+    
+    // Update toggle all button
+    updateToggleAllButton();
+  }
+}
+
+// Make function globally available
+window.viewDetailedCommits = viewDetailedCommits;
 
 /**
  * Toggles the commit summary for a group

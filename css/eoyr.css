@@ -855,6 +855,13 @@
   color: var(--eoyr-neon-green);
 }
 
+/* View Detailed Commits Button */
+.view-logs-button:hover {
+  background: rgba(0, 255, 65, 0.15) !important;
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+  transform: translateY(-1px);
+}
+
 .group-toggle {
   transition: transform 0.3s ease;
   color: var(--eoyr-neon-green);

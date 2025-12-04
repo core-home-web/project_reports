@@ -645,3 +645,23 @@ body[data-theme="plain"] .summary-list li::before {
   content: "•" !important;
   color: #000 !important;
 }
+
+/* View Detailed Commits Button - Minimal Style */
+body[data-theme="plain"] .view-logs-button {
+  font-family: Helvetica, Arial, sans-serif !important;
+  background: transparent !important;
+  color: #000 !important;
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+}
+
+body[data-theme="plain"] .view-logs-button:hover {
+  background: #000 !important;
+  color: #FFF !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+body[data-theme="plain"] .summary-actions {
+  border-top: 1px solid #CCC !important;
+}
