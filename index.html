@@ -123,9 +123,10 @@ pointer-events: none;
 /* Mobile (phone) responsive */
 @media screen and (max-width: 767px) {
   .page-padding.is-navbar {
-    max-height: 80svh;
-    justify-content: space-between;
-    overflow: visible;
+    max-height: 100svh;
+    justify-content: flex-start;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
   .navbar-left-inner {
     overflow: visible;
@@ -135,12 +136,13 @@ pointer-events: none;
     top: auto;
     left: auto;
     transform: none;
-    margin: 2em auto;
-    height: 310px;
+    margin: 1em auto 0.5em;
+    height: 200px;
     overflow: visible;
   }
   .nav-links-column:not(.is-main) {
-    margin-top: 0;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
   }
   
   /* Fix navbar logo sizing to prevent menu button overflow */
