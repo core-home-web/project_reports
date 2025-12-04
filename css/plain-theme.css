@@ -132,19 +132,24 @@ body[data-theme="plain"] img {
 }
 
 /* ========================================
-   BORDERS - Simple BLACK 1px
+   BORDERS - Simple BLACK 1px (selective)
    ======================================== */
-body[data-theme="plain"] *[class*="border"],
 body[data-theme="plain"] .analytics-card,
 body[data-theme="plain"] .work_item,
 body[data-theme="plain"] .airtable-card,
-body[data-theme="plain"] .project-card,
-body[data-theme="plain"] .week-row,
-body[data-theme="plain"] .navbar-right-item,
-body[data-theme="plain"] .project-preview-wrapper {
+body[data-theme="plain"] .week-row {
   border-color: #000 !important;
   border-width: 1px !important;
   border-style: solid !important;
+  border-radius: 0 !important;
+}
+
+/* NO borders on navbar items and project cards */
+body[data-theme="plain"] .navbar-right-item,
+body[data-theme="plain"] .project-card,
+body[data-theme="plain"] .project-preview-wrapper,
+body[data-theme="plain"] .navbar-right-content {
+  border: none !important;
   border-radius: 0 !important;
 }
 
@@ -157,9 +162,6 @@ body[data-theme="plain"] * {
    BUTTONS & LINKS
    ======================================== */
 body[data-theme="plain"] button,
-body[data-theme="plain"] .nav-link-desktop,
-body[data-theme="plain"] .nav-link-item,
-body[data-theme="plain"] .analytics-card,
 body[data-theme="plain"] input[type="submit"] {
   background: transparent !important;
   color: #000 !important;
@@ -167,23 +169,37 @@ body[data-theme="plain"] input[type="submit"] {
   border-radius: 0 !important;
 }
 
+/* Navigation links - NO borders */
+body[data-theme="plain"] .nav-link-desktop,
+body[data-theme="plain"] .nav-link-item {
+  background: transparent !important;
+  color: #000 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  text-decoration: none !important;
+}
+
+/* Hover states - BLACK background, WHITE text */
 body[data-theme="plain"] button:hover,
+body[data-theme="plain"] input[type="submit"]:hover {
+  background: #000 !important;
+  color: #FFF !important;
+}
+
 body[data-theme="plain"] .nav-link-desktop:hover,
-body[data-theme="plain"] .nav-link-item:hover,
-body[data-theme="plain"] .analytics-card:hover {
+body[data-theme="plain"] .nav-link-item:hover {
   background: #000 !important;
   color: #FFF !important;
 }
 
 body[data-theme="plain"] a {
   color: #000 !important;
-  text-decoration: underline !important;
+  text-decoration: none !important;
 }
 
 body[data-theme="plain"] a:hover {
   background: #000 !important;
   color: #FFF !important;
-  text-decoration: none !important;
 }
 
 /* ========================================
@@ -286,6 +302,48 @@ body[data-theme="plain"] .analytics-card,
 body[data-theme="plain"] .work_item {
   background: transparent !important;
   background-color: transparent !important;
+}
+
+/* ========================================
+   PROJECT CARDS (Website Blocks)
+   ======================================== */
+body[data-theme="plain"] .project-card,
+body[data-theme="plain"] .navbar-right-item {
+  background: #FFF !important;
+  background-color: #FFF !important;
+  color: #000 !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+}
+
+body[data-theme="plain"] .project-card:hover,
+body[data-theme="plain"] .navbar-right-item:hover {
+  background: #000 !important;
+  background-color: #000 !important;
+  color: #FFF !important;
+}
+
+body[data-theme="plain"] .project-card:hover *,
+body[data-theme="plain"] .navbar-right-item:hover * {
+  color: #FFF !important;
+}
+
+body[data-theme="plain"] .project-card h3,
+body[data-theme="plain"] .project-card h4,
+body[data-theme="plain"] .project-card p,
+body[data-theme="plain"] .navbar-right-item h3,
+body[data-theme="plain"] .navbar-right-item h4,
+body[data-theme="plain"] .navbar-right-item p {
+  color: #000 !important;
+}
+
+body[data-theme="plain"] .project-card:hover h3,
+body[data-theme="plain"] .project-card:hover h4,
+body[data-theme="plain"] .project-card:hover p,
+body[data-theme="plain"] .navbar-right-item:hover h3,
+body[data-theme="plain"] .navbar-right-item:hover h4,
+body[data-theme="plain"] .navbar-right-item:hover p {
+  color: #FFF !important;
 }
 
 /* ========================================
