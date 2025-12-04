@@ -11,16 +11,16 @@
    GLOBAL OVERRIDES - CSS VARIABLES
    ======================================== */
 body[data-theme="plain"] {
-  --eoyr-neon-green: #FFF !important;
-  --eoyr-neon-green-dim: #FFF !important;
+  --eoyr-neon-green: #000 !important;
+  --eoyr-neon-green-dim: #000 !important;
   --eoyr-neon-green-glow: transparent !important;
   --eoyr-neon-green-bg: transparent !important;
-  --eoyr-black: #000 !important;
-  --eoyr-dark-green: #000 !important;
+  --eoyr-black: #FFF !important;
+  --eoyr-dark-green: #FFF !important;
 }
 
 /* ========================================
-   BACKGROUNDS - Force Black
+   BACKGROUNDS - Force WHITE
    ======================================== */
 body[data-theme="plain"],
 body[data-theme="plain"] .page-wrapper,
@@ -37,8 +37,8 @@ body[data-theme="plain"] .navbar-content-wrapper,
 body[data-theme="plain"] .page-padding,
 body[data-theme="plain"] .opening-block,
 body[data-theme="plain"] .block {
-  background: #000 !important;
-  background-color: #000 !important;
+  background: #FFF !important;
+  background-color: #FFF !important;
   background-image: none !important;
 }
 
@@ -51,7 +51,7 @@ body[data-theme="plain"] * {
 }
 
 /* ========================================
-   TEXT COLORS - Force White
+   TEXT COLORS - Force BLACK
    ======================================== */
 body[data-theme="plain"],
 body[data-theme="plain"] h1,
@@ -76,7 +76,7 @@ body[data-theme="plain"] .navbar-right-text,
 body[data-theme="plain"] .week-row-title,
 body[data-theme="plain"] .work_title,
 body[data-theme="plain"] .airtable-card-title {
-  color: #FFF !important;
+  color: #000 !important;
 }
 
 /* ========================================
@@ -98,18 +98,18 @@ body[data-theme="plain"] spline-viewer {
   pointer-events: none !important;
 }
 
-/* Show "CORE HOME" Text Logo */
+/* Show "CORE HOME™" Text Logo */
 body[data-theme="plain"] .brand-wrapper {
   font-family: Helvetica, Arial, sans-serif !important;
   font-size: 1.5rem !important;
   font-weight: bold !important;
-  color: #FFF !important;
+  color: #000 !important;
   text-decoration: none !important;
   display: inline-block !important;
 }
 
 body[data-theme="plain"] .brand-wrapper::before {
-  content: "CORE HOME" !important;
+  content: "CORE HOME™" !important;
   display: inline-block !important;
 }
 
@@ -132,7 +132,7 @@ body[data-theme="plain"] img {
 }
 
 /* ========================================
-   BORDERS - Simple White 1px
+   BORDERS - Simple BLACK 1px
    ======================================== */
 body[data-theme="plain"] *[class*="border"],
 body[data-theme="plain"] .analytics-card,
@@ -142,7 +142,7 @@ body[data-theme="plain"] .project-card,
 body[data-theme="plain"] .week-row,
 body[data-theme="plain"] .navbar-right-item,
 body[data-theme="plain"] .project-preview-wrapper {
-  border-color: #FFF !important;
+  border-color: #000 !important;
   border-width: 1px !important;
   border-style: solid !important;
   border-radius: 0 !important;
@@ -162,8 +162,8 @@ body[data-theme="plain"] .nav-link-item,
 body[data-theme="plain"] .analytics-card,
 body[data-theme="plain"] input[type="submit"] {
   background: transparent !important;
-  color: #FFF !important;
-  border: 1px solid #FFF !important;
+  color: #000 !important;
+  border: 1px solid #000 !important;
   border-radius: 0 !important;
 }
 
@@ -171,18 +171,18 @@ body[data-theme="plain"] button:hover,
 body[data-theme="plain"] .nav-link-desktop:hover,
 body[data-theme="plain"] .nav-link-item:hover,
 body[data-theme="plain"] .analytics-card:hover {
-  background: #FFF !important;
-  color: #000 !important;
+  background: #000 !important;
+  color: #FFF !important;
 }
 
 body[data-theme="plain"] a {
-  color: #FFF !important;
+  color: #000 !important;
   text-decoration: underline !important;
 }
 
 body[data-theme="plain"] a:hover {
-  background: #FFF !important;
-  color: #000 !important;
+  background: #000 !important;
+  color: #FFF !important;
   text-decoration: none !important;
 }
 
@@ -192,14 +192,14 @@ body[data-theme="plain"] a:hover {
 body[data-theme="plain"] input,
 body[data-theme="plain"] select,
 body[data-theme="plain"] textarea {
-  background: #000 !important;
-  color: #FFF !important;
-  border: 1px solid #FFF !important;
+  background: #FFF !important;
+  color: #000 !important;
+  border: 1px solid #000 !important;
   border-radius: 0 !important;
 }
 
 body[data-theme="plain"] input::placeholder {
-  color: #999 !important;
+  color: #666 !important;
 }
 
 /* ========================================
@@ -222,9 +222,9 @@ body[data-theme="plain"] .work_item::after {
 }
 
 body[data-theme="plain"] .project-preview-wrapper {
-  background: #000 !important;
+  background: #FFF !important;
   background-image: none !important;
-  border: 1px solid #FFF !important;
+  border: 1px solid #000 !important;
 }
 
 /* ========================================
@@ -234,16 +234,16 @@ body[data-theme="plain"] .block-disclaimer,
 body[data-theme="plain"] .highlight-box {
   background: transparent !important;
   background-color: transparent !important;
-  border-left: 2px solid #FFF !important;
+  border-left: 2px solid #000 !important;
   border-top: none !important;
   border-right: none !important;
   border-bottom: none !important;
-  color: #FFF !important;
+  color: #000 !important;
 }
 
 body[data-theme="plain"] .highlight-box p,
 body[data-theme="plain"] .block-disclaimer {
-  color: #FFF !important;
+  color: #000 !important;
 }
 
 /* ========================================
@@ -258,7 +258,7 @@ body[data-theme="plain"] .nav-color-picker-button {
    ======================================== */
 body[data-theme="plain"] .feature-list li:before {
   content: "•" !important;
-  color: #FFF !important;
+  color: #000 !important;
 }
 
 /* ========================================
@@ -266,12 +266,12 @@ body[data-theme="plain"] .feature-list li:before {
    ======================================== */
 body[data-theme="plain"] #theme-toggle .toggle-slider {
   left: 22px !important;
-  background: #FFF !important;
+  background: #000 !important;
 }
 
 body[data-theme="plain"] #theme-toggle .toggle-switch {
-  background: rgba(255, 255, 255, 0.2) !important;
-  border-color: #FFF !important;
+  background: rgba(0, 0, 0, 0.1) !important;
+  border-color: #000 !important;
 }
 
 body[data-theme="matrix"] #theme-toggle .toggle-slider {
@@ -292,7 +292,7 @@ body[data-theme="plain"] .work_item {
    IFRAMES & EMBEDS - Keep Visible
    ======================================== */
 body[data-theme="plain"] iframe {
-  border: 1px solid #FFF !important;
+  border: 1px solid #000 !important;
 }
 
 /* ========================================
@@ -303,4 +303,114 @@ body[data-theme="plain"] div[style],
 body[data-theme="plain"] span[style],
 body[data-theme="plain"] a[style] {
   background: none !important;
+}
+
+/* ========================================
+   HIDE SVG ICONS IN REPORTS
+   ======================================== */
+body[data-theme="plain"] svg,
+body[data-theme="plain"] .week-row-icon,
+body[data-theme="plain"] .commit-icon {
+  display: none !important;
+}
+
+/* ========================================
+   ANALYTICS PAGE - SIMPLE LIST
+   ======================================== */
+body[data-theme="plain"] .analytics-grid {
+  display: block !important;
+  grid-template-columns: 1fr !important;
+}
+
+body[data-theme="plain"] .analytics-card {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 1rem !important;
+  margin-bottom: 1rem !important;
+  background: #FFF !important;
+  border: 1px solid #000 !important;
+}
+
+body[data-theme="plain"] .analytics-card h3 {
+  font-size: 1.25rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+body[data-theme="plain"] .analytics-card p {
+  font-size: 1rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+body[data-theme="plain"] .analytics-card button {
+  width: fit-content !important;
+  padding: 0.5rem 1rem !important;
+  margin-top: 0.5rem !important;
+}
+
+/* ========================================
+   CONTENT PAGE - SIMPLE RESPONSIVE GRID
+   ======================================== */
+body[data-theme="plain"] .work_list {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 1rem !important;
+  grid-auto-flow: dense !important;
+}
+
+@media (max-width: 1200px) {
+  body[data-theme="plain"] .work_list {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  body[data-theme="plain"] .work_list {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  body[data-theme="plain"] .work_list {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+body[data-theme="plain"] .work_item {
+  grid-column: span 1 !important;
+  grid-row: span 1 !important;
+  aspect-ratio: 1 / 1 !important;
+}
+
+/* ========================================
+   LIGHTBOX - MINIMALISTIC STYLE
+   ======================================== */
+body[data-theme="plain"] .lightbox-overlay {
+  background: rgba(255, 255, 255, 0.95) !important;
+}
+
+body[data-theme="plain"] .lightbox-content {
+  background: #FFF !important;
+  border: 2px solid #000 !important;
+}
+
+body[data-theme="plain"] .lightbox-close,
+body[data-theme="plain"] .lightbox-prev,
+body[data-theme="plain"] .lightbox-next {
+  background: transparent !important;
+  color: #000 !important;
+  border: 1px solid #000 !important;
+  font-size: 2rem !important;
+}
+
+body[data-theme="plain"] .lightbox-close:hover,
+body[data-theme="plain"] .lightbox-prev:hover,
+body[data-theme="plain"] .lightbox-next:hover {
+  background: #000 !important;
+  color: #FFF !important;
+}
+
+body[data-theme="plain"] .lightbox-counter {
+  color: #000 !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid #000 !important;
 }
