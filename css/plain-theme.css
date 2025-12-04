@@ -450,7 +450,6 @@ body[data-theme="plain"] .week-row {
 }
 
 body[data-theme="plain"] .static-block:hover,
-body[data-theme="plain"] .block-content:hover,
 body[data-theme="plain"] .commit-content:hover,
 body[data-theme="plain"] .commits-container:hover,
 body[data-theme="plain"] .week-row:hover {
@@ -461,11 +460,19 @@ body[data-theme="plain"] .week-row:hover {
 }
 
 body[data-theme="plain"] .static-block:hover *,
-body[data-theme="plain"] .block-content:hover *,
 body[data-theme="plain"] .commit-content:hover *,
 body[data-theme="plain"] .commits-container:hover *,
 body[data-theme="plain"] .week-row:hover * {
   color: #FFF !important;
+}
+
+/* Don't apply hover to block-content (contains title and disclaimer) */
+body[data-theme="plain"] .block-content {
+  pointer-events: none !important;
+}
+
+body[data-theme="plain"] .block-content * {
+  pointer-events: auto !important;
 }
 
 /* ========================================
