@@ -322,8 +322,8 @@ body[data-theme="plain"] #theme-toggle {
 }
 
 body[data-theme="plain"] #theme-toggle:hover {
-  background: transparent !important;
-  color: #000 !important;
+  background: #000 !important;
+  color: #FFF !important;
 }
 
 body[data-theme="plain"] #theme-toggle .toggle-status {
@@ -331,19 +331,28 @@ body[data-theme="plain"] #theme-toggle .toggle-status {
 }
 
 body[data-theme="plain"] #theme-toggle:hover .toggle-status {
-  color: #000 !important;
+  color: #FFF !important;
 }
 
 body[data-theme="plain"] #theme-toggle .toggle-slider {
   left: 22px !important;
   background: #000 !important;
-  transition: all 0.3s ease !important;
+  transition: left 0.3s ease !important;
+}
+
+body[data-theme="plain"] #theme-toggle:hover .toggle-slider {
+  background: #FFF !important;
 }
 
 body[data-theme="plain"] #theme-toggle .toggle-switch {
   background: rgba(0, 0, 0, 0.1) !important;
   border-color: #000 !important;
-  transition: all 0.3s ease !important;
+  transition: none !important;
+}
+
+body[data-theme="plain"] #theme-toggle:hover .toggle-switch {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: #FFF !important;
 }
 
 body[data-theme="matrix"] #theme-toggle .toggle-slider {
